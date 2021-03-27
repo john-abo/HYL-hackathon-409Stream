@@ -73,7 +73,11 @@ public class search {
 			powerSet(matches,g,0);
 			
 	    	for(int i = 0; i < done.size(); i++) {
-	    		System.out.println(done.get(i).size());
+	    		for(int j = 0; j< done.get(i).size(); j++) {
+	    			System.out.println(done.get(i).get(j).ID);
+	    		
+	    		}
+	    		System.out.println();
 	    	}
 			
 	

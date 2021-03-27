@@ -2,22 +2,24 @@ package hyl_project;
 
 class node{
 	
+	//contains all the attributes of an entry in the chair table
 	
-	 node next = null;
+	node next = null;
 	 boolean legs = false;
 	 boolean arms = false;
 	 boolean seat = false;
 	 boolean cushion = false;
 	 int parts = 0;
-	 String id;
+	 String ID = "";
 	
 	 int price;
 	 
 
 	public node( String id, String legs1, String arms1,
 			String seat1, String cushion1, int price) {
-		this.id = id;
+		this.ID = id;
 		this.price = price;
+		//converts Y and N into booleans
 		if(legs1.equals("Y")) {
 			legs = true;
 			parts++;
