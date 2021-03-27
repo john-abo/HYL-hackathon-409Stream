@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+.OUT
 
 # Log file
 *.log
@@ -81,3 +82,7 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+hyl_project/OUT/report1.txt
+hyl_project_TESTS/OUT/report1.txt
+hyl_project_TESTS/OUT/report2.txt
+hyl_project_TESTS/OUT/report3.txt
