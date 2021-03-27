@@ -7,7 +7,8 @@ public class ProjectMain {
 	private static String userIn = "";
 	
 	/**
-	 * Gets the user input
+	 * Gets the user input. The message printed is meant to notifty the user about the format
+	 * and the meaning of each input.
 	 */
 	private static void userInput() {
 		Scanner input = new Scanner(System.in);
@@ -17,13 +18,18 @@ public class ProjectMain {
 		System.out.println("<Furniture type>:	Type of furniture, such as mesh, Adjustable, or Swing Arm");
 		System.out.println("<Furniture>:		Furniture that's being checked, such as Desk, Lamp, Chair");
 		System.out.println("<Quantity>:			Amount of specific furniture you are looking for");
-		System.out.println("\nEnter:\n");
+		System.out.println("\nEnter:");
 		
 		userIn = input.nextLine();
 		
 		input.close();
 	}
 
+	/**
+	 * Main method
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		FormPrinter printer;
 		userInput();

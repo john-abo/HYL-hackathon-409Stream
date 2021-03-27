@@ -17,7 +17,8 @@ public class FormPrinter {
 	private static int orderNum = 0;
 	
 	/**
-	 * Normal constructor
+	 * Normal constructor. Ensures the parameters passed are valid using regEx and throws
+	 * illegal argument exceptions otherwise.
 	 * 
 	 * @param request	The string request that the user enters. will be stripped for spaces
 	 * 					and perhaps could be made case insensitive.
@@ -68,12 +69,16 @@ public class FormPrinter {
 	}
 	
 	/**
-	 * Copy Constructor
+	 * Copy Constructor, and ensures the clone is not null
 	 * 
 	 * @param clone
 	 */
 	public FormPrinter(FormPrinter clone) {
 		if (clone != null) {
+			
+			this.furniture = clone.getFurniture();
+			this.type = clone.getType();
+			this.quantity = clone.getQuantity();
 			
 		} else {
 			System.err.println("Clone is null");
@@ -123,6 +128,12 @@ public class FormPrinter {
 		return orderNum;
 	}
 	
+	/**
+	 * Creates a formatted string that will be written to the report. Portions are missing as
+	 * they require the SQL sections, which are still a work in progress.
+	 * 
+	 * @return	A String that contains the formatted report that will be printed to the report text file
+	 */
 	public String formatReport() {
 		String ret = "";
 		
