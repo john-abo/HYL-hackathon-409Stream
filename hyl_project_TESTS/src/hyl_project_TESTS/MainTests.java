@@ -1,5 +1,7 @@
 package hyl_project_TESTS;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import hyl_project.FormPrinter;
 
@@ -37,30 +39,44 @@ public class MainTests {
 	@Test
 	public void typeGetterTests() {
 		subject = new FormPrinter("mesh chair, 1");
+		String reportInt = subject.getType();
+		
 		//Expected: mesh
+		assertTrue("reportNumber is incorrect. Expected: \"mesh\", Actual: \"" + reportInt + "\"", reportInt.equalsIgnoreCase("mesh"));
 	}
 	
 	@Test
 	public void furnitureGetterTests() {
 		subject = new FormPrinter("mesh chair, 1");
+		String reportInt = subject.getFurniture();
 		
 		//Expected: chair
+		assertTrue("reportNumber is incorrect. Expected: \"chair\", Actual: \"" + reportInt + "\"", reportInt.equalsIgnoreCase("chair"));
 	}
 	
 	@Test
 	public void quantityGetterTests() {
 		subject = new FormPrinter("mesh chair, 1");
+		int reportInt = subject.getQuantity();
 		
 		//Expected: 1
+		assertTrue("reportNumber is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
 	}
 	
 	@Test
 	public void fileIOTest() {
+		int reportInt = 0;
 		
 		//not sure how to test for this
 		subject = new FormPrinter("mesh chair, 1");
-		subject.writeReport();	//report1.txt
-		subject.writeReport();	//report2.txt
-		subject.writeReport();	//report3.txt
+		
+		reportInt = subject.writeReport();	//report1.txt
+		assertTrue("reportNumber is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
+		
+		reportInt = subject.writeReport();	//report2.txt
+		assertTrue("reportNumber is incorrect. Expected: 2, Actual: " + reportInt, reportInt == 2);
+		
+		reportInt = subject.writeReport();	//report3.txt
+		assertTrue("reportNumber is incorrect. Expected: 3, Actual: " + reportInt, reportInt == 3);
 	}
 }

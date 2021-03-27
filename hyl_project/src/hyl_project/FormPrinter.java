@@ -123,7 +123,8 @@ public class FormPrinter {
 		
 		ret += "Report #" + orderNum + "\n";
 		ret += "Furniture Order Form\n";
-		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity + "\n";
+		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity/* + "\n"*/;	//This needs to change once I get
+																								//the SQL data
 		
 		//Somewhere here I need to determine whether or not a set could be found
 		//I need the rest of the group's code for this
