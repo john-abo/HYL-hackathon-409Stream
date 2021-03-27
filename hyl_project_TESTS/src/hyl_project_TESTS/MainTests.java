@@ -27,6 +27,11 @@ public class MainTests {
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
+	public void zeroIntegerConst() {
+		subject = new FormPrinter("mesh chair, 0");
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
 	public void invalidCloneConst() {
 		subject = new FormPrinter((FormPrinter)null);
 	}
@@ -61,6 +66,14 @@ public class MainTests {
 		
 		//Expected: 1
 		assertTrue("reportNumber is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
+		
+		subject = new FormPrinter("mesh chair, 100");
+		reportInt = subject.getQuantity();
+		assertTrue("reportNumber is incorrect. Expected: 100, Actual: " + reportInt, reportInt == 100);
+		
+		subject = new FormPrinter("mesh chair, 56216");
+		reportInt = subject.getQuantity();
+		assertTrue("reportNumber is incorrect. Expected: 56216, Actual: " + reportInt, reportInt == 56216);
 	}
 	
 	@Test

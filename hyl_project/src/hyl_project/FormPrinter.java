@@ -51,6 +51,11 @@ public class FormPrinter {
 			
 			try {
 				quantity = Integer.parseInt(s);
+				
+				if (quantity <= 0) {
+					throw new Exception();
+				}
+				
 			} catch (Exception e) {
 				System.err.println("Invalid Integer passed. Passed: \"" + s + "\"");
 				throw new IllegalArgumentException();
