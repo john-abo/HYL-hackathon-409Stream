@@ -7,6 +7,7 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	private ResultSet results;
+	//done contains the power set
 	private ArrayList<ArrayList<node>> done = new ArrayList<ArrayList<node>>();
 	public search( String dBURL, String uSERNAME, String pASSWORD) {
 		
@@ -25,25 +26,24 @@ public class search {
 		
 	}
 	public ArrayList<String> searchChair(String lookup) {
-		//checks if studio exists in table in database
-    	//query to find studio with specific name
+		
     
-    	int s = 0;
+    	//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
-    	ArrayList<node>[] subsets;
+    	
     	try {
+    		//finds all entries of chair with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM CHAIR WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
+			//current price to save
 			int price = 0;
+			//used to check if combination is valid
 			boolean arm = false;
 			boolean legs = false;
 			boolean seat = false;
 			boolean cushion = false;
-			ArrayList<node> hasLegs = new ArrayList<node>();
-			ArrayList<node> hasSeat = new ArrayList<node>();
-			ArrayList<node> hasCushion = new ArrayList<node>();
-			ArrayList<node> hasArms = new ArrayList<node>();
+			//list will all the matches
 		    ArrayList<node> matches = new ArrayList<node>();
 			
 			
@@ -52,24 +52,14 @@ public class search {
 					
 				   node temp = new node(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
 				   matches.add(temp);
-				   if(temp.arms) {
-					   hasArms.add(temp);
-				   }
-				   if(temp.legs) {
-					   hasLegs.add(temp);
-				   }
-				   if(temp.seat) {
-					   hasSeat.add(temp);
-				   }
-				   if(temp.cushion) {
-					   hasCushion.add(temp);
-				   }
+				 
 				   
 				}
 				
 	            }
-		
+			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
+			//finds the power set for the matches list
 			powerSet(matches,g,0);
 			
 	    	for(int i = 0; i < done.size(); i++) {
@@ -93,16 +83,26 @@ public class search {
 		
 		
 	}
-	
+	/**
+	 * 
+	 * @param arg set to find power set of
+	 * @param currentSet current created subset
+	 * @param index index of element being looked at in the arg set
+	 */
 	public void powerSet(ArrayList<node> arg,ArrayList<node> currentSet,int index) {
+		//base case
 		if(index == arg.size()) {
+			//adds the current set to the power set
 			done.add(currentSet);
 			return;
 		}
+		//copy of current set before adding to it. This contains the current set without the current element being looked at in the arg set
 		ArrayList<node> b = (ArrayList<node>) currentSet.clone();
+		//adds current element being looked at to current set(one case of any subset)
 		currentSet.add(arg.get(index));
+		
 		powerSet(arg,b,index+1);
-	
+		//This contains the current set with the current element being looked at in the arg set(other case of any subset)
 		powerSet(arg,currentSet,index+1);
 		
 	}

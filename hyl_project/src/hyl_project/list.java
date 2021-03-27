@@ -16,7 +16,7 @@ public void add(node temp) {
 	   return;
    }
    if(tail == null && head == null){
-	//   //System.out.println(temp.e.payload);
+	//System.out.println(temp.e.payload);
 	   head = temp;
 	   tail = temp;
 	  size++;

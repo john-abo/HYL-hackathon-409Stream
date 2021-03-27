@@ -13,7 +13,15 @@ class node{
 	 String ID = "";
 	
 	 int price;
-	 
+	 /**
+	  * 
+	  * @param id id of table entry
+	  * @param legs1 legs value of table entry
+	  * @param arms1 arms value of table entry
+	  * @param seat1 seat value of table entry
+	  * @param cushion1 cushion value of table entry
+	  * @param price price of table entry
+	  */
 
 	public node( String id, String legs1, String arms1,
 			String seat1, String cushion1, int price) {
