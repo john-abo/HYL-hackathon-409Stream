@@ -57,6 +57,7 @@ public class MainTests {
 	@Test
 	public void fileIOTest() {
 		
+		//not sure how to test for this
 		subject = new FormPrinter("mesh chair, 1");
 		subject.writeReport();	//report1.txt
 		subject.writeReport();	//report2.txt

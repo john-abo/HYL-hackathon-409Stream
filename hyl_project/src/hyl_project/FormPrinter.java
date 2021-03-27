@@ -1,7 +1,7 @@
 package hyl_project;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,7 +88,7 @@ public class FormPrinter {
 		// If the directory does not exist, create it. If it does exist, make sure
 	    // it is a directory.
 	    File directory = new File(DIRECTORY);
-	    FileOutputStream outStream = null;
+	    FileWriter outStream = null;
 	    
 	    try {
 	    	if (!directory.exists()) {
@@ -103,7 +103,11 @@ public class FormPrinter {
 	    }
 	    
 	    try {
-	    	outStream = new FileOutputStream(DIRECTORY + "/report" + Integer.toString(orderNum) + ".txt");
+	    	outStream = new FileWriter(DIRECTORY + "/report" + Integer.toString(orderNum) + ".txt");
+	    	
+	    	//Write format to file
+	    	//going to need to create a method to return a formatted string
+	    	outStream.write(formatReport());
 	    	
 	    	outStream.close();
 	    } catch (Exception e) {
@@ -112,6 +116,19 @@ public class FormPrinter {
 	    }
 	    
 		return orderNum;
+	}
+	
+	public String formatReport() {
+		String ret = "";
+		
+		ret += "Report #" + orderNum + "\n";
+		ret += "Furniture Order Form\n";
+		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity + "\n";
+		
+		//Somewhere here I need to determine whether or not a set could be found
+		//I need the rest of the group's code for this
+		
+		return ret;
 	}
 	
 	public String getType() {
