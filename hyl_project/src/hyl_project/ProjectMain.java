@@ -32,6 +32,25 @@ public class ProjectMain {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
+		// TESTING NOW
+
+		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
+	}
+
+	public class calculateOption(){
+
+		if (requestPossible){
+			produceOutput();
+		} else {
+			printSuggestions();
+		}
+
+	}
+
+	public class produceOutput(){
+		
+=======
 		//TEST
 		FormPrinter printer;
 		userInput();
@@ -41,6 +60,7 @@ public class ProjectMain {
 		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 		
 		printer.writeReport();	//Writes report
+>>>>>>> HYL-project
 	}
 
 }
