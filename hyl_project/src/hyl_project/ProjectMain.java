@@ -39,18 +39,25 @@ public class ProjectMain {
 
 		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
 	}
+	
+	/**
+	 * Lets not forget to document our methods as well :D
+	 */
+	public void calculateOption() {
 
-	public class calculateOption(){
-
-		if (requestPossible){
-			produceOutput();
-		} else {
-			printSuggestions();
-		}
+		//Lets get this working
+		//if (/*requestPossible*/){
+		//	produceOutput();
+		//} else {
+		//	//printSuggestions();
+		//}
 
 	}
-
-	public class produceOutput(){
+	
+	/**
+	 * Lets not forget to document our methods as well :D
+	 */
+	public void produceOutput() {
 		
 		//TEST
 		FormPrinter printer;
