@@ -2,6 +2,7 @@ package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.Collections;
 import java.util.LinkedList;
+
 public class prototypeOne {
 	private ResultSet results;
     private Connection dbConnect;
@@ -84,9 +85,6 @@ public class prototypeOne {
 	  	}
 		 return x;
 	}
-	
-	
-	
 
 	public static void main(String[] args) {
 		 prototypeOne myJDBC = new prototypeOne("jdbc:mysql://localhost/inventory","mouser3","ensf409");

@@ -7,6 +7,36 @@ public class ProjectMain {
 	private static String userIn = "";
 	
 	/**
+	 * Lets not forget to document our methods as well :D
+	 */
+	public void calculateOption() {
+
+		//Lets get this working
+		//if (/*requestPossible*/){
+		//	produceOutput();
+		//} else {
+		//	//printSuggestions();
+		//}
+
+	}
+	
+	/**
+	 * Lets not forget to document our methods as well :D
+	 */
+	public void produceOutput() {
+		
+		//TEST
+		FormPrinter printer;
+		userInput();
+		System.out.println("User request: " + userIn);
+		
+		printer = new FormPrinter(userIn);
+		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
+		
+		printer.writeReport();	//Writes report
+	}
+	
+	/**
 	 * Gets the user input. The message printed is meant to notifty the user about the format
 	 * and the meaning of each input.
 	 */
@@ -39,35 +69,4 @@ public class ProjectMain {
 
 		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
 	}
-	
-	/**
-	 * Lets not forget to document our methods as well :D
-	 */
-	public void calculateOption() {
-
-		//Lets get this working
-		//if (/*requestPossible*/){
-		//	produceOutput();
-		//} else {
-		//	//printSuggestions();
-		//}
-
-	}
-	
-	/**
-	 * Lets not forget to document our methods as well :D
-	 */
-	public void produceOutput() {
-		
-		//TEST
-		FormPrinter printer;
-		userInput();
-		System.out.println("User request: " + userIn);
-		
-		printer = new FormPrinter(userIn);
-		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
-		
-		printer.writeReport();	//Writes report
-	}
-
 }
