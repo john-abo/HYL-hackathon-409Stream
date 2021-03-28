@@ -47,18 +47,21 @@ public class search {
 			boolean total = false;
 			//list will all the matches
 		    ArrayList<node> matches = new ArrayList<node>();
-			
+			node temp = null;
 			
 			while (results.next()){
 				if(results.getString("Type").equals(lookup)) {
 					
-				   node temp = new node(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
+				    temp = new node(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
 				   matches.add(temp);
 				 
 				   
 				}
 				
 	            }
+			if(temp == null) {
+				return null;
+			}
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
 			//finds the power set for the matches list
@@ -81,12 +84,11 @@ public class search {
 	    		     total = seat && arm && cushion && legs;
 	    		    
 	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
-	    		     //finds combined price of subset
 	    			combinedPrice += done.get(i).get(j).price;
 	    			
 	    		}
 	    		//System.out.println(combinedPrice);
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
+	    		//checks if combination is valid and if its lower than the current price
 	    		if(combinedPrice < price && total) {
 	    			
 	    			price = combinedPrice;
@@ -100,7 +102,7 @@ public class search {
 	    		legs = false;
 	    	}
 			
-	    	//System.out.println(price);
+	    	System.out.println(price);
 			//go.printList();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
