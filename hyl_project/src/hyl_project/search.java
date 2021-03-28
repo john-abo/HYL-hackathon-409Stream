@@ -47,19 +47,23 @@ public class search {
 			boolean total = false;
 			//list will all the matches
 		    ArrayList<node> matches = new ArrayList<node>();
-			
+			node temp1= null;
 			
 			while (results.next()){
 				if(results.getString("Type").equals(lookup)) {
 					
 				   chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
-				   node temp1 = new node(temp);
+				    temp1 = new node(temp);
 				   matches.add(temp1);
 				 
 				   
 				}
 				
 	            }
+			//returns immediately if no results were found
+			if(temp1 == null) {
+				return null;
+			}
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
 			//finds the power set for the matches list
