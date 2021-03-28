@@ -31,9 +31,11 @@ public class ProjectMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-<<<<<<< HEAD
 		// TESTING NOW
+
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
+		myJDBC.initializeConnection();
+		myJDBC.searchChair("Task");
 
 		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
 	}
@@ -50,7 +52,6 @@ public class ProjectMain {
 
 	public class produceOutput(){
 		
-=======
 		//TEST
 		FormPrinter printer;
 		userInput();
@@ -60,7 +61,6 @@ public class ProjectMain {
 		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 		
 		printer.writeReport();	//Writes report
->>>>>>> HYL-project
 	}
 
 }
