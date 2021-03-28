@@ -15,6 +15,11 @@ public class ProjectMain {
 		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 		
 		printer.writeReport();	//Writes report
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
+		myJDBC.initializeConnection();
+		myJDBC.searchChair("Task");
+		
+
 	}
 
 }
