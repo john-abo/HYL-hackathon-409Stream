@@ -33,7 +33,7 @@ public class ProjectMain {
 	public static void main(String[] args) {
 		FormPrinter printer;
 		userInput();
-		System.out.println("User in: " + userIn);
+		System.out.println("User request: " + userIn);
 		
 		printer = new FormPrinter(userIn);
 		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
