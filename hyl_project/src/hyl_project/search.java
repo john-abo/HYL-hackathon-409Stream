@@ -37,12 +37,14 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 			//current price to save
-			int price = 0;
+			int price = 2147483647;
+			int combinedPrice = 0;
 			//used to check if combination is valid
 			boolean arm = false;
 			boolean legs = false;
 			boolean seat = false;
 			boolean cushion = false;
+			boolean total = false;
 			//list will all the matches
 		    ArrayList<node> matches = new ArrayList<node>();
 			
@@ -61,16 +63,44 @@ public class search {
 			ArrayList<node> g = new ArrayList<node>();
 			//finds the power set for the matches list
 			powerSet(matches,g,0);
-			
+			//removes the empty set
+			done.remove(0);
+			//iterates over each subset in power set
 	    	for(int i = 0; i < done.size(); i++) {
+	    		//iterates over each element in subset
 	    		for(int j = 0; j< done.get(i).size(); j++) {
-	    			System.out.println(done.get(i).get(j).ID);
+	    			//checks if combination is valid by checking if at least 1 element is true for each part
+	    			arm |= done.get(i).get(j).arms ;
 	    		
+	    		    seat |= done.get(i).get(j).seat;
+	    		   
+	    		    cushion |= done.get(i).get(j).cushion;
+	    		    
+	    		    legs |= done.get(i).get(j).legs;
+	    		    //total determines whether the combination is valid by seeing if each combination has required parts
+	    		     total = seat && arm && cushion && legs;
+	    		    
+	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
+	    		     //finds combined price of subset
+	    			combinedPrice += done.get(i).get(j).price;
+	    			
 	    		}
-	    		System.out.println();
+	    		//System.out.println(combinedPrice);
+	    		//if combination is valid and whether the combined price of the combination is smallest possible one
+	    		if(combinedPrice < price && total) {
+	    			
+	    			price = combinedPrice;
+	    		}
+	    		//System.out.println();
+	    		//resets variables for each iteration
+	    		combinedPrice = 0;
+	    		arm = false;
+	    		seat = false;
+	    		cushion = false;
+	    		legs = false;
 	    	}
 			
-	
+	    	//System.out.println(price);
 			//go.printList();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
