@@ -1,8 +1,8 @@
 package hyl_project;
 
-public class list {
-node head = null;
-node tail = null;
+public class list implements Cloneable {
+node head;
+node tail;
 int size = 0;
 
 public list() {
@@ -11,53 +11,47 @@ public list() {
 }
 
 public void add(node temp) {
-   
    if(temp == null) {
 	   return;
    }
    if(tail == null && head == null){
-	//System.out.println(temp.e.payload);
-	   head = temp;
+	head = temp;
 	   tail = temp;
 	  size++;
 	   return;
-   }
- //  //System.out.println(temp.e.payload);
-   tail.next = temp;
+	   }
+tail.next = temp;
    tail = temp;
    size++;
-	//printList();
-	
 }
+/**
+ * copy constructor
+ * @param list to copyFrom
+ */
+public list clone()
+        throws CloneNotSupportedException
+    {
+        return (list)super.clone();
+    }
 public void printList() {
 	node temp = head;
-	int i = 0;
-	////System.out.println("hi");
-	////System.out.println(head);
+
 	while(temp !=null){
-		
-	System.out.println(temp.price + " item " + i);
-		temp = temp.next;
-		i++;
-	}
+	temp = temp.next;
 }
-public node peek() {
+}
+public node getStart() {
 	
 	return head;
 }
-public node getNext(node f) {
-	if(f != null) {
-	return f.next;
+public node getNext(node getNext) {
+	if(getNext != null) {
+	return getNext.next;
 	}
 	return null;
 }
-public node dequeue(){
-	
+public node pop(){
 	node temp = head;
-	////System.out.println(head.e.payload);
-	
-	
-	
 	if(head !=null) {
 	head = head.next;
 	}
@@ -65,9 +59,6 @@ public node dequeue(){
 		tail = null;
 		
 	}
-	
-	
-	 ////System.out.println(temp.e.payload);
 	size--;
 	return temp;
 	

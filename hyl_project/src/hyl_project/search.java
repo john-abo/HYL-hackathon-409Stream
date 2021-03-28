@@ -47,21 +47,19 @@ public class search {
 			boolean total = false;
 			//list will all the matches
 		    ArrayList<node> matches = new ArrayList<node>();
-			node temp = null;
+			
 			
 			while (results.next()){
 				if(results.getString("Type").equals(lookup)) {
 					
-				    temp = new node(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
-				   matches.add(temp);
+				   chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
+				   node temp1 = new node(temp);
+				   matches.add(temp1);
 				 
 				   
 				}
 				
 	            }
-			if(temp == null) {
-				return null;
-			}
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
 			//finds the power set for the matches list
@@ -72,23 +70,25 @@ public class search {
 	    	for(int i = 0; i < done.size(); i++) {
 	    		//iterates over each element in subset
 	    		for(int j = 0; j< done.get(i).size(); j++) {
+	    			chairData v = (chairData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			arm |= done.get(i).get(j).arms ;
+	    			arm |= v.arms ;
 	    		
-	    		    seat |= done.get(i).get(j).seat;
+	    		    seat |= v.seat;
 	    		   
-	    		    cushion |= done.get(i).get(j).cushion;
+	    		    cushion |= v.cushion;
 	    		    
-	    		    legs |= done.get(i).get(j).legs;
+	    		    legs |= v.legs;
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = seat && arm && cushion && legs;
 	    		    
 	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
-	    			combinedPrice += done.get(i).get(j).price;
+	    		     //finds combined price of subset
+	    			combinedPrice += v.price;
 	    			
 	    		}
 	    		//System.out.println(combinedPrice);
-	    		//checks if combination is valid and if its lower than the current price
+	    		//if combination is valid and whether the combined price of the combination is smallest possible one
 	    		if(combinedPrice < price && total) {
 	    			
 	    			price = combinedPrice;
