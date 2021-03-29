@@ -5,7 +5,7 @@ public class chairData {
 	 boolean arms = false;
 	 boolean seat = false;
 	 boolean cushion = false;
-	 int parts = 0;
+
 	 String ID = "";
 	
 	 int price;
@@ -26,19 +26,19 @@ public class chairData {
 		//converts Y and N into booleans
 		if(legs1.equals("Y")) {
 			legs = true;
-			parts++;
+			
 		}
 		if(arms1.equals("Y")) {
 			arms = true;
-			parts++;
+			
 		}
 		if(seat1.equals("Y")) {
 			seat = true;
-			parts++;
+			
 		}
 		if(cushion1.equals("Y")) {
 			cushion = true;
-			parts++;
+			
 		}
 	}
 }
