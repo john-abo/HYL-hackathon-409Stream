@@ -17,7 +17,7 @@ public class ProjectMain {
 		printer.writeReport();	//Writes report
 		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
 		myJDBC.initializeConnection();
-		myJDBC.searchChair("Task");
+		myJDBC.searchChair("Mesh");
 		
 
 	}
