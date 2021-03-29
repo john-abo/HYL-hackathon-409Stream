@@ -27,6 +27,11 @@ public class MainTests {
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
+	public void zeroIntegerConst() {
+		subject = new FormPrinter("mesh chair, 0");
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
 	public void invalidCloneConst() {
 		subject = new FormPrinter((FormPrinter)null);
 	}
@@ -37,21 +42,35 @@ public class MainTests {
 	}
 	
 	@Test
+	public void validCopyConst() {
+		subject = new FormPrinter("mesh chair, 1");
+		FormPrinter subject2 = new FormPrinter(subject);
+		
+		String reportType = subject2.getType();
+		String reportFurniture = subject2.getFurniture();
+		int reportInt = subject2.getQuantity();
+		
+		assertTrue("reportType is incorrect. Expected: " + subject.getType() + ", Actual: \"" + reportType + "\"", reportType.equalsIgnoreCase(subject.getType()));
+		assertTrue("reportFurniture is incorrect. Expected: " + subject.getFurniture() + ", Actual: \"" + reportFurniture + "\"", reportFurniture.equalsIgnoreCase(subject.getFurniture()));
+		assertTrue("reportInt is incorrect. Expected: " + subject.getQuantity() + ", Actual: \"" + reportInt + "\"", reportInt == subject.getQuantity());
+	}
+	
+	@Test
 	public void typeGetterTests() {
 		subject = new FormPrinter("mesh chair, 1");
-		String reportInt = subject.getType();
+		String reportType = subject.getType();
 		
 		//Expected: mesh
-		assertTrue("reportNumber is incorrect. Expected: \"mesh\", Actual: \"" + reportInt + "\"", reportInt.equalsIgnoreCase("mesh"));
+		assertTrue("reportType is incorrect. Expected: \"mesh\", Actual: \"" + reportType + "\"", reportType.equalsIgnoreCase("mesh"));
 	}
 	
 	@Test
 	public void furnitureGetterTests() {
 		subject = new FormPrinter("mesh chair, 1");
-		String reportInt = subject.getFurniture();
+		String reportFurniture = subject.getFurniture();
 		
 		//Expected: chair
-		assertTrue("reportNumber is incorrect. Expected: \"chair\", Actual: \"" + reportInt + "\"", reportInt.equalsIgnoreCase("chair"));
+		assertTrue("reportFurniture is incorrect. Expected: \"chair\", Actual: \"" + reportFurniture + "\"", reportFurniture.equalsIgnoreCase("chair"));
 	}
 	
 	@Test
@@ -60,7 +79,15 @@ public class MainTests {
 		int reportInt = subject.getQuantity();
 		
 		//Expected: 1
-		assertTrue("reportNumber is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
+		assertTrue("reportInt is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
+		
+		subject = new FormPrinter("mesh chair, 100");
+		reportInt = subject.getQuantity();
+		assertTrue("reportInt is incorrect. Expected: 100, Actual: " + reportInt, reportInt == 100);
+		
+		subject = new FormPrinter("mesh chair, 56216");
+		reportInt = subject.getQuantity();
+		assertTrue("reportInt is incorrect. Expected: 56216, Actual: " + reportInt, reportInt == 56216);
 	}
 	
 	@Test
@@ -71,12 +98,12 @@ public class MainTests {
 		subject = new FormPrinter("mesh chair, 1");
 		
 		reportInt = subject.writeReport();	//report1.txt
-		assertTrue("reportNumber is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
+		assertTrue("reportInt is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
 		
 		reportInt = subject.writeReport();	//report2.txt
-		assertTrue("reportNumber is incorrect. Expected: 2, Actual: " + reportInt, reportInt == 2);
+		assertTrue("reportInt is incorrect. Expected: 2, Actual: " + reportInt, reportInt == 2);
 		
 		reportInt = subject.writeReport();	//report3.txt
-		assertTrue("reportNumber is incorrect. Expected: 3, Actual: " + reportInt, reportInt == 3);
+		assertTrue("reportInt is incorrect. Expected: 3, Actual: " + reportInt, reportInt == 3);
 	}
 }
