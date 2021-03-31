@@ -539,6 +539,75 @@ public class search {
 		
 	}
 	
+	public void deleteChair(String ChairID) {
+		try {
+            String query = "DELETE FROM chair WHERE ID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, ChairID);
+            myStmt.executeUpdate();
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+	}
+	public void deleteDesk(String DeskID) {
+		try {
+            String query = "DELETE FROM desk WHERE ID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, DeskID);
+            myStmt.executeUpdate();
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+	}
+	
+	public void deleteFiling(String FilingID) {
+		try {
+            String query = "DELETE FROM filing WHERE ID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, FilingID);
+            myStmt.executeUpdate();
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+	}
+	public void deleteLamp(String LampID) {
+		try {
+            String query = "DELETE FROM lamp WHERE ID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, LampID);
+            myStmt.executeUpdate();
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+	}
+	public void deleteManufacturer(String ManuID) {
+		try {
+            String query = "DELETE FROM manufacturer WHERE ID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, ManuID);
+            myStmt.executeUpdate();
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+	}
+	
+	
+	
 	
 
 }
