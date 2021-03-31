@@ -7,6 +7,8 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	private ResultSet results;
+	private filingData[] new1;
+	private deskData[] new2;
 	//done contains the power set
 	private ArrayList<ArrayList<node>> done = new ArrayList<ArrayList<node>>();
 	/**
@@ -153,8 +155,27 @@ public class search {
 			e.printStackTrace();
 		}
     	
-    	
 		done2.add("$" + String.valueOf(orderPrice));
+		
+		new1 = new filingData[done2.size()-1];
+		for (int i = 0; i < new1.length; i++) {
+			new1[i] = registerFilingHelper(done2.get(i));
+		}
+
+			
+		if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'F') {
+    				deleteFiling(done2.get(i));
+    			}
+    		}   		
+    	}
+    	
+    	for (int i = 0; i < new1.length; i++) {
+    		registerFiling(new1[i]);
+    	}
+    	
+    	System.out.println(done2);
 		return done2;
 		
 		
@@ -275,7 +296,13 @@ public class search {
 			e.printStackTrace();
 		}
     	done2.add("$" + String.valueOf(orderPrice));
-    	
+    	if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'L') {
+    				deleteLamp(done2.get(i));
+    			}
+    		}   		
+    	}
 		return done2;
 	}
 	/**
@@ -376,6 +403,7 @@ public class search {
 	    		return null;
 	    	}
 	    	ArrayList<node> finalCombo = done.get(index1);
+	    
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		
 	    		done2.add(finalCombo.get(h).id);
@@ -389,8 +417,30 @@ public class search {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+   
     	done2.add("$"+String.valueOf(orderPrice));
+    	new2 = new deskData[done2.size()-1];
+		for (int i = 0; i < new2.length; i++) {
+			new2[i] = registerDeskHelper(done2.get(i));
+		}
+
+			
+		if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'D') {
+    				deleteDesk(done2.get(i));
+    			}
+    		}   		
+    	}
+    	
+    	for (int i = 0; i < new2.length; i++) {
+    		registerDesk(new2[i]);
+    	}
+    	
+    	System.out.println(done2);
+    	
+    	
+    	
 		return done2;
 		
 	}
@@ -497,6 +547,7 @@ public class search {
 	    	ArrayList<node> finalCombo = done.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		done2.add(finalCombo.get(h).id);
+	    		
 	    		//removes currently found combo from list of availiable items
 	    		matches.remove(finalCombo.get(h));
 	    		
@@ -510,10 +561,16 @@ public class search {
 			e.printStackTrace();
 		}
     	done2.add("$"+String.valueOf(orderPrice));
+    	
+    	if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'C') {
+    				deleteChair(done2.get(i));
+    			}
+    		}   		
+    	}
+ 
 		return done2;
-		
-		
-		
 	}
 	/**
 	 * 
@@ -606,8 +663,121 @@ public class search {
         }
 	}
 	
+	public deskData registerDeskHelper(String DeskID) {
+		 String ID = DeskID;
+		 String Type = null;
+		 String Legs = null;
+		 String Top = null;
+		 String Drawer = null;
+		 int Price = 0;
+		 String ManuID = null;
+		 try {
+			 String query = "SELECT * FROM desk WHERE ID = '" + DeskID + "'";
+			 Statement myStmt = dbConnect.createStatement();
+			 results = myStmt.executeQuery(query);
 	
-	
-	
+			 while (results.next()){
+				     
+	                Type = results.getString("Type");
+	                Legs = results.getString("Legs");
+	                Top = results.getString("Top");
+	                Drawer = results.getString("Drawer");
+	                Price += results.getInt("Price");
+	                ManuID = results.getString("ManuID");
+	               
+			 }
+	          	deskData x = new deskData(ID, Type, Legs, Top, Drawer, Price, ManuID);
+	            myStmt.close();
+	            return x;
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+		return null;
+	}
+	public void registerDesk(deskData abc) {
+		 try {
+	            
+	            String query = "INSERT INTO desk (ID, Type, Legs, Top, Drawer, Price, ManuID) VALUES (?,?,?,?,?,?,?)";
+	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+	            
+	            myStmt.setString(1, abc.ID2);
+	            myStmt.setString(2, abc.Type2);
+	            myStmt.setString(3, abc.Legs2);
+	            myStmt.setString(4, abc.Top2);
+	            myStmt.setString(5, abc.Drawer2);
+	            myStmt.setInt(6, abc.Price2);
+	            myStmt.setString(7, abc.ManuID2);
+	            myStmt.executeUpdate();
+	            
+	            myStmt.close();
 
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	
+	}
+	public filingData registerFilingHelper(String FilingID) {
+		
+		 String ID = FilingID;
+		 String Type = null;
+		 String Rails = null;
+		 String Drawers = null;
+		 String Cabinet = null;
+		 int Price = 0;
+		 String ManuID = null;
+		 try {
+			 String query = "SELECT * FROM filing WHERE ID = '" + FilingID + "'";
+			 Statement myStmt = dbConnect.createStatement();
+			 results = myStmt.executeQuery(query);
+	
+			 while (results.next()){
+				     
+	                Type = results.getString("Type");
+	                Rails = results.getString("Rails");
+	                Drawers = results.getString("Drawers");
+	                Cabinet = results.getString("Cabinet");
+	                Price += results.getInt("Price");
+	                ManuID = results.getString("ManuID");
+	                
+	                
+			 }
+			 filingData x = new filingData(ID, Type, Rails, Drawers, Cabinet, Price, ManuID);
+			 myStmt.close();
+			 return x;
+	           
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+		return null;
+	}
+	public void registerFiling(filingData abc) {
+		
+		 try {
+	            String query = "INSERT INTO filing (ID, Type, Rails, Drawers, Cabinet, Price, ManuID) VALUES (?,?,?,?,?,?,?)";
+	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+	            
+	            myStmt.setString(1, abc.ID2);
+	            myStmt.setString(2, abc.Type2);
+	            myStmt.setString(3, abc.Rails2);
+	            myStmt.setString(4, abc.Drawers2);
+	            myStmt.setString(5, abc.Cabinet2);
+	            myStmt.setInt(6, abc.Price2);
+	            myStmt.setString(7, abc.ManuID2);
+	            myStmt.executeUpdate();
+	            
+	            myStmt.close();
+
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	}
+	
+	 public void close() {
+	        try {
+	            results.close();
+	            dbConnect.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 }
