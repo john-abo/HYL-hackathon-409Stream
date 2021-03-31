@@ -65,8 +65,12 @@ public class ProjectMain {
 
 		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
 		myJDBC.initializeConnection();
-		myJDBC.searchChair("Task");
-		myJDBC.searchChair("Mesh");
+
+		myJDBC.searchChair("Task",1);
+		myJDBC.searchFiling("SSJ",1);
+		myJDBC.searchFiling("Small",1);
+		myJDBC.searchLamp("Desk",1);
+		myJDBC.searchChair("Mesh",1);
 
 		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
 	}

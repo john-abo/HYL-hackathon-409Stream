@@ -1,9 +1,11 @@
 package hyl_project_TESTS;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import hyl_project.FormPrinter;
+import java.util.ArrayList;
 
 public class MainTests {
 	
@@ -105,5 +107,14 @@ public class MainTests {
 		
 		reportInt = subject.writeReport();	//report3.txt
 		assertTrue("reportInt is incorrect. Expected: 3, Actual: " + reportInt, reportInt == 3);
+	}
+	
+	@Test
+	public void chairSearching1() {
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
+		myJDBC.initializeConnection();
+		ArrayList<String> expected = new ArrayList<String>(); //EMPTY LIST FOR NOW
+		ArrayList<String> actual = myJDBC.searchChair("Task",1);
+		assertEquals(expected, actual);
 	}
 }
