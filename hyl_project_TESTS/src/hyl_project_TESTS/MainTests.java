@@ -4,6 +4,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import hyl_project.FormPrinter;
+import hyl_project.search;
+
+import java.util.ArrayList;
 
 public class MainTests {
 	
@@ -12,7 +15,7 @@ public class MainTests {
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidTypeConst() {
 		subject = new FormPrinter("");	//no idea how to test this case exactly
-													//I think I can query for existing types
+										//I think I can query for existing types
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

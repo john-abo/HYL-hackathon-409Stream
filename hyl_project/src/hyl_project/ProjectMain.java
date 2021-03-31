@@ -63,7 +63,8 @@ public class ProjectMain {
 	public static void main(String[] args) {
 		// TESTING NOW
 
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
+
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
 		myJDBC.searchChair("Task");
 		myJDBC.searchChair("Mesh");
