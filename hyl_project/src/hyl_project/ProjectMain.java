@@ -1,5 +1,6 @@
 package hyl_project;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProjectMain {
@@ -67,10 +68,12 @@ public class ProjectMain {
 		myJDBC.initializeConnection();
 
 
-		myJDBC.searchChair("Task",1);
+		
+		
 		myJDBC.searchFiling("SSJ",1);
 		myJDBC.searchFiling("Small",1);
-		myJDBC.searchLamp("Desk",1);
+		ArrayList<String> test = myJDBC.searchLamp("Desk",2);
+		System.out.println(test.get(0));
 		myJDBC.searchChair("Mesh",1);
 
 

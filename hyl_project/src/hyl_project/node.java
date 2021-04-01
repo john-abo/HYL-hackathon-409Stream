@@ -30,7 +30,7 @@ class node<e>{
 	}
 	public node(node copy) {
 		this.element = (e) copy.element;
-		this.className = copy.className;
+		this.id = copy.id;
 		this.price = copy.price;
 	}
 	public void updatePrice() {
