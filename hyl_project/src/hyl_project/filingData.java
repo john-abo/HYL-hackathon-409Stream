@@ -25,15 +25,7 @@ public class filingData {
 	  * 
 	  * @param price price of filing entry
 	  */
-	public filingData(String ID, String Type, String Rails, String Drawers, String Cabinet, int Price, String ManuID) {
-		this.ID2 = ID;
-		this.Type2 = Type;
-		this.Rails2 = Rails;
-		this.Drawers2 = Drawers;
-		this.Cabinet2 = Cabinet;
-		this.Price2 = Price;
-		this.ManuID2 = ManuID;
-	}
+	
 	public filingData( String id, String Rails1, String cabinet1,
 			String Drawers1,  int price) {
 		this.ID = id;
@@ -52,6 +44,17 @@ public class filingData {
 			Drawers = true;
 			
 		}
+	}
+	
+	
+	public filingData(String ID, String Type, String Rails, String Drawers, String Cabinet, int Price, String ManuID) {
+		this.ID2 = ID;
+		this.Type2 = Type;
+		this.Rails2 = Rails;
+		this.Drawers2 = Drawers;
+		this.Cabinet2 = Cabinet;
+		this.Price2 = Price;
+		this.ManuID2 = ManuID;
 	}
 
 }

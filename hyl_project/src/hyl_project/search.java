@@ -7,8 +7,10 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	private ResultSet results;
-	private filingData[] new1;
-	private deskData[] new2;
+	private filingData[] deletedFilingData;
+	private deskData[] deletedDeskData;
+	private chairData[] deletedChairData;
+	private lampData[] deletedLampData;
 	//done contains the power set
 	private ArrayList<ArrayList<node>> done = new ArrayList<ArrayList<node>>();
 	/**
@@ -157,9 +159,9 @@ public class search {
     	
 		done2.add("$" + String.valueOf(orderPrice));
 		
-		new1 = new filingData[done2.size()-1];
-		for (int i = 0; i < new1.length; i++) {
-			new1[i] = registerFilingHelper(done2.get(i));
+		deletedFilingData = new filingData[done2.size()-1];
+		for (int i = 0; i < deletedFilingData.length; i++) {
+			deletedFilingData[i] = registerFilingHelper(done2.get(i));
 		}
 
 			
@@ -171,8 +173,8 @@ public class search {
     		}   		
     	}
     	
-    	for (int i = 0; i < new1.length; i++) {
-    		registerFiling(new1[i]);
+    	for (int i = 0; i < deletedFilingData.length; i++) {
+    		registerFiling(deletedFilingData[i]);
     	}
     	
     	System.out.println(done2);
@@ -244,7 +246,7 @@ public class search {
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			lampData v = (lampData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			Base |= v.Base ;
+	    			Base |= v.Base;
 	    		
 	    		    Bulb |= v.Bulb;
 	    		   
@@ -296,13 +298,25 @@ public class search {
 			e.printStackTrace();
 		}
     	done2.add("$" + String.valueOf(orderPrice));
-    	if (done2 != null) {
+    	deletedLampData = new lampData[done2.size()-1];
+		for (int i = 0; i < deletedLampData.length; i++) {
+			deletedLampData[i] = registerLampHelper(done2.get(i));
+		}
+
+			
+		if (done2 != null) {
     		for (int i = 0; i < (done2.size() -1); i++){
     			if (done2.get(i).charAt(0) == 'L') {
     				deleteLamp(done2.get(i));
     			}
     		}   		
     	}
+    	
+    	for (int i = 0; i < deletedLampData.length; i++) {
+    		registerLamp(deletedLampData[i]);
+    	}
+    	
+    	System.out.println(done2);
 		return done2;
 	}
 	/**
@@ -419,9 +433,9 @@ public class search {
 		}
    
     	done2.add("$"+String.valueOf(orderPrice));
-    	new2 = new deskData[done2.size()-1];
-		for (int i = 0; i < new2.length; i++) {
-			new2[i] = registerDeskHelper(done2.get(i));
+    	deletedDeskData = new deskData[done2.size()-1];
+		for (int i = 0; i < deletedDeskData.length; i++) {
+			deletedDeskData[i] = registerDeskHelper(done2.get(i));
 		}
 
 			
@@ -433,8 +447,8 @@ public class search {
     		}   		
     	}
     	
-    	for (int i = 0; i < new2.length; i++) {
-    		registerDesk(new2[i]);
+    	for (int i = 0; i < deletedDeskData.length; i++) {
+    		registerDesk(deletedDeskData[i]);
     	}
     	
     	System.out.println(done2);
@@ -561,14 +575,25 @@ public class search {
 			e.printStackTrace();
 		}
     	done2.add("$"+String.valueOf(orderPrice));
-    	
-    	if (done2 != null) {
+    	deletedChairData = new chairData[done2.size()-1];
+		for (int i = 0; i < deletedChairData.length; i++) {
+			deletedChairData[i] = registerChairHelper(done2.get(i));
+		}
+
+			
+		if (done2 != null) {
     		for (int i = 0; i < (done2.size() -1); i++){
     			if (done2.get(i).charAt(0) == 'C') {
     				deleteChair(done2.get(i));
     			}
     		}   		
     	}
+    	
+    	for (int i = 0; i < deletedChairData.length; i++) {
+    		registerChair(deletedChairData[i]);
+    	}
+    	
+    	System.out.println(done2);
  
 		return done2;
 	}
@@ -772,6 +797,117 @@ public class search {
 	        }
 	}
 	
+	public chairData registerChairHelper(String ChairID) {
+		
+		 String ID = ChairID;
+		 String Type = null;
+		 String Legs = null;
+		 String Arms = null;
+		 String Seat = null;
+		 String Cushion = null;
+		 int Price = 0;
+		 String ManuID = null;
+		 try {
+			 String query = "SELECT * FROM chair WHERE ID = '" + ChairID + "'";
+			 Statement myStmt = dbConnect.createStatement();
+			 results = myStmt.executeQuery(query);
+	
+			 while (results.next()){
+				     
+	                Type = results.getString("Type");
+	                Legs = results.getString("Legs");
+	                Arms = results.getString("Arms");
+	                Seat = results.getString("Seat");
+	                Cushion = results.getString("Cushion");
+	                Price += results.getInt("Price");
+	                ManuID = results.getString("ManuID");
+	                
+	                
+			 }
+			 chairData x = new chairData(ID, Type, Legs, Arms, Seat, Cushion, Price, ManuID);
+			 myStmt.close();
+			 return x;
+	           
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+		return null;
+	}
+	public void registerChair(chairData abc) {
+		
+		 try {
+	            String query = "INSERT INTO chair (ID, Type, Legs, Arms, Seat, Cushion, Price, ManuID) VALUES (?,?,?,?,?,?,?,?)";
+	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+	            
+	            myStmt.setString(1, abc.ID2);
+	            myStmt.setString(2, abc.Type2);
+	            myStmt.setString(3, abc.Legs2);
+	            myStmt.setString(4, abc.Arms2);
+	            myStmt.setString(5, abc.Seat2);
+	            myStmt.setString(6, abc.Cushion2);
+	            myStmt.setInt(7, abc.Price2);
+	            myStmt.setString(8, abc.ManuID2);
+	            myStmt.executeUpdate();
+	            
+	            myStmt.close();
+
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	}
+	
+	public lampData registerLampHelper(String LampID) {
+		
+		 String ID = LampID;
+		 String Type = null;
+		 String Base = null;
+		 String Bulb = null;
+		 int Price = 0;
+		 String ManuID = null;
+		 try {
+			 String query = "SELECT * FROM lamp WHERE ID = '" + LampID + "'";
+			 Statement myStmt = dbConnect.createStatement();
+			 results = myStmt.executeQuery(query);
+	
+			 while (results.next()){
+				     
+	                Type = results.getString("Type");
+	                Base = results.getString("Base");
+	                Bulb = results.getString("Bulb"); 
+	                Price += results.getInt("Price");
+	                ManuID = results.getString("ManuID");
+	                
+	                
+			 }
+			 lampData x = new lampData(ID, Type, Base, Bulb, Price, ManuID);
+			 myStmt.close();
+			 return x;
+	           
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+		return null;
+	}
+	public void registerLamp(lampData abc) {
+		
+		 try {
+	            String query = "INSERT INTO lamp (ID, Type, Base, Bulb, Price, ManuID) VALUES (?,?,?,?,?,?)";
+	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+	            
+	            myStmt.setString(1, abc.ID2);
+	            myStmt.setString(2, abc.Type2);
+	            myStmt.setString(3, abc.Base2);
+	            myStmt.setString(4, abc.Bulb2);
+	            myStmt.setInt(5, abc.Price2);
+	            myStmt.setString(6, abc.ManuID2);
+	            myStmt.executeUpdate();
+	            
+	            myStmt.close();
+
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	}
 	 public void close() {
 	        try {
 	            results.close();

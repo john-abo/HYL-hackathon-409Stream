@@ -25,15 +25,7 @@ public class deskData {
 	  * 
 	  * @param price price of desk entry
 	  */
-	public deskData(String id, String Type, String Legs, String Top, String Drawer, int Price, String ManuID) {
-		this.ID2 = id;
-		this.Type2 = Type;
-		this.Legs2 = Legs;
-		this.Top2 = Top;
-		this.Drawer2 = Drawer;
-		this.Price2 = Price;
-		this.ManuID2 = ManuID;
-	}
+	
 	public deskData( String id, String legs1, String top1,
 			String Drawer1,  int price) {
 		this.ID = id;
@@ -52,6 +44,16 @@ public class deskData {
 			Drawer = true;
 			
 		}
+	}
+	
+	public deskData(String id, String Type, String Legs, String Top, String Drawer, int Price, String ManuID) {
+		this.ID2 = id;
+		this.Type2 = Type;
+		this.Legs2 = Legs;
+		this.Top2 = Top;
+		this.Drawer2 = Drawer;
+		this.Price2 = Price;
+		this.ManuID2 = ManuID;
 	}
 
 }
