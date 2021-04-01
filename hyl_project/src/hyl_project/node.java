@@ -8,15 +8,43 @@ class node<e>{
 	//this element contains all the data the node needs. For a chair for example, e contains all the chair data
     e element;
     String id;
-	public node(e element) {
+    int price;
+	public node(e element)  {
 		this.element = element;
+
+		
+		this.next = next;
+
 		try {
-			id = (String) element.getClass().getDeclaredField("ID").get(this.element);
-		} catch (Exception e1) {
+			
+		price = (int) (element.getClass().getDeclaredField("price").get(this.element));
+		id = (String) (element.getClass().getDeclaredField("ID").get(this.element));
 			
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+	public node() {
+		
+	}
+	public node(node copy) {
+		this.element = (e) copy.element;
+		this.className = copy.className;
+		this.price = copy.price;
+	}
+	public void updatePrice() {
+		
+		try {
+			
+			price = (int) (element.getClass().getDeclaredField("price").get(this.element));
+			
+				
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+	}
 
 
 	
