@@ -200,7 +200,7 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 			//current price to save
-			int price = 2147483647;
+			
 			
 			//used to check if combination is valid
 			boolean Base = false;
@@ -230,6 +230,7 @@ public class search {
 		
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ;b++) {
+			int price = 2147483647;
 			done = new ArrayList<ArrayList<node>>();
 			int index1 = -1;
 			int combinedPrice = 0;
@@ -252,7 +253,7 @@ public class search {
 	    		   
 	    		
 	    		    
-	    		    Bulb |= v.Bulb;
+	    		   
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = Base && Bulb;
 	    		    
@@ -336,7 +337,7 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 			//current price to save
-			int price = 2147483647;
+			
 			
 			//used to check if combination is valid
 			boolean Top = false;
@@ -349,6 +350,7 @@ public class search {
 			node temp1= null;
 			
 			while (results.next()){
+				
 				if(results.getString("Type").equals(lookup)) {
 					
 				   deskData temp = new deskData(results.getString("ID"),results.getString("Legs"),results.getString("Top"),results.getString("Drawer"),results.getInt("Price"));
@@ -366,6 +368,7 @@ public class search {
 			}
 			//empty arraylist
 			for(int b= 0 ; b < needed ; b++) {
+				int price = 2147483647;
 			int combinedPrice = 0;
 			done = new ArrayList<ArrayList<node>>();
 			int index1 = -1;
@@ -477,7 +480,7 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 			//current price to save
-			int price = 2147483647;
+			
 		
 			//used to check if combination is valid
 			boolean arm = false;
@@ -506,6 +509,7 @@ public class search {
 			}
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ; b++) {
+			int price = 2147483647;
 			int index1 = -1;
 			done = new ArrayList<ArrayList<node>>();
 			int combinedPrice = 0;
