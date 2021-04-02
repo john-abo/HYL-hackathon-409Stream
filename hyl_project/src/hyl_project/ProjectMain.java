@@ -64,6 +64,7 @@ public class ProjectMain {
 	public static void main(String[] args) {
 		// TESTING NOW
 
+
 		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();		
 		
@@ -77,5 +78,8 @@ public class ProjectMain {
 		myJDBC.searchChair("Mesh",1);
 		System.out.println(myJDBC.searchChair("Task",1).get(0));
 		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
+
+		
+
 	}
 }

@@ -7,8 +7,8 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	private ResultSet results;
-	//done contains the power set
-	private ArrayList<ArrayList<node>> done = new ArrayList<ArrayList<node>>();
+	//done contains the power set or all possible combinations of the currently found item list
+	private ArrayList<ArrayList<node>> done;
 	/**
 	 * 
 	 * @param dBURL url of database
@@ -35,7 +35,7 @@ public class search {
 	}
 	
 	/**
-	 * 
+	 * finds filing order
 	 * @param lookup type of filing
 	 * @param needed number needed for order
 	 * @return arraylist string containing ids of all ordered items, returns null if order not possible
@@ -43,20 +43,17 @@ public class search {
 	public ArrayList<String> searchFiling(String lookup,int needed){
 		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
 	    ArrayList<String> done2 = new ArrayList<String>();
-<<<<<<< Updated upstream
-	    int orderPrice = 0;
-	    int combinedPrice = 0;
-=======
+	    //total order price
 	    long orderPrice = 0;
-	    long combinedPrice = 0;
->>>>>>> Stashed changes
+	   
+
     	try {
     		
     		//finds all entries of chair with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM filing WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
-			//current price to save
+		
 			
 			//used to check if combination is valid
 			boolean Rails = false;
@@ -85,26 +82,26 @@ public class search {
 			}
 			//iterates once to find each item required in order
 			for(int b = 0; b < needed ; b++) {
-<<<<<<< Updated upstream
-				int price = 2147483647;
-=======
+				//price of current combination
+				 long combinedPrice = 0;
+				 //current lowest combination price
 				long price = Long.MAX_VALUE;
->>>>>>> Stashed changes
-				
+				//intializes all possible combination list done
 				done = new ArrayList<ArrayList<node>>();
-			
+			//saves index of found combination
 		    int index1 = -1;
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
+	    		//resets for next combination price
 	    		combinedPrice = 0;
-	    		//iterates over each element in subset
+	    		//iterates over each element in combination
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			filingData v = (filingData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
@@ -123,18 +120,17 @@ public class search {
 	    			combinedPrice += v.price;
 	    			
 	    		}
-	    		//System.out.println(combinedPrice);
+	    	
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-<<<<<<< Updated upstream
-	    		if(combinedPrice < price && total) {
-=======
+
+
 	    		if(combinedPrice <= price && total) {
->>>>>>> Stashed changes
+	    			//saves index of currently found combination
 	    			index1 = i;
-	    			//System.out.println(combinedPrice);
+	    			//updates current lowest combination price with price of current combination
 	    			price = combinedPrice;
 	    		}
-	    		//System.out.println();
+	    		
 	    		//resets variables for each iteration
 	    		
 	    		Rails = false;
@@ -142,8 +138,7 @@ public class search {
 	    		
 	    		Drawers = false;
 	    	}
-			
-	    	//System.out.println(price);
+		
 	    	//if no valid combo is found, index1 is -1. Therefore order is invalid
 	      	if(index1 ==-1) {
 	      		
@@ -151,29 +146,30 @@ public class search {
 	    	}
 	    	ArrayList<node> finalCombo = done.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
+	    		//adds currently found combination items to return list
 	    		done2.add(finalCombo.get(h).id);
 	    		//removes currently found combination from list of available items
 	    		matches.remove(finalCombo.get(h));
 	    		
 	    	}
-	    	
+	    	//adds current lowest price to total order price
 	    	orderPrice += price;
 	    	
 			}
-			//go.printList();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
-    	
+    	//adds price to return list
 		done2.add("$" + String.valueOf(orderPrice));
 		return done2;
 		
 		
 	}
 	/**
-	 * 
+	 * finds lamp order
 	 * @param lookup type of lamp needed in order
 	 * @param needed number of lamps needed in order
 	 * @return arraylist containing ordered lamps, with price always at the end. Returns null for invalid orders
@@ -182,18 +178,16 @@ public class search {
 		
 		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
-    	//price of order
-<<<<<<< Updated upstream
-    	int orderPrice = 0;
-=======
+    	//total price of order
+
     	long orderPrice = 0;
->>>>>>> Stashed changes
+
     	try {
     		//finds all entries of chair with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM LAMP WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
-			//current price to save
+		
 			
 			
 			//used to check if combination is valid
@@ -202,7 +196,7 @@ public class search {
 		
 			
 			boolean total = false;
-			//list will all the matches
+			//list will have all the matches
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
@@ -224,27 +218,24 @@ public class search {
 		
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ;b++) {
-<<<<<<< Updated upstream
-			int price = 2147483647;
-			done = new ArrayList<ArrayList<node>>();
-			int index1 = -1;
-			int combinedPrice = 0;
-=======
+			//current lowest combination price
 			long price = Long.MAX_VALUE;
+			//intializes all possible combination list done
 			done = new ArrayList<ArrayList<node>>();
 			int index1 = -1;
+			//price of current combination
 			long combinedPrice = 0;
->>>>>>> Stashed changes
+
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
-	    		//iterates over each element in subset
+	    		//iterates over each element in combination
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			lampData v = (lampData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
@@ -265,15 +256,14 @@ public class search {
 	    		}
 	    		//System.out.println(combinedPrice);
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-<<<<<<< Updated upstream
-	    		if(combinedPrice < price && total) {
-=======
+
 	    		if(combinedPrice <= price && total) {
->>>>>>> Stashed changes
+
 	    			index1 = i;
+	    			//updates current lowest combination price with price of current combination
 	    			price = combinedPrice;
 	    		}
-	    		//System.out.println();
+	    		
 	    		//resets variables for each iteration
 	    		combinedPrice = 0;
 	    		Base = false;
@@ -282,14 +272,14 @@ public class search {
 	    	
 	    	}
 			
-	    	//System.out.println(price);
+	    	
 	    	//if valid combo could not be found index = -1. Therefore order is invalid
 	      	if(index1 ==-1) {
 	    		return null;
 	    	}
 	    	ArrayList<node> finalCombo = done.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
-	    		
+	    		//adds currently found combination items to return list
 	    		done2.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from available items
 	    		matches.remove(finalCombo.get(h));
@@ -308,17 +298,15 @@ public class search {
 		return done2;
 	}
 	/**
-	 * orders desks
+	 * finds desk order
 	 * @param lookup type of desk needed for order
 	 * @param needed number of desks needed for order
 	 * @return arraylist containg ids of desks order.Returns null for invalid order. Price always at the end as string.
 	 */
 	public ArrayList<String> searchDesk(String lookup, int needed){
-<<<<<<< Updated upstream
-		int orderPrice = 0;
-=======
+		//total price of order
 		long orderPrice = 0;
->>>>>>> Stashed changes
+
 		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
     
@@ -327,7 +315,7 @@ public class search {
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM DESK WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
-			//current price to save
+			
 			
 			
 			//used to check if combination is valid
@@ -357,24 +345,23 @@ public class search {
 				
 				return null;
 			}
-			//empty arraylist
+			//iterates once for each item needed in order
 			for(int b= 0 ; b < needed ; b++) {
-<<<<<<< Updated upstream
-				int price = 2147483647;
-			int combinedPrice = 0;
-=======
-				long price = Long.MAX_VALUE;
+			//current lowest combination price
+			long price = Long.MAX_VALUE;
+			//current combination price
 			long combinedPrice = 0;
->>>>>>> Stashed changes
+			//intializes all possible combination list done
 			done = new ArrayList<ArrayList<node>>();
+			//index of found combination
 			int index1 = -1;
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
 	    		
 	    		for(int j = 0; j< done.get(i).size(); j++) {
@@ -398,10 +385,12 @@ public class search {
 	    		//System.out.println(combinedPrice);
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
 	    		if(combinedPrice <= price && total) {
+	    			//saves index of combination
 	    			index1 = i;
+	    			//updates current lowest combination price with price of current combination
 	    			price = combinedPrice;
 	    		}
-	    		//System.out.println();
+	    		
 	    		//resets variables for each iteration
 	    		combinedPrice = 0;
 	    		Top = false;
@@ -410,21 +399,22 @@ public class search {
 	    		Drawer = false;
 	    	}
 			
-	    	//System.out.println(price);
+	    	//this means no combination was found and therefore order is not possible
 	      	if(index1 ==-1) {
 	      		
 	    		return null;
 	    	}
 	    	ArrayList<node> finalCombo = done.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
-	    		
+	    		//adds currently found combo items to return list
 	    		done2.add(finalCombo.get(h).id);
+	    		//removes currently found combo items from list of possible items
 	    		matches.remove(finalCombo.get(h));
 	    	}
 	    	//increases price of order by currently found combo price
 	    	orderPrice += price;
 			}
-			//go.printList();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -441,12 +431,9 @@ public class search {
 	 * @return arraylist of ids ordered. String containg total price is always at the end.If order is invalid, null is returned.
 	 */
 	public ArrayList<String> searchChair(String lookup,int needed) {
-<<<<<<< Updated upstream
-		int orderPrice = 0;
-=======
+		//total order price
 		long orderPrice = 0;
->>>>>>> Stashed changes
-		
+
     	//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
     	
@@ -456,7 +443,7 @@ public class search {
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM CHAIR WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
-			//current price to save
+	
 			
 		
 			//used to check if combination is valid
@@ -486,27 +473,25 @@ public class search {
 			}
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ; b++) {
-<<<<<<< Updated upstream
-			int price = 2147483647;
-			int index1 = -1;
-			done = new ArrayList<ArrayList<node>>();
-			int combinedPrice = 0;
-=======
+			//current lowest combination price	
 			long price = Long.MAX_VALUE;
+			//saves index of found combination
 			int index1 = -1;
+			//intializes all possible combination list done
 			done = new ArrayList<ArrayList<node>>();
+			//this is the current combination price
 			long combinedPrice = 0;
->>>>>>> Stashed changes
+
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
-	    		//iterates over each element in subset
+	    		//iterates over each element in combination
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			chairData v = (chairData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
@@ -520,19 +505,20 @@ public class search {
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = seat && arm && cushion && legs;
 	    		    
-	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
+	    		   
 	    		     //finds combined price of subset
 	    			combinedPrice += v.price;
 	    			
 	    		}
-	    		//System.out.println(combinedPrice);
+	    		
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
 	    		if(combinedPrice <= price && total) {
+	    			//saves index of found combination
 	    			index1 = i;
-	    			
+	    			//updates current lowest combination price with price of current combination
 	    			price = combinedPrice;
 	    		}
-	    		//System.out.println();
+	    		
 	    		//resets variables for each iteration
 	    		combinedPrice = 0;
 	    		arm = false;
@@ -541,15 +527,16 @@ public class search {
 	    		legs = false;
 	    	}
 			
-	    	//System.out.println(price);
+	    	
 	    	//if index1 = -1, then no valid combo could be found and therefore order is invalid
 	    	if(index1 ==-1) {
 	    		return null;
 	    	}
 	    	ArrayList<node> finalCombo = done.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
+	    		//adds currently found combo items to return list
 	    		done2.add(finalCombo.get(h).id);
-	    		//removes currently found combo from list of availiable items
+	    		//removes currently found combo items from list of available items
 	    		matches.remove(finalCombo.get(h));
 	    		
 	    	}
@@ -561,6 +548,7 @@ public class search {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	//adds order price to return list
     	done2.add("$"+String.valueOf(orderPrice));
 		return done2;
 		
@@ -568,25 +556,25 @@ public class search {
 		
 	}
 	/**
-	 * 
-	 * @param arg set to find power set of
-	 * @param currentSet current created subset
-	 * @param index index of element being looked at in the arg set
+	 * finds the power set / all possible combinations of a given arg list
+	 * @param arg list to find power set/ all possible combinations of arg
+	 * @param currentSet currently created subset/combination
+	 * @param index index of element being looked at in the arg list
 	 */
 	public void powerSet(ArrayList<node> arg,ArrayList<node> currentSet,int index) {
 		//base case
 		if(index == arg.size()) {
-			//adds the current set to the power set
+			//adds the current set to the power set / list of all possible combinations
 			done.add(currentSet);
 			return;
 		}
-		//copy of current set before adding to it. This contains the current set without the current element being looked at in the arg set
+		//copy of current set/combination before adding to it. This contains the current set/combination without the current element being looked at in the arg set
 		ArrayList<node> b = (ArrayList<node>) currentSet.clone();
-		//adds current element being looked at to current set(one case of any subset)
+		//adds current element being looked at to current set(one case of any subset/combination)
 		currentSet.add(arg.get(index));
 		
 		powerSet(arg,b,index+1);
-		//This contains the current set with the current element being looked at in the arg set(other case of any subset)
+		//This contains the current set/combination with the current element being looked at in the arg set/list(other case of any subset/combination)
 		powerSet(arg,currentSet,index+1);
 		
 	}
