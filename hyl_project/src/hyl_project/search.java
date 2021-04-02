@@ -35,7 +35,7 @@ public class search {
 	}
 	
 	/**
-	 * 
+	 * finds filing order
 	 * @param lookup type of filing
 	 * @param needed number needed for order
 	 * @return arraylist string containing ids of all ordered items, returns null if order not possible
@@ -169,7 +169,7 @@ public class search {
 		
 	}
 	/**
-	 * 
+	 * finds lamp order
 	 * @param lookup type of lamp needed in order
 	 * @param needed number of lamps needed in order
 	 * @return arraylist containing ordered lamps, with price always at the end. Returns null for invalid orders
@@ -298,7 +298,7 @@ public class search {
 		return done2;
 	}
 	/**
-	 * orders desks
+	 * finds desk order
 	 * @param lookup type of desk needed for order
 	 * @param needed number of desks needed for order
 	 * @return arraylist containg ids of desks order.Returns null for invalid order. Price always at the end as string.
@@ -548,6 +548,7 @@ public class search {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	//adds order price to return list
     	done2.add("$"+String.valueOf(orderPrice));
 		return done2;
 		
@@ -563,17 +564,17 @@ public class search {
 	public void powerSet(ArrayList<node> arg,ArrayList<node> currentSet,int index) {
 		//base case
 		if(index == arg.size()) {
-			//adds the current set to the power set
+			//adds the current set to the power set / list of all possible combinations
 			done.add(currentSet);
 			return;
 		}
-		//copy of current set before adding to it. This contains the current set without the current element being looked at in the arg set
+		//copy of current set/combination before adding to it. This contains the current set/combination without the current element being looked at in the arg set
 		ArrayList<node> b = (ArrayList<node>) currentSet.clone();
 		//adds current element being looked at to current set(one case of any subset/combination)
 		currentSet.add(arg.get(index));
 		
 		powerSet(arg,b,index+1);
-		//This contains the current set with the current element being looked at in the arg set(other case of any subset/combination)
+		//This contains the current set/combination with the current element being looked at in the arg set/list(other case of any subset/combination)
 		powerSet(arg,currentSet,index+1);
 		
 	}
