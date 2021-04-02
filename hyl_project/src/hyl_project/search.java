@@ -7,8 +7,8 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	private ResultSet results;
-	//done contains the power set or all possible combinations of the currently found item list
-	private ArrayList<ArrayList<node>> done;
+	//comboList contains the power set or all possible combinations of the currently found item list
+	private ArrayList<ArrayList<node>> comboList;
 	/**
 	 * 
 	 * @param dBURL url of database
@@ -41,15 +41,15 @@ public class search {
 	 * @return arraylist string containing ids of all ordered items, returns null if order not possible
 	 */
 	public ArrayList<String> searchFiling(String lookup,int needed){
-		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
-	    ArrayList<String> done2 = new ArrayList<String>();
-	    //total order price
+		//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
+	    ArrayList<String> returnList = new ArrayList<String>();
+	    //total order currentLowestComboPrice
 	    long orderPrice = 0;
 	   
 
     	try {
     		
-    		//finds all entries of chair with the specified type and saves them into results
+    		//finds all entries of filing with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM filing WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
@@ -61,14 +61,14 @@ public class search {
 			boolean Drawers = false;
 			
 			boolean total = false;
-			//list will all the matches
+			//this matches list will contain all the filing entries that match the type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
 			while (results.next()){
 				if(results.getString("Type").equals(lookup)) {
-					
-				   filingData temp = new filingData(results.getString("ID"),results.getString("Rails"),results.getString("Cabinet"),results.getString("Drawers"),results.getInt("Price"));
+					//saves data of each filing entry of specified type into node and then saves that node into matches list
+				   filingData temp = new filingData(results.getString("ID"),results.getString("Rails"),results.getString("Cabinet"),results.getString("Drawers"),results.getInt("currentLowestComboPrice"));
 				    temp1 = new node(temp);
 				   matches.add(temp1);
 				 
@@ -82,12 +82,12 @@ public class search {
 			}
 			//iterates once to find each item required in order
 			for(int b = 0; b < needed ; b++) {
-				//price of current combination
+				//currentLowestComboPrice of current combination
 				 long combinedPrice = 0;
-				 //current lowest combination price
-				long price = Long.MAX_VALUE;
-				//intializes all possible combination list done
-				done = new ArrayList<ArrayList<node>>();
+				 //current lowest combination currentLowestComboPrice
+				long currentLowestComboPrice = Long.MAX_VALUE;
+				//intializes all possible combination list comboList
+				comboList = new ArrayList<ArrayList<node>>();
 			//saves index of found combination
 		    int index1 = -1;
 			//empty arraylist
@@ -96,14 +96,14 @@ public class search {
 
 			powerSet(matches,g,0);
 			//removes the empty set
-			done.remove(0);
+			comboList.remove(0);
 			//iterates over each possible combination/subset
-	    	for(int i = 0; i < done.size(); i++) {
-	    		//resets for next combination price
+	    	for(int i = 0; i < comboList.size(); i++) {
+	    		//resets for next combination currentLowestComboPrice
 	    		combinedPrice = 0;
 	    		//iterates over each element in combination
-	    		for(int j = 0; j< done.get(i).size(); j++) {
-	    			filingData v = (filingData) done.get(i).get(j).element;
+	    		for(int j = 0; j< comboList.get(i).size(); j++) {
+	    			filingData v = (filingData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
 	    			Rails |= v.Rails ;
 	    		
@@ -115,20 +115,20 @@ public class search {
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = Rails && Drawers && Cabinet;
 	    		    
-	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
-	    		     //finds combined price of subset
+	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
+	    		     //finds combined currentLowestComboPrice of combo
 	    			combinedPrice += v.price;
 	    			
 	    		}
 	    	
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
+	    		//if combination is valid and whether the combined currentLowestComboPrice of the combination is smallest possible one
 
 
-	    		if(combinedPrice <= price && total) {
+	    		if(combinedPrice <= currentLowestComboPrice && total) {
 	    			//saves index of currently found combination
 	    			index1 = i;
-	    			//updates current lowest combination price with price of current combination
-	    			price = combinedPrice;
+	    			//updates current lowest price with combined price of combination
+	    			currentLowestComboPrice = combinedPrice;
 	    		}
 	    		
 	    		//resets variables for each iteration
@@ -144,16 +144,16 @@ public class search {
 	      		
 	    		return null;
 	    	}
-	    	ArrayList<node> finalCombo = done.get(index1);
+	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combination items to return list
-	    		done2.add(finalCombo.get(h).id);
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combination from list of available items
 	    		matches.remove(finalCombo.get(h));
 	    		
 	    	}
-	    	//adds current lowest price to total order price
-	    	orderPrice += price;
+	    	//adds current lowest currentLowestComboPrice to total order currentLowestComboPrice
+	    	orderPrice += currentLowestComboPrice;
 	    	
 			}
 			
@@ -162,9 +162,9 @@ public class search {
 			e.printStackTrace();
 		}
     	
-    	//adds price to return list
-		done2.add("$" + String.valueOf(orderPrice));
-		return done2;
+    	//adds currentLowestComboPrice to return list
+		returnList.add("$" + String.valueOf(orderPrice));
+		return returnList;
 		
 		
 	}
@@ -172,18 +172,18 @@ public class search {
 	 * finds lamp order
 	 * @param lookup type of lamp needed in order
 	 * @param needed number of lamps needed in order
-	 * @return arraylist containing ordered lamps, with price always at the end. Returns null for invalid orders
+	 * @return arraylist containing ordered lamps, with currentLowestComboPrice always at the end. Returns null for invalid orders
 	 */
 	public ArrayList<String> searchLamp(String lookup,int needed){
 		
-		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
-    	ArrayList<String> done2 = new ArrayList<String>();
-    	//total price of order
+		//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
+    	ArrayList<String> returnList = new ArrayList<String>();
+    	//total currentLowestComboPrice of order
 
     	long orderPrice = 0;
 
     	try {
-    		//finds all entries of chair with the specified type and saves them into results
+    		//finds all entries of lamp with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM LAMP WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
@@ -196,19 +196,19 @@ public class search {
 		
 			
 			boolean total = false;
-			//list will have all the matches
+			//matches will have all the lamp entries of specified type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
 			while (results.next()){
-				if(results.getString("Type").equals(lookup)) {
-					
-				  lampData temp = new lampData(results.getString("ID"),results.getString("Bulb"),results.getString("Base"),results.getInt("Price"));
+				
+				//saves data of each lamp entry of specified type into node and then saves that node into matches list
+				  lampData temp = new lampData(results.getString("ID"),results.getString("Bulb"),results.getString("Base"),results.getInt("currentLowestComboPrice"));
 				    temp1 = new node(temp);
 				   matches.add(temp1);
 				 
 				   
-				}
+				
 				
 	            }
 			//returns immediately if no results were found
@@ -218,12 +218,12 @@ public class search {
 		
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ;b++) {
-			//current lowest combination price
-			long price = Long.MAX_VALUE;
-			//intializes all possible combination list done
-			done = new ArrayList<ArrayList<node>>();
+			//current lowest combination currentLowestComboPrice
+			long currentLowestComboPrice = Long.MAX_VALUE;
+			//intializes all possible combination list comboList
+			comboList = new ArrayList<ArrayList<node>>();
 			int index1 = -1;
-			//price of current combination
+			//currentLowestComboPrice of current combination
 			long combinedPrice = 0;
 
 			//empty arraylist
@@ -232,36 +232,33 @@ public class search {
 
 			powerSet(matches,g,0);
 			//removes the empty set
-			done.remove(0);
+			comboList.remove(0);
 			//iterates over each possible combination/subset
-	    	for(int i = 0; i < done.size(); i++) {
+	    	for(int i = 0; i < comboList.size(); i++) {
 	    		//iterates over each element in combination
-	    		for(int j = 0; j< done.get(i).size(); j++) {
-	    			lampData v = (lampData) done.get(i).get(j).element;
+	    		for(int j = 0; j< comboList.get(i).size(); j++) {
+	    			lampData v = (lampData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
 	    			Base |= v.Base ;
 	    		
 	    		    Bulb |= v.Bulb;
-	    		   
-	    		
 	    		    
-	    		   
-	    		    //total determines whether the combination is valid by seeing if each combination has required parts
+	    		  //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = Base && Bulb;
 	    		    
-	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
-	    		     //finds combined price of subset
+	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
+	    		     //finds combined currentLowestComboPrice of combo
 	    			combinedPrice += v.price;
 	    			
 	    		}
-	    		//System.out.println(combinedPrice);
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
+	    		
+	    		//if combination is valid and whether the combined currentLowestComboPrice of the combination is smallest possible one
 
-	    		if(combinedPrice <= price && total) {
-
+	    		if(combinedPrice <= currentLowestComboPrice && total) {
+	    			//saves current combination index
 	    			index1 = i;
-	    			//updates current lowest combination price with price of current combination
-	    			price = combinedPrice;
+	    			//updates current lowest price with combined price of combination
+	    			currentLowestComboPrice = combinedPrice;
 	    		}
 	    		
 	    		//resets variables for each iteration
@@ -277,41 +274,41 @@ public class search {
 	      	if(index1 ==-1) {
 	    		return null;
 	    	}
-	    	ArrayList<node> finalCombo = done.get(index1);
+	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combination items to return list
-	    		done2.add(finalCombo.get(h).id);
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from available items
 	    		matches.remove(finalCombo.get(h));
-	    		//System.out.println(done2.get(h));
+	    		//System.out.println(returnList.get(h));
 	    	}
-	    	//increases price of order by currently found combo price
-	    	orderPrice += price;
+	    	//increases currentLowestComboPrice of order by currently found combo currentLowestComboPrice
+	    	orderPrice += currentLowestComboPrice;
 			}
 			//go.printList();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	done2.add("$" + String.valueOf(orderPrice));
+    	returnList.add("$" + String.valueOf(orderPrice));
     	
-		return done2;
+		return returnList;
 	}
 	/**
 	 * finds desk order
 	 * @param lookup type of desk needed for order
 	 * @param needed number of desks needed for order
-	 * @return arraylist containg ids of desks order.Returns null for invalid order. Price always at the end as string.
+	 * @return arraylist containg ids of desks order.Returns null for invalid order. currentLowestComboPrice always at the end as string.
 	 */
 	public ArrayList<String> searchDesk(String lookup, int needed){
-		//total price of order
+		//total currentLowestComboPrice of order
 		long orderPrice = 0;
 
-		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
-    	ArrayList<String> done2 = new ArrayList<String>();
+		//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
+    	ArrayList<String> returnList = new ArrayList<String>();
     
     	try {
-    		//finds all entries of chair with the specified type and saves them into results
+    		//finds all entries of desk with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM DESK WHERE Type=?");
 			find.setString(1,lookup);
 			results = find.executeQuery();
@@ -324,20 +321,18 @@ public class search {
 			boolean Drawer = false;
 			
 			boolean total = false;
-			//list will all the matches
+			//matches will contain all the desk entries with specified type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
 			while (results.next()){
-				
-				if(results.getString("Type").equals(lookup)) {
-					
-				   deskData temp = new deskData(results.getString("ID"),results.getString("Legs"),results.getString("Top"),results.getString("Drawer"),results.getInt("Price"));
-				    temp1 = new node<deskData>(temp);
-				   matches.add(temp1);
+				//saves data of each desk entry of type needed into temp node and then saves that temp node into matches list
+				deskData temp = new deskData(results.getString("ID"),results.getString("Legs"),results.getString("Top"),results.getString("Drawer"),results.getInt("currentLowestComboPrice"));
+				temp1 = new node<deskData>(temp);
+				matches.add(temp1);
 				 
 				   
-				}
+				
 				
 	            }
 			//returns immediately if no results were found
@@ -347,12 +342,12 @@ public class search {
 			}
 			//iterates once for each item needed in order
 			for(int b= 0 ; b < needed ; b++) {
-			//current lowest combination price
-			long price = Long.MAX_VALUE;
-			//current combination price
+			//current lowest combination currentLowestComboPrice
+			long currentLowestComboPrice = Long.MAX_VALUE;
+			//current combination currentLowestComboPrice
 			long combinedPrice = 0;
-			//intializes all possible combination list done
-			done = new ArrayList<ArrayList<node>>();
+			//intializes all possible combination list comboList
+			comboList = new ArrayList<ArrayList<node>>();
 			//index of found combination
 			int index1 = -1;
 			ArrayList<node> g = new ArrayList<node>();
@@ -360,12 +355,12 @@ public class search {
 
 			powerSet(matches,g,0);
 			//removes the empty set
-			done.remove(0);
+			comboList.remove(0);
 			//iterates over each possible combination/subset
-	    	for(int i = 0; i < done.size(); i++) {
+	    	for(int i = 0; i < comboList.size(); i++) {
 	    		
-	    		for(int j = 0; j< done.get(i).size(); j++) {
-	    			deskData v = (deskData) done.get(i).get(j).element;
+	    		for(int j = 0; j< comboList.get(i).size(); j++) {
+	    			deskData v = (deskData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
 	    			Top |= v.top ;
 	    		
@@ -377,18 +372,18 @@ public class search {
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = Top && legs && Drawer && legs;
 	    		    
-	    		   //System.out.println(done.get(i).get(j).arms + " " +  arm + " " + done.get(i).get(j).ID);
-	    		     //finds combined price of subset
+	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
+	    		     //finds combined currentLowestComboPrice of combo
 	    			combinedPrice += v.price;
 	    			
 	    		}
 	    		//System.out.println(combinedPrice);
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-	    		if(combinedPrice <= price && total) {
+	    		//if combination is valid and whether the combined currentLowestComboPrice of the combination is smallest possible one
+	    		if(combinedPrice <= currentLowestComboPrice && total) {
 	    			//saves index of combination
 	    			index1 = i;
-	    			//updates current lowest combination price with price of current combination
-	    			price = combinedPrice;
+	    			//updates current lowest price with combined price of combination
+	    			currentLowestComboPrice = combinedPrice;
 	    		}
 	    		
 	    		//resets variables for each iteration
@@ -404,15 +399,15 @@ public class search {
 	      		
 	    		return null;
 	    	}
-	    	ArrayList<node> finalCombo = done.get(index1);
+	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combo items to return list
-	    		done2.add(finalCombo.get(h).id);
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from list of possible items
 	    		matches.remove(finalCombo.get(h));
 	    	}
-	    	//increases price of order by currently found combo price
-	    	orderPrice += price;
+	    	//increases currentLowestComboPrice of order by currently found combo currentLowestComboPrice
+	    	orderPrice += currentLowestComboPrice;
 			}
 			
 		} catch (SQLException e) {
@@ -420,22 +415,22 @@ public class search {
 			e.printStackTrace();
 		}
     	
-    	done2.add("$"+String.valueOf(orderPrice));
-		return done2;
+    	returnList.add("$"+String.valueOf(orderPrice));
+		return returnList;
 		
 	}
 	/**
 	 * finds chair order
 	 * @param lookup type of chair
 	 * @param needed amount needed for order
-	 * @return arraylist of ids ordered. String containg total price is always at the end.If order is invalid, null is returned.
+	 * @return arraylist of ids ordered. String containg total currentLowestComboPrice is always at the end.If order is invalid, null is returned.
 	 */
 	public ArrayList<String> searchChair(String lookup,int needed) {
-		//total order price
+		//total order currentLowestComboPrice
 		long orderPrice = 0;
 
-    	//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
-    	ArrayList<String> done2 = new ArrayList<String>();
+    	//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
+    	ArrayList<String> returnList = new ArrayList<String>();
     	
     	
     	try {
@@ -452,19 +447,19 @@ public class search {
 			boolean seat = false;
 			boolean cushion = false;
 			boolean total = false;
-			//list will all the matches
+			//contains the chair entries for required type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
 			while (results.next()){
-				if(results.getString("Type").equals(lookup)) {
-					
-				   chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
+				
+				//saves data of each chair entry with specified type into temp node and adds it to matches list
+				   chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("currentLowestComboPrice"));
 				    temp1 = new node(temp);
 				   matches.add(temp1);
 				 
 				   
-				}
+				
 				
 	            }
 			//returns immediately if no results were found
@@ -473,13 +468,13 @@ public class search {
 			}
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ; b++) {
-			//current lowest combination price	
-			long price = Long.MAX_VALUE;
+			//current lowest combination currentLowestComboPrice	
+			long currentLowestComboPrice = Long.MAX_VALUE;
 			//saves index of found combination
 			int index1 = -1;
-			//intializes all possible combination list done
-			done = new ArrayList<ArrayList<node>>();
-			//this is the current combination price
+			//intializes all possible combination list comboList
+			comboList = new ArrayList<ArrayList<node>>();
+			//this is the current combination currentLowestComboPrice
 			long combinedPrice = 0;
 
 			//empty arraylist
@@ -488,12 +483,12 @@ public class search {
 
 			powerSet(matches,g,0);
 			//removes the empty set
-			done.remove(0);
+			comboList.remove(0);
 			//iterates over each possible combination/subset
-	    	for(int i = 0; i < done.size(); i++) {
+	    	for(int i = 0; i < comboList.size(); i++) {
 	    		//iterates over each element in combination
-	    		for(int j = 0; j< done.get(i).size(); j++) {
-	    			chairData v = (chairData) done.get(i).get(j).element;
+	    		for(int j = 0; j< comboList.get(i).size(); j++) {
+	    			chairData v = (chairData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
 	    			arm |= v.arms ;
 	    		
@@ -506,17 +501,17 @@ public class search {
 	    		     total = seat && arm && cushion && legs;
 	    		    
 	    		   
-	    		     //finds combined price of subset
+	    		     //finds combined currentLowestComboPrice of combo
 	    			combinedPrice += v.price;
 	    			
 	    		}
 	    		
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-	    		if(combinedPrice <= price && total) {
+	    		//if combination is valid and whether the combined currentLowestComboPrice of the combination is smallest possible one
+	    		if(combinedPrice <= currentLowestComboPrice && total) {
 	    			//saves index of found combination
 	    			index1 = i;
-	    			//updates current lowest combination price with price of current combination
-	    			price = combinedPrice;
+	    			//updates current lowest price with combined price of combination
+	    			currentLowestComboPrice = combinedPrice;
 	    		}
 	    		
 	    		//resets variables for each iteration
@@ -532,16 +527,16 @@ public class search {
 	    	if(index1 ==-1) {
 	    		return null;
 	    	}
-	    	ArrayList<node> finalCombo = done.get(index1);
+	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combo items to return list
-	    		done2.add(finalCombo.get(h).id);
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from list of available items
 	    		matches.remove(finalCombo.get(h));
 	    		
 	    	}
-	    	//increases price of order by currently found combo price
-	    	orderPrice += price;
+	    	//increases total price of order by currently found lowest combo price
+	    	orderPrice += currentLowestComboPrice;
 			}
 			//go.printList();
 		} catch (SQLException e) {
@@ -549,8 +544,8 @@ public class search {
 			e.printStackTrace();
 		}
     	//adds order price to return list
-    	done2.add("$"+String.valueOf(orderPrice));
-		return done2;
+    	returnList.add("$"+String.valueOf(orderPrice));
+		return returnList;
 		
 		
 		
@@ -565,15 +560,15 @@ public class search {
 		//base case
 		if(index == arg.size()) {
 			//adds the current set to the power set / list of all possible combinations
-			done.add(currentSet);
+			comboList.add(currentSet);
 			return;
 		}
 		//copy of current set/combination before adding to it. This contains the current set/combination without the current element being looked at in the arg set
-		ArrayList<node> b = (ArrayList<node>) currentSet.clone();
+		ArrayList<node> copyOfCurrentSet = (ArrayList<node>) currentSet.clone();
 		//adds current element being looked at to current set(one case of any subset/combination)
 		currentSet.add(arg.get(index));
 		
-		powerSet(arg,b,index+1);
+		powerSet(arg,copyOfCurrentSet,index+1);
 		//This contains the current set/combination with the current element being looked at in the arg set/list(other case of any subset/combination)
 		powerSet(arg,currentSet,index+1);
 		

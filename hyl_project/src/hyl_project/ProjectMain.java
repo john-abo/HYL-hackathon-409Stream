@@ -65,7 +65,7 @@ public class ProjectMain {
 		// TESTING NOW
 
 
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","ensf409");
 		myJDBC.initializeConnection();		
 		
 		myJDBC.searchFiling("SSJ",1);
