@@ -65,26 +65,6 @@ public class ProjectMain {
 		// TESTING NOW
 
 		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
-		myJDBC.initializeConnection();
-<<<<<<< Updated upstream
-
-
-		
-		
-		myJDBC.searchFiling("SSJ",1);
-		myJDBC.searchFiling("Small",1);
-		ArrayList<String> test = myJDBC.searchLamp("Desk",2);
-		System.out.println(test.get(0));
-		myJDBC.searchChair("Mesh",1);
-
-
-
-
-=======
-		
-		myJDBC.searchChair("Mesh",1);
-		System.out.println(myJDBC.searchChair("Task",1).get(0));
->>>>>>> Stashed changes
-		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
+	
 	}
 }
