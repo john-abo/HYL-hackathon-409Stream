@@ -43,8 +43,13 @@ public class search {
 	public ArrayList<String> searchFiling(String lookup,int needed){
 		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
 	    ArrayList<String> done2 = new ArrayList<String>();
+<<<<<<< Updated upstream
 	    int orderPrice = 0;
 	    int combinedPrice = 0;
+=======
+	    long orderPrice = 0;
+	    long combinedPrice = 0;
+>>>>>>> Stashed changes
     	try {
     		
     		//finds all entries of chair with the specified type and saves them into results
@@ -80,7 +85,11 @@ public class search {
 			}
 			//iterates once to find each item required in order
 			for(int b = 0; b < needed ; b++) {
+<<<<<<< Updated upstream
 				int price = 2147483647;
+=======
+				long price = Long.MAX_VALUE;
+>>>>>>> Stashed changes
 				
 				done = new ArrayList<ArrayList<node>>();
 			
@@ -116,7 +125,11 @@ public class search {
 	    		}
 	    		//System.out.println(combinedPrice);
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
+<<<<<<< Updated upstream
 	    		if(combinedPrice < price && total) {
+=======
+	    		if(combinedPrice <= price && total) {
+>>>>>>> Stashed changes
 	    			index1 = i;
 	    			//System.out.println(combinedPrice);
 	    			price = combinedPrice;
@@ -170,7 +183,11 @@ public class search {
 		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
     	//price of order
+<<<<<<< Updated upstream
     	int orderPrice = 0;
+=======
+    	long orderPrice = 0;
+>>>>>>> Stashed changes
     	try {
     		//finds all entries of chair with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM LAMP WHERE Type=?");
@@ -207,10 +224,17 @@ public class search {
 		
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ;b++) {
+<<<<<<< Updated upstream
 			int price = 2147483647;
 			done = new ArrayList<ArrayList<node>>();
 			int index1 = -1;
 			int combinedPrice = 0;
+=======
+			long price = Long.MAX_VALUE;
+			done = new ArrayList<ArrayList<node>>();
+			int index1 = -1;
+			long combinedPrice = 0;
+>>>>>>> Stashed changes
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
 			//finds the power set for the matches list
@@ -241,7 +265,11 @@ public class search {
 	    		}
 	    		//System.out.println(combinedPrice);
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
+<<<<<<< Updated upstream
 	    		if(combinedPrice < price && total) {
+=======
+	    		if(combinedPrice <= price && total) {
+>>>>>>> Stashed changes
 	    			index1 = i;
 	    			price = combinedPrice;
 	    		}
@@ -286,7 +314,11 @@ public class search {
 	 * @return arraylist containg ids of desks order.Returns null for invalid order. Price always at the end as string.
 	 */
 	public ArrayList<String> searchDesk(String lookup, int needed){
+<<<<<<< Updated upstream
 		int orderPrice = 0;
+=======
+		long orderPrice = 0;
+>>>>>>> Stashed changes
 		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
     
@@ -327,8 +359,13 @@ public class search {
 			}
 			//empty arraylist
 			for(int b= 0 ; b < needed ; b++) {
+<<<<<<< Updated upstream
 				int price = 2147483647;
 			int combinedPrice = 0;
+=======
+				long price = Long.MAX_VALUE;
+			long combinedPrice = 0;
+>>>>>>> Stashed changes
 			done = new ArrayList<ArrayList<node>>();
 			int index1 = -1;
 			ArrayList<node> g = new ArrayList<node>();
@@ -404,7 +441,11 @@ public class search {
 	 * @return arraylist of ids ordered. String containg total price is always at the end.If order is invalid, null is returned.
 	 */
 	public ArrayList<String> searchChair(String lookup,int needed) {
+<<<<<<< Updated upstream
 		int orderPrice = 0;
+=======
+		long orderPrice = 0;
+>>>>>>> Stashed changes
 		
     	//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> done2 = new ArrayList<String>();
@@ -445,10 +486,17 @@ public class search {
 			}
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ; b++) {
+<<<<<<< Updated upstream
 			int price = 2147483647;
 			int index1 = -1;
 			done = new ArrayList<ArrayList<node>>();
 			int combinedPrice = 0;
+=======
+			long price = Long.MAX_VALUE;
+			int index1 = -1;
+			done = new ArrayList<ArrayList<node>>();
+			long combinedPrice = 0;
+>>>>>>> Stashed changes
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
 			//finds the power set for the matches list
@@ -479,7 +527,7 @@ public class search {
 	    		}
 	    		//System.out.println(combinedPrice);
 	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-	    		if(combinedPrice < price && total) {
+	    		if(combinedPrice <= price && total) {
 	    			index1 = i;
 	    			
 	    			price = combinedPrice;
