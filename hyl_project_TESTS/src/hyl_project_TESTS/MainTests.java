@@ -113,7 +113,7 @@ public class MainTests {
 	
 	@Test
 	public void chairSearching1() {
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
 		ArrayList<String> expected = new ArrayList<String>(); //EMPTY LIST FOR NOW
 		ArrayList<String> actual = myJDBC.searchChair("Task",1);
