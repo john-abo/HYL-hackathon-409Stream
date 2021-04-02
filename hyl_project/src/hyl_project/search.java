@@ -92,16 +92,16 @@ public class search {
 		    int index1 = -1;
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
 	    		//resets for next combination price
 	    		combinedPrice = 0;
-	    		//iterates over each element in subset
+	    		//iterates over each element in combination
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			filingData v = (filingData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
@@ -130,7 +130,7 @@ public class search {
 	    			//updates current lowest combination price with price of current combination
 	    			price = combinedPrice;
 	    		}
-	    		//System.out.println();
+	    		
 	    		//resets variables for each iteration
 	    		
 	    		Rails = false;
@@ -156,7 +156,7 @@ public class search {
 	    	orderPrice += price;
 	    	
 			}
-			//go.printList();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -228,14 +228,14 @@ public class search {
 
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
-	    		//iterates over each element in subset
+	    		//iterates over each element in combination
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			lampData v = (lampData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
@@ -345,7 +345,7 @@ public class search {
 				
 				return null;
 			}
-			//empty arraylist
+			//iterates once for each item needed in order
 			for(int b= 0 ; b < needed ; b++) {
 			//current lowest combination price
 			long price = Long.MAX_VALUE;
@@ -356,12 +356,12 @@ public class search {
 			//index of found combination
 			int index1 = -1;
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
 	    		
 	    		for(int j = 0; j< done.get(i).size(); j++) {
@@ -390,7 +390,7 @@ public class search {
 	    			//updates current lowest combination price with price of current combination
 	    			price = combinedPrice;
 	    		}
-	    		//System.out.println();
+	    		
 	    		//resets variables for each iteration
 	    		combinedPrice = 0;
 	    		Top = false;
@@ -414,7 +414,7 @@ public class search {
 	    	//increases price of order by currently found combo price
 	    	orderPrice += price;
 			}
-			//go.printList();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -484,14 +484,14 @@ public class search {
 
 			//empty arraylist
 			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set for the matches list
+			//finds the power set/all possible combinations for the matches list
 
 			powerSet(matches,g,0);
 			//removes the empty set
 			done.remove(0);
-			//iterates over each subset in power set
+			//iterates over each possible combination/subset
 	    	for(int i = 0; i < done.size(); i++) {
-	    		//iterates over each element in subset
+	    		//iterates over each element in combination
 	    		for(int j = 0; j< done.get(i).size(); j++) {
 	    			chairData v = (chairData) done.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
