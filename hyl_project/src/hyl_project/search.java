@@ -451,17 +451,13 @@ public class search {
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
-			while (results.next()){
-				
+			while (results.next()){				
 				//saves data of each chair entry with specified type into temp node and adds it to matches list
-				   chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("currentLowestComboPrice"));
-				    temp1 = new node(temp);
-				   matches.add(temp1);
-				 
-				   
-				
-				
-	            }
+				chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("currentLowestComboPrice"));
+				temp1 = new node(temp);
+				matches.add(temp1);
+
+	         }
 			//returns immediately if no results were found
 			if(temp1 == null) {
 				return null;

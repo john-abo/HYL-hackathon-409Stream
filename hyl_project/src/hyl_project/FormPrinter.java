@@ -2,6 +2,7 @@ package hyl_project;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,8 @@ public class FormPrinter {
 	private final static String DIRECTORY = "OUT";
 	private static int orderNum = 0;
 	
+	private search myJDBC;
+	
 	/**
 	 * Normal constructor. Ensures the parameters passed are valid using regEx and throws
 	 * illegal argument exceptions otherwise.
@@ -26,6 +29,8 @@ public class FormPrinter {
 	public FormPrinter(String request) {
 		String s = "";
 		Matcher match = PATTERN.matcher(request + " ");
+		
+		System.out.println("User request: " + request);
 		
 		if (match.find()) {
 			s = match.group(1);
@@ -63,9 +68,38 @@ public class FormPrinter {
 			}
 		} else {
 			System.err.println("No match found");
-			throw new IllegalArgumentException();
+
 		}
 		
+		//Begins querying the database for most optimal purchase
+		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
+		myJDBC.initializeConnection();
+		
+		ArrayList<String> result = new ArrayList<String>();
+		
+		if (furniture.equalsIgnoreCase("chair")) {
+			System.out.println("Looking for chairs...");
+			
+			result = myJDBC.searchChair(type,  quantity);
+			
+		} else if (furniture.equalsIgnoreCase("desk")) {
+			System.out.println("Looking for desks...");
+			
+			result = myJDBC.searchDesk(type,  quantity);
+			
+		} else if (furniture.equalsIgnoreCase("lamp")) {
+			System.out.println("Looking for lamps...");
+			
+			result = myJDBC.searchLamp(type,  quantity);
+			
+		} else if (furniture.equalsIgnoreCase("filing")) {
+			System.out.println("Looking for filings...");
+			
+			result = myJDBC.searchFiling(type,  quantity);
+			
+		} else {
+			System.out.println("That furniture can't be found");
+		}
 	}
 	
 	/**

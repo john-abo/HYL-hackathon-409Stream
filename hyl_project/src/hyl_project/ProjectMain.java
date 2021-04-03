@@ -8,36 +8,6 @@ public class ProjectMain {
 	private static String userIn = "";
 	
 	/**
-	 * Lets not forget to document our methods as well :D
-	 */
-	public void calculateOption() {
-
-		//Lets get this working
-		//if (/*requestPossible*/){
-		//	produceOutput();
-		//} else {
-		//	//printSuggestions();
-		//}
-
-	}
-	
-	/**
-	 * Lets not forget to document our methods as well :D
-	 */
-	public void produceOutput() {
-		
-		//TEST
-		FormPrinter printer;
-		userInput();
-		System.out.println("User request: " + userIn);
-		
-		printer = new FormPrinter(userIn);
-		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
-		
-		printer.writeReport();	//Writes report
-	}
-	
-	/**
 	 * Gets the user input. The message printed is meant to notifty the user about the format
 	 * and the meaning of each input.
 	 */
@@ -63,22 +33,16 @@ public class ProjectMain {
 	 */
 	public static void main(String[] args) {
 		// TESTING NOW
-
-
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","ensf409");
-		myJDBC.initializeConnection();		
+		System.out.println("Starting software...");
 		
-		myJDBC.searchFiling("SSJ",1);
-		myJDBC.searchFiling("Small",1);
-		ArrayList<String> test = myJDBC.searchLamp("Desk",2);
-		System.out.println(test.get(0));
-		myJDBC.searchChair("Mesh",1);
-
+		FormPrinter printer;
+		userInput();
 		
-		myJDBC.searchChair("Mesh",1);
-		System.out.println(myJDBC.searchChair("Task",1).get(0));
-		// args = String  furnitureCategory, String furnitureType, and int requestedAmount
-
+			
+		printer = new FormPrinter(userIn);
+		//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
+				
+		printer.writeReport();	//Writes report
 		
 
 	}
