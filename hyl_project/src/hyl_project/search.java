@@ -68,7 +68,7 @@ public class search {
 			while (results.next()){
 				if(results.getString("Type").equals(lookup)) {
 					//saves data of each filing entry of specified type into node and then saves that node into matches list
-				   filingData temp = new filingData(results.getString("ID"),results.getString("Rails"),results.getString("Cabinet"),results.getString("Drawers"),results.getInt("currentLowestComboPrice"));
+				   filingData temp = new filingData(results.getString("ID"),results.getString("Rails"),results.getString("Cabinet"),results.getString("Drawers"),results.getInt("Price"));
 				    temp1 = new node(temp);
 				   matches.add(temp1);
 				 
@@ -203,7 +203,7 @@ public class search {
 			while (results.next()){
 				
 				//saves data of each lamp entry of specified type into node and then saves that node into matches list
-				  lampData temp = new lampData(results.getString("ID"),results.getString("Bulb"),results.getString("Base"),results.getInt("currentLowestComboPrice"));
+				  lampData temp = new lampData(results.getString("ID"),results.getString("Bulb"),results.getString("Base"),results.getInt("Price"));
 				    temp1 = new node(temp);
 				   matches.add(temp1);
 				 
@@ -327,7 +327,7 @@ public class search {
 			
 			while (results.next()){
 				//saves data of each desk entry of type needed into temp node and then saves that temp node into matches list
-				deskData temp = new deskData(results.getString("ID"),results.getString("Legs"),results.getString("Top"),results.getString("Drawer"),results.getInt("currentLowestComboPrice"));
+				deskData temp = new deskData(results.getString("ID"),results.getString("Legs"),results.getString("Top"),results.getString("Drawer"),results.getInt("Price"));
 				temp1 = new node<deskData>(temp);
 				matches.add(temp1);
 				 
@@ -453,7 +453,7 @@ public class search {
 			
 			while (results.next()){				
 				//saves data of each chair entry with specified type into temp node and adds it to matches list
-				chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("currentLowestComboPrice"));
+				chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
 				temp1 = new node(temp);
 				matches.add(temp1);
 
