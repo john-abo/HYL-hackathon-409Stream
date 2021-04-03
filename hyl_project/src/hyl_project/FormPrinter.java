@@ -19,6 +19,8 @@ public class FormPrinter {
 	
 	private search myJDBC;
 	
+	private ArrayList<String> result;
+	
 	/**
 	 * Normal constructor. Ensures the parameters passed are valid using regEx and throws
 	 * illegal argument exceptions otherwise.
@@ -71,35 +73,45 @@ public class FormPrinter {
 
 		}
 		
+		
+	}
+	
+	public ArrayList<String> query() {
+		ArrayList<String> ret = new ArrayList<String>();
+		
 		//Begins querying the database for most optimal purchase
 		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
-		
-		ArrayList<String> result = new ArrayList<String>();
-		
+				
+		result = new ArrayList<String>();
+				
 		if (furniture.equalsIgnoreCase("chair")) {
 			System.out.println("Looking for chairs...");
 			
 			result = myJDBC.searchChair(type,  quantity);
-			
 		} else if (furniture.equalsIgnoreCase("desk")) {
 			System.out.println("Looking for desks...");
-			
+					
 			result = myJDBC.searchDesk(type,  quantity);
-			
 		} else if (furniture.equalsIgnoreCase("lamp")) {
 			System.out.println("Looking for lamps...");
-			
+					
 			result = myJDBC.searchLamp(type,  quantity);
-			
 		} else if (furniture.equalsIgnoreCase("filing")) {
 			System.out.println("Looking for filings...");
-			
+					
 			result = myJDBC.searchFiling(type,  quantity);
-			
 		} else {
 			System.out.println("That furniture can't be found");
 		}
+				
+		System.out.println("Results: ");
+				
+		for (String result : result) {
+			ret.add(result);
+		}
+		
+		return ret;
 	}
 	
 	/**
@@ -173,9 +185,17 @@ public class FormPrinter {
 		
 		ret += "Report #" + orderNum + "\n";
 		ret += "Furniture Order Form\n";
-		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity/* + "\n"*/;	//This needs to change once I get
+		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity + "\n";	//This needs to change once I get
 																								//the SQL data
-		
+		if (result != null) {
+			int i;
+			
+			for (i = 0; i < result.size() - 1 ; i++) {
+				ret += "ID: " + result.get(i) + "\n";
+			}
+			
+			ret += "\nTotal Cost: " + result.get(i);
+		}
 		//Somewhere here I need to determine whether or not a set could be found
 		//I need the rest of the group's code for this
 		

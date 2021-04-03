@@ -40,6 +40,8 @@ public class ProjectMain {
 		
 			
 		printer = new FormPrinter(userIn);
+		
+		System.out.println(printer.query());
 		//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 				
 		printer.writeReport();	//Writes report
