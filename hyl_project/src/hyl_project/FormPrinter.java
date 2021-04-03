@@ -70,7 +70,7 @@ public class FormPrinter {
 			}
 		} else {
 			System.err.println("No match found");
-
+			throw new IllegalArgumentException();
 		}
 		
 		
@@ -100,14 +100,14 @@ public class FormPrinter {
 	 * be assigned to null. User input is also verified to an extent, but the
 	 * user is no longer prompted for another input.
 	 */
-	public void query() {
+	public boolean query() {
 		
 		//Begins querying the database for most optimal purchase
 		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
 				
 		result = null;
-				
+		
 		if (furniture.equalsIgnoreCase("chair")) {
 			System.out.println("Looking for chairs...");
 			
@@ -127,6 +127,12 @@ public class FormPrinter {
 		} else {
 			System.out.println("That furniture can't be found");
 		}
+		
+		if (result == null) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**

@@ -38,14 +38,20 @@ public class ProjectMain {
 		FormPrinter printer;
 		userInput();
 		
+		try {
+			printer = new FormPrinter(userIn);
 			
-		printer = new FormPrinter(userIn);
-		printer.query();
-		
-		System.out.println(printer.formatReport());
-		//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
-				
-		printer.writeReport();	//Writes report
+			if (printer.query()) {
+				System.out.println(printer.formatReport());
+				//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
+						
+				printer.writeReport();	//Writes report
+			} else {
+				System.out.println("No results lols, somewhere here I'll print recommended and stuff");
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Bruh");
+		}
 		
 
 	}
