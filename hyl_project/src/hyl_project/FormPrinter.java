@@ -76,14 +76,37 @@ public class FormPrinter {
 		
 	}
 	
-	public ArrayList<String> query() {
-		ArrayList<String> ret = new ArrayList<String>();
+	/**
+	 * Copy Constructor, and ensures the clone is not null
+	 * 
+	 * @param clone
+	 */
+	public FormPrinter(FormPrinter clone) {
+		if (clone != null) {
+			
+			this.furniture = clone.getFurniture();
+			this.type = clone.getType();
+			this.quantity = clone.getQuantity();
+			
+		} else {
+			System.err.println("Clone is null");
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	/**
+	 * Performs the query in order to get a result from the database. Assigns
+	 * it to global result variable, if there are no possible results it will
+	 * be assigned to null. User input is also verified to an extent, but the
+	 * user is no longer prompted for another input.
+	 */
+	public void query() {
 		
 		//Begins querying the database for most optimal purchase
 		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
 				
-		result = new ArrayList<String>();
+		result = null;
 				
 		if (furniture.equalsIgnoreCase("chair")) {
 			System.out.println("Looking for chairs...");
@@ -103,32 +126,6 @@ public class FormPrinter {
 			result = myJDBC.searchFiling(type,  quantity);
 		} else {
 			System.out.println("That furniture can't be found");
-		}
-				
-		System.out.println("Results: ");
-				
-		for (String result : result) {
-			ret.add(result);
-		}
-		
-		return ret;
-	}
-	
-	/**
-	 * Copy Constructor, and ensures the clone is not null
-	 * 
-	 * @param clone
-	 */
-	public FormPrinter(FormPrinter clone) {
-		if (clone != null) {
-			
-			this.furniture = clone.getFurniture();
-			this.type = clone.getType();
-			this.quantity = clone.getQuantity();
-			
-		} else {
-			System.err.println("Clone is null");
-			throw new IllegalArgumentException();
 		}
 	}
 	
@@ -163,7 +160,10 @@ public class FormPrinter {
 	    	
 	    	//Write format to file
 	    	//going to need to create a method to return a formatted string
-	    	outStream.write(formatReport());
+	    	String fileHeader = "";
+	    	fileHeader += "Report #" + orderNum + "\n";
+			fileHeader += "Furniture Order Form\n";
+	    	outStream.write(fileHeader + formatReport());
 	    	
 	    	outStream.close();
 	    } catch (Exception e) {
@@ -183,8 +183,6 @@ public class FormPrinter {
 	public String formatReport() {
 		String ret = "";
 		
-		ret += "Report #" + orderNum + "\n";
-		ret += "Furniture Order Form\n";
 		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity + "\n";	//This needs to change once I get
 																								//the SQL data
 		if (result != null) {
