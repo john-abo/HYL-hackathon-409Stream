@@ -4,8 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import hyl_project.FormPrinter;
-import hyl_project.search;
+
+import edu.ucalgary.ensf409.FormPrinter;
+import edu.ucalgary.ensf409.search;
 
 import java.util.ArrayList;
 

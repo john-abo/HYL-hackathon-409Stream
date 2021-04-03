@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 
 import java.util.ArrayList;
 import java.util.Scanner;

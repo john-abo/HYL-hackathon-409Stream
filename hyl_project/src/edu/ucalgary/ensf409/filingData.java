@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 //class to store filing data
 public class filingData {
 	//all data for filing entry

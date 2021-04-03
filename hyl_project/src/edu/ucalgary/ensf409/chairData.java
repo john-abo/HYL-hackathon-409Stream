@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 //class to store chair data 
 public class chairData {
 	//all data for chair entry

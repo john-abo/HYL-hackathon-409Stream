@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 //class to store lamp data
 public class lampData {
 	//contains data for lamp entry

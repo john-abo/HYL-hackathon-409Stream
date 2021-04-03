@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 //class to store desk data
 public class deskData {
 	//all data for desk entry

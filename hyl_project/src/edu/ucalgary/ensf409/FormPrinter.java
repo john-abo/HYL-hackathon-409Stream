@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 
 import java.io.File;
 import java.io.FileWriter;

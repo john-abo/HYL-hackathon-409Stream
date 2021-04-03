@@ -1,4 +1,5 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
+
 import java.sql.*;
 import java.util.ArrayList;
 public class search {
