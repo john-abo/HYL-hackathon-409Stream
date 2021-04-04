@@ -1,6 +1,7 @@
-package hyl_project;
-
+package edu.ucalgary.ensf409;
+//class to store filing data
 public class filingData {
+	//all data for filing entry
 	 boolean Rails = false;
 	 boolean Cabinet = false;
 	 boolean Drawers = false;
@@ -10,7 +11,7 @@ public class filingData {
 	
 	 int price;
 	 /**
-	  * 
+	  * Constructor
 	  * @param id id of filing entry
 	  * @param Rails1 Rails value of filing entry
 	  * @param cabinet cabinet value of  filing entry

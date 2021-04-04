@@ -1,4 +1,4 @@
-package hyl_project;
+package edu.ucalgary.ensf409;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,36 +6,6 @@ import java.util.Scanner;
 public class ProjectMain {
 	
 	private static String userIn = "";
-	
-	/**
-	 * Lets not forget to document our methods as well :D
-	 */
-	public void calculateOption() {
-
-		//Lets get this working
-		//if (/*requestPossible*/){
-		//	produceOutput();
-		//} else {
-		//	//printSuggestions();
-		//}
-
-	}
-	
-	/**
-	 * Lets not forget to document our methods as well :D
-	 */
-	public void produceOutput() {
-		
-		//TEST
-		FormPrinter printer;
-		userInput();
-		System.out.println("User request: " + userIn);
-		
-		printer = new FormPrinter(userIn);
-		System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
-		
-		printer.writeReport();	//Writes report
-	}
 	
 	/**
 	 * Gets the user input. The message printed is meant to notifty the user about the format
@@ -62,9 +32,28 @@ public class ProjectMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
 		// TESTING NOW
+		System.out.println("Starting software...");
+		
+		FormPrinter printer;
+		userInput();
+		
+		try {
+			printer = new FormPrinter(userIn);
+			
+			if (printer.query()) {
+				System.out.println(printer.formatReport());
+				//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
+						
+				printer.writeReport();	//Writes report
+			} else {
+				System.out.println("No results lols, somewhere here I'll print recommended and stuff");
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Bruh");
+		}
+		
 
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
-	
 	}
 }
