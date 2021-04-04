@@ -601,7 +601,7 @@ public class search {
 				//contains manufacturer ID of current item being looked at
 				String id = results.getString("ManuID");
 				//if the current item in table has manufacturer ID thats not already in the list, that  manufacturer will be added to the list
-				if(!returnList.contains(id)){
+				if(!IDlist.contains(id)){
 					//finds entry of with specified ID and then it adds it to the list 
 		    		 findManu = dbConnect.prepareStatement("SELECT * FROM MANUFACTURER WHERE ManuID=?");
 					findManu.setString(1, id);
