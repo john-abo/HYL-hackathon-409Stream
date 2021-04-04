@@ -8,9 +8,19 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	
+
+	
 	//comboList contains the power set or all possible combinations of the currently found item list
 	private ArrayList<ArrayList<node>> comboList;
-	
+	/**
+	 * returns comboList instance variable
+	 * @return comboList, which lists all the possible list combinations
+	 */
+	public ArrayList<ArrayList<node>> getComboList() {
+		
+		return comboList;
+	 
+	}
 	/**
 	 * 
 	 * @param dBURL url of database
