@@ -87,6 +87,50 @@ public class FormPrinter {
 	}
 	
 	/**
+<<<<<<< Updated upstream:hyl_project/src/hyl_project/FormPrinter.java
+=======
+	 * Performs the query in order to get a result from the database. Assigns
+	 * it to global result variable, if there are no possible results it will
+	 * be assigned to null. User input is also verified to an extent, but the
+	 * user is no longer prompted for another input.
+	 */
+	public boolean query() {
+		
+		//Begins querying the database for most optimal purchase
+		myJDBC = new search("jdbc:mysql://localhost/inventory","root","ensf409");
+		myJDBC.initializeConnection();
+				
+		result = null;
+		
+		if (furniture.equalsIgnoreCase("chair")) {
+			System.out.println("Looking for chairs...");
+			
+			result = myJDBC.searchChair(type,  quantity);
+		} else if (furniture.equalsIgnoreCase("desk")) {
+			System.out.println("Looking for desks...");
+					
+			result = myJDBC.searchDesk(type,  quantity);
+		} else if (furniture.equalsIgnoreCase("lamp")) {
+			System.out.println("Looking for lamps...");
+					
+			result = myJDBC.searchLamp(type,  quantity);
+		} else if (furniture.equalsIgnoreCase("filing")) {
+			System.out.println("Looking for filings...");
+					
+			result = myJDBC.searchFiling(type,  quantity);
+		} else {
+			System.out.println("That furniture can't be found");
+		}
+		
+		if (result == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+>>>>>>> Stashed changes:hyl_project/src/edu/ucalgary/ensf409/FormPrinter.java
 	 * Writes report to .txt file. the number with which the report is associated
 	 * to is determined by orderNum static variable
 	 * 

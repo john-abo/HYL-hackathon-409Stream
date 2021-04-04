@@ -1,4 +1,14 @@
 Report #1
 Furniture Order Form
 
+<<<<<<< Updated upstream
 Original request: test testerson, 1652165
+=======
+Original request: desk lamp, 2
+ID: L013
+ID: L208
+ID: L112
+ID: L342
+
+Total Cost: $40
+>>>>>>> Stashed changes
