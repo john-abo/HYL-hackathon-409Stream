@@ -7,10 +7,8 @@ public class search {
 	public final String  USERNAME;
 	public final String PASSWORD;
 	private ResultSet results;
-	private filingData[] deletedFilingData;
-	private deskData[] deletedDeskData;
-	private chairData[] deletedChairData;
-	private lampData[] deletedLampData;
+	
+	
 	//done contains the power set
 	private ArrayList<ArrayList<node>> done = new ArrayList<ArrayList<node>>();
 	/**
@@ -159,12 +157,8 @@ public class search {
     	
 		done2.add("$" + String.valueOf(orderPrice));
 		
-		deletedFilingData = new filingData[done2.size()-1];
-		for (int i = 0; i < deletedFilingData.length; i++) {
-			deletedFilingData[i] = registerFilingHelper(done2.get(i));
-		}
-
-			
+		
+		/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
 		if (done2 != null) {
     		for (int i = 0; i < (done2.size() -1); i++){
     			if (done2.get(i).charAt(0) == 'F') {
@@ -172,12 +166,9 @@ public class search {
     			}
     		}   		
     	}
+    	*/
     	
-    	for (int i = 0; i < deletedFilingData.length; i++) {
-    		registerFiling(deletedFilingData[i]);
-    	}
-    	
-    	System.out.println(done2);
+    	//System.out.println(done2);
 		return done2;
 		
 		
@@ -299,12 +290,8 @@ public class search {
 			e.printStackTrace();
 		}
     	done2.add("$" + String.valueOf(orderPrice));
-    	deletedLampData = new lampData[done2.size()-1];
-		for (int i = 0; i < deletedLampData.length; i++) {
-			deletedLampData[i] = registerLampHelper(done2.get(i));
-		}
-
-			
+    	
+		/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
 		if (done2 != null) {
     		for (int i = 0; i < (done2.size() -1); i++){
     			if (done2.get(i).charAt(0) == 'L') {
@@ -312,12 +299,10 @@ public class search {
     			}
     		}   		
     	}
+    	*/
+    
     	
-    	for (int i = 0; i < deletedLampData.length; i++) {
-    		registerLamp(deletedLampData[i]);
-    	}
-    	
-    	System.out.println(done2);
+    	//System.out.println(done2);
 		return done2;
 	}
 	/**
@@ -436,12 +421,8 @@ public class search {
 		}
    
     	done2.add("$"+String.valueOf(orderPrice));
-    	deletedDeskData = new deskData[done2.size()-1];
-		for (int i = 0; i < deletedDeskData.length; i++) {
-			deletedDeskData[i] = registerDeskHelper(done2.get(i));
-		}
-
-			
+    	 
+    	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
 		if (done2 != null) {
     		for (int i = 0; i < (done2.size() -1); i++){
     			if (done2.get(i).charAt(0) == 'D') {
@@ -449,12 +430,9 @@ public class search {
     			}
     		}   		
     	}
+    	*/
     	
-    	for (int i = 0; i < deletedDeskData.length; i++) {
-    		registerDesk(deletedDeskData[i]);
-    	}
-    	
-    	System.out.println(done2);
+    	//System.out.println(done2);
     	
     	
     	
@@ -579,12 +557,9 @@ public class search {
 			e.printStackTrace();
 		}
     	done2.add("$"+String.valueOf(orderPrice));
-    	deletedChairData = new chairData[done2.size()-1];
-		for (int i = 0; i < deletedChairData.length; i++) {
-			deletedChairData[i] = registerChairHelper(done2.get(i));
-		}
-
-			
+    	
+    	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+    	
 		if (done2 != null) {
     		for (int i = 0; i < (done2.size() -1); i++){
     			if (done2.get(i).charAt(0) == 'C') {
@@ -592,12 +567,8 @@ public class search {
     			}
     		}   		
     	}
-    	
-    	for (int i = 0; i < deletedChairData.length; i++) {
-    		registerChair(deletedChairData[i]);
-    	}
-    	
-    	System.out.println(done2);
+    	*/
+    	//System.out.println(done2);
  
 		return done2;
 	}
@@ -624,7 +595,13 @@ public class search {
 		powerSet(arg,currentSet,index+1);
 		
 	}
-	
+	/**
+	 * Method to delete the chair currently bought from the database by using the chairID
+	 * preparedStatement connects to database using parameter query which "DELETES from chair" for a certain chairID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param ChairID ChairID of the chair to be deleted
+	 */
 	public void deleteChair(String ChairID) {
 		try {
             String query = "DELETE FROM chair WHERE ID = ?";
@@ -638,6 +615,13 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	/**
+	 * Method to delete the desk currently bought from the database by using the deskID
+	 * preparedStatement connects to database using parameter query which "DELETES from desk" for a certain deskID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param DeskID DeskID of the desk to be deleted
+	 */
 	public void deleteDesk(String DeskID) {
 		try {
             String query = "DELETE FROM desk WHERE ID = ?";
@@ -651,7 +635,13 @@ public class search {
             ex.printStackTrace();
         }
 	}
-	
+	/**
+	 * Method to delete the filing currently bought from the database by using the filingID
+	 * preparedStatement connects to database using parameter query which "DELETES from filing" for a certain filingID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param FilingID FilingID of the filing to be deleted
+	 */
 	public void deleteFiling(String FilingID) {
 		try {
             String query = "DELETE FROM filing WHERE ID = ?";
@@ -665,6 +655,13 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	/**
+	 * Method to delete the lamp currently bought from the database by using the lampID
+	 * preparedStatement connects to database using parameter query which "DELETES from lamp" for a certain lampID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param LampID LampID of the lamp to be deleted
+	 */
 	public void deleteLamp(String LampID) {
 		try {
             String query = "DELETE FROM lamp WHERE ID = ?";
@@ -678,6 +675,14 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	
+	/**
+	 * Method to delete the manufacturer by using ManuID
+	 * preparedStatement connects to database using parameter query which "DELETES from manufacturer" for a certain ManuID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param ManuID, ManuID of the manufacturer to be deleted
+	 */
 	public void deleteManufacturer(String ManuID) {
 		try {
             String query = "DELETE FROM manufacturer WHERE ID = ?";
@@ -692,226 +697,9 @@ public class search {
         }
 	}
 	
-	public deskData registerDeskHelper(String DeskID) {
-		 String ID = DeskID;
-		 String Type = null;
-		 String Legs = null;
-		 String Top = null;
-		 String Drawer = null;
-		 int Price = 0;
-		 String ManuID = null;
-		 try {
-			 String query = "SELECT * FROM desk WHERE ID = '" + DeskID + "'";
-			 Statement myStmt = dbConnect.createStatement();
-			 results = myStmt.executeQuery(query);
-	
-			 while (results.next()){
-				     
-	                Type = results.getString("Type");
-	                Legs = results.getString("Legs");
-	                Top = results.getString("Top");
-	                Drawer = results.getString("Drawer");
-	                Price += results.getInt("Price");
-	                ManuID = results.getString("ManuID");
-	               
-			 }
-	          	deskData x = new deskData(ID, Type, Legs, Top, Drawer, Price, ManuID);
-	            myStmt.close();
-	            return x;
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-		return null;
-	}
-	public void registerDesk(deskData abc) {
-		 try {
-	            
-	            String query = "INSERT INTO desk (ID, Type, Legs, Top, Drawer, Price, ManuID) VALUES (?,?,?,?,?,?,?)";
-	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
-	            
-	            myStmt.setString(1, abc.ID2);
-	            myStmt.setString(2, abc.Type2);
-	            myStmt.setString(3, abc.Legs2);
-	            myStmt.setString(4, abc.Top2);
-	            myStmt.setString(5, abc.Drawer2);
-	            myStmt.setInt(6, abc.Price2);
-	            myStmt.setString(7, abc.ManuID2);
-	            myStmt.executeUpdate();
-	            
-	            myStmt.close();
-
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-	
-	}
-	public filingData registerFilingHelper(String FilingID) {
-		
-		 String ID = FilingID;
-		 String Type = null;
-		 String Rails = null;
-		 String Drawers = null;
-		 String Cabinet = null;
-		 int Price = 0;
-		 String ManuID = null;
-		 try {
-			 String query = "SELECT * FROM filing WHERE ID = '" + FilingID + "'";
-			 Statement myStmt = dbConnect.createStatement();
-			 results = myStmt.executeQuery(query);
-	
-			 while (results.next()){
-				     
-	                Type = results.getString("Type");
-	                Rails = results.getString("Rails");
-	                Drawers = results.getString("Drawers");
-	                Cabinet = results.getString("Cabinet");
-	                Price += results.getInt("Price");
-	                ManuID = results.getString("ManuID");
-	                
-	                
-			 }
-			 filingData x = new filingData(ID, Type, Rails, Drawers, Cabinet, Price, ManuID);
-			 myStmt.close();
-			 return x;
-	           
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-		return null;
-	}
-	public void registerFiling(filingData abc) {
-		
-		 try {
-	            String query = "INSERT INTO filing (ID, Type, Rails, Drawers, Cabinet, Price, ManuID) VALUES (?,?,?,?,?,?,?)";
-	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
-	            
-	            myStmt.setString(1, abc.ID2);
-	            myStmt.setString(2, abc.Type2);
-	            myStmt.setString(3, abc.Rails2);
-	            myStmt.setString(4, abc.Drawers2);
-	            myStmt.setString(5, abc.Cabinet2);
-	            myStmt.setInt(6, abc.Price2);
-	            myStmt.setString(7, abc.ManuID2);
-	            myStmt.executeUpdate();
-	            
-	            myStmt.close();
-
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-	}
-	
-	public chairData registerChairHelper(String ChairID) {
-		
-		 String ID = ChairID;
-		 String Type = null;
-		 String Legs = null;
-		 String Arms = null;
-		 String Seat = null;
-		 String Cushion = null;
-		 int Price = 0;
-		 String ManuID = null;
-		 try {
-			 String query = "SELECT * FROM chair WHERE ID = '" + ChairID + "'";
-			 Statement myStmt = dbConnect.createStatement();
-			 results = myStmt.executeQuery(query);
-	
-			 while (results.next()){
-				     
-	                Type = results.getString("Type");
-	                Legs = results.getString("Legs");
-	                Arms = results.getString("Arms");
-	                Seat = results.getString("Seat");
-	                Cushion = results.getString("Cushion");
-	                Price += results.getInt("Price");
-	                ManuID = results.getString("ManuID");
-	                
-	                
-			 }
-			 chairData x = new chairData(ID, Type, Legs, Arms, Seat, Cushion, Price, ManuID);
-			 myStmt.close();
-			 return x;
-	           
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-		return null;
-	}
-	public void registerChair(chairData abc) {
-		
-		 try {
-	            String query = "INSERT INTO chair (ID, Type, Legs, Arms, Seat, Cushion, Price, ManuID) VALUES (?,?,?,?,?,?,?,?)";
-	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
-	            
-	            myStmt.setString(1, abc.ID2);
-	            myStmt.setString(2, abc.Type2);
-	            myStmt.setString(3, abc.Legs2);
-	            myStmt.setString(4, abc.Arms2);
-	            myStmt.setString(5, abc.Seat2);
-	            myStmt.setString(6, abc.Cushion2);
-	            myStmt.setInt(7, abc.Price2);
-	            myStmt.setString(8, abc.ManuID2);
-	            myStmt.executeUpdate();
-	            
-	            myStmt.close();
-
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-	}
-	
-	public lampData registerLampHelper(String LampID) {
-		
-		 String ID = LampID;
-		 String Type = null;
-		 String Base = null;
-		 String Bulb = null;
-		 int Price = 0;
-		 String ManuID = null;
-		 try {
-			 String query = "SELECT * FROM lamp WHERE ID = '" + LampID + "'";
-			 Statement myStmt = dbConnect.createStatement();
-			 results = myStmt.executeQuery(query);
-	
-			 while (results.next()){
-				     
-	                Type = results.getString("Type");
-	                Base = results.getString("Base");
-	                Bulb = results.getString("Bulb"); 
-	                Price += results.getInt("Price");
-	                ManuID = results.getString("ManuID");
-	                
-	                
-			 }
-			 lampData x = new lampData(ID, Type, Base, Bulb, Price, ManuID);
-			 myStmt.close();
-			 return x;
-	           
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-		return null;
-	}
-	public void registerLamp(lampData abc) {
-		
-		 try {
-	            String query = "INSERT INTO lamp (ID, Type, Base, Bulb, Price, ManuID) VALUES (?,?,?,?,?,?)";
-	            PreparedStatement myStmt = dbConnect.prepareStatement(query);
-	            
-	            myStmt.setString(1, abc.ID2);
-	            myStmt.setString(2, abc.Type2);
-	            myStmt.setString(3, abc.Base2);
-	            myStmt.setString(4, abc.Bulb2);
-	            myStmt.setInt(5, abc.Price2);
-	            myStmt.setString(6, abc.ManuID2);
-	            myStmt.executeUpdate();
-	            
-	            myStmt.close();
-
-	        } catch (SQLException ex) {
-	            ex.printStackTrace();
-	        }
-	}
+	/**
+	 * method that closes ResultSet and Connection Objects
+	 */
 	 public void close() {
 	        try {
 	            results.close();

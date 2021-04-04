@@ -8,14 +8,7 @@ public class chairData {
 	 String ID = "";
 	 int price;
 	 
-	 String ID2 = null;
-	 String Type2 = null;
-	 String Legs2 = null;
-	 String Arms2 = null;
-	 String Seat2 = null;
-	 String Cushion2 = null;
-	 int Price2 = 0;
-	 String ManuID2 = null;
+	
 	 /**
 	  * 
 	  * @param id id of table entry
@@ -49,14 +42,5 @@ public class chairData {
 		}
 	}
 	
-	public chairData(String ID, String Type, String Legs, String Arms, String Seat, String Cushion, int Price, String ManuID) {
-		this.ID2 = ID;
-		this.Type2 = Type;
-		this.Legs2 = Legs;
-		this.Arms2 = Arms;
-		this.Seat2 = Seat;
-		this.Cushion2 = Cushion;
-		this.Price2 = Price;
-		this.ManuID2 = ManuID;
-	}
+
 }

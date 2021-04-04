@@ -8,13 +8,7 @@ public class filingData {
 	
 	 String ID = "";
 	
-	 String ID2 = null;
-	 String Type2 = null;
-	 String Rails2 = null;
-	 String Drawers2 = null;
-	 String Cabinet2 = null;
-	 int Price2 = 0;
-	 String ManuID2 = null;
+
 	 
 	 /**
 	  * 
@@ -47,14 +41,5 @@ public class filingData {
 	}
 	
 	
-	public filingData(String ID, String Type, String Rails, String Drawers, String Cabinet, int Price, String ManuID) {
-		this.ID2 = ID;
-		this.Type2 = Type;
-		this.Rails2 = Rails;
-		this.Drawers2 = Drawers;
-		this.Cabinet2 = Cabinet;
-		this.Price2 = Price;
-		this.ManuID2 = ManuID;
-	}
 
 }

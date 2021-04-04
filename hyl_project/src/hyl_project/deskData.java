@@ -7,13 +7,7 @@ public class deskData {
 	 int price;
 	 String ID = "";
 	 
-	 String ID2 = null;
-	 String Type2 = null;
-	 String Legs2 = null;
-	 String Top2 = null;
-	 String Drawer2 = null;
-	 int Price2 = 0;
-	 String ManuID2 = null;
+	
 	
 	
 	 /**
@@ -46,14 +40,6 @@ public class deskData {
 		}
 	}
 	
-	public deskData(String id, String Type, String Legs, String Top, String Drawer, int Price, String ManuID) {
-		this.ID2 = id;
-		this.Type2 = Type;
-		this.Legs2 = Legs;
-		this.Top2 = Top;
-		this.Drawer2 = Drawer;
-		this.Price2 = Price;
-		this.ManuID2 = ManuID;
-	}
+	
 
 }

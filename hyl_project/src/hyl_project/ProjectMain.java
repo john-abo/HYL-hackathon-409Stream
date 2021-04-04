@@ -70,7 +70,7 @@ public class ProjectMain {
 		myJDBC.searchDesk("Standing", 1);
 		myJDBC.searchFiling("Large",1);
 		myJDBC.searchFiling("Large",1);
-		myJDBC.searchLamp("Desk",1);
+		myJDBC.searchLamp("Desk",2);
 		myJDBC.searchChair("Mesh",1);
 
 
