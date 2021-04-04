@@ -7,7 +7,7 @@ public class search {
 	public final String DBURL;
 	public final String  USERNAME;
 	public final String PASSWORD;
-	private ResultSet results;
+	
 	//comboList contains the power set or all possible combinations of the currently found item list
 	private ArrayList<ArrayList<node>> comboList;
 	/**
@@ -46,7 +46,7 @@ public class search {
 	    ArrayList<String> returnList = new ArrayList<String>();
 	    //total order currentLowestComboPrice
 	    long orderPrice = 0;
-	   
+	    ResultSet results;
 
     	try {
     		
@@ -157,7 +157,8 @@ public class search {
 	    	orderPrice += currentLowestComboPrice;
 	    	
 			}
-			
+			find.close();
+			results.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -180,9 +181,9 @@ public class search {
 		//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> returnList = new ArrayList<String>();
     	//total currentLowestComboPrice of order
-
+    	
     	long orderPrice = 0;
-
+    	ResultSet results;
     	try {
     		//finds all entries of lamp with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM LAMP WHERE Type=?");
@@ -287,6 +288,8 @@ public class search {
 	    	orderPrice += currentLowestComboPrice;
 			}
 			//go.printList();
+			results.close();
+			find.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -307,7 +310,7 @@ public class search {
 
 		//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> returnList = new ArrayList<String>();
-    
+    	ResultSet results;
     	try {
     		//finds all entries of desk with the specified type and saves them into results
     		PreparedStatement find = dbConnect.prepareStatement("SELECT * FROM DESK WHERE Type=?");
@@ -409,8 +412,10 @@ public class search {
 	    	}
 	    	//increases currentLowestComboPrice of order by currently found combo currentLowestComboPrice
 	    	orderPrice += currentLowestComboPrice;
+	    	
 			}
-			
+			find.close();
+			results.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -432,7 +437,7 @@ public class search {
 
     	//contains the combination with the lowest currentLowestComboPrice. currentLowestComboPrice is always at the END of the arraylist. If combination cannot be created, this is empty
     	ArrayList<String> returnList = new ArrayList<String>();
-    	
+    	ResultSet results;
     	
     	try {
     		//finds all entries of chair with the specified type and saves them into results
@@ -535,6 +540,8 @@ public class search {
 	    	//increases total price of order by currently found lowest combo price
 	    	orderPrice += currentLowestComboPrice;
 			}
+			find.close();
+			results.close();
 			//go.printList();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -568,6 +575,58 @@ public class search {
 		powerSet(arg,copyOfCurrentSet,index+1);
 		//This contains the current set/combination with the current element being looked at in the arg set/list(other case of any subset/combination)
 		powerSet(arg,currentSet,index+1);
+		
+	}
+	/**
+	 * finds all possible  manufacturers
+	 * @param  furniture type of furniture where manufacturers are being looked into (e.g, chair, filing, desk,lamp).
+	 * This needs to be in all lowercase
+	 * @return returns a list of chair manufacturers
+	 */
+	public ArrayList<String> findManufacturer(String furniture){
+		ResultSet results;
+		PreparedStatement find;
+		//contains all the manufacturers
+		ArrayList<String> returnList = new ArrayList<String>();
+		//contains list of manufacturer IDs
+		ArrayList<String> IDlist = new ArrayList<String>();
+		try {
+			
+			//finds all entries of chair and saves them into results
+			find = dbConnect.prepareStatement("SELECT * FROM " + furniture);
+			results = find.executeQuery();
+			ResultSet resultsManu = null;
+			PreparedStatement findManu = null;
+			while(results.next()) {
+				//contains manufacturer ID of current item being looked at
+				String id = results.getString("ManuID");
+				//if the current item in table has manufacturer ID thats not already in the list, that  manufacturer will be added to the list
+				if(!returnList.contains(id)){
+					//finds entry of with specified ID and then it adds it to the list 
+		    		 findManu = dbConnect.prepareStatement("SELECT * FROM MANUFACTURER WHERE ManuID=?");
+					findManu.setString(1, id);
+					//contains entry of manufacturer with specified ID
+					 resultsManu = findManu.executeQuery();
+					//adds id of manufacturer to ID and name of manufacturer to return list
+					while(resultsManu.next()) {
+					IDlist.add(id);
+					returnList.add(resultsManu.getString(2));
+					}
+				}
+			}
+			results.close();
+			findManu.close();
+			resultsManu.close();
+			find.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return returnList;
 		
 	}
 	
