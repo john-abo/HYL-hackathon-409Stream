@@ -54,6 +54,9 @@ public class SearchTests {
      */
     @After
     public void tearDown() {
+    	
+    	initDatabase();	//Reinitializes the database, in case something breaks
+    	
         subject = null;
         dbConnect = null;
     }
@@ -163,7 +166,7 @@ public class SearchTests {
     	for (String entry : manuList) {
     		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
     	}
-    
+    	
     }
     
     @Test
@@ -193,13 +196,12 @@ public class SearchTests {
     	ArrayList<String> subjectList = subject.findManufacturer("Bed");
     }
     
-    
-    
     /**
      * Initiallizes the database based on inventory.sql that was provided
      * by the class
      * 
      */
+
     private void initDatabase() {
     	//LOL look at this garbage
     	try {
