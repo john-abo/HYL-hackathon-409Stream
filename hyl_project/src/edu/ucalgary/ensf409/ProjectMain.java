@@ -48,7 +48,7 @@ public class ProjectMain {
 						
 				printer.writeReport();	//Writes report
 			} else {
-				System.out.println("No results lols, somewhere here I'll print recommended and stuff");
+				printer.failed();
 			}
 		} catch (IllegalArgumentException e) {
 			System.out.println("Bruh");

@@ -206,6 +206,18 @@ public class FormPrinter {
 		return ret;
 	}
 	
+	/**
+	 * Prints failure message to user, including recommended list of manufacturers
+	 */
+	public void failed() {
+		System.out.println("Order cannot be fulfilled based on current inventory");
+		System.out.println("Suggested manufacturers:");
+	
+		for (String man : myJDBC.findManufacturer(furniture)) {
+			System.out.println(man);
+		}
+	}
+	
 	public String getType() {
 		return type;
 	}

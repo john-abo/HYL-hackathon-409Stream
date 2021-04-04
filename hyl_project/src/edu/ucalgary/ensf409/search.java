@@ -579,7 +579,7 @@ public class search {
 	}
 	/**
 	 * finds all possible  manufacturers
-	 * @param  furniture type of furniture where manufacturers are being looked into (e.g, chair, filing, desk,lamp).
+	 * @param  furniture type of furniture where manufacturers are being looked into (e.g, chair, filing, desk, lamp).
 	 * This needs to be in all lowercase
 	 * @return returns a list of chair manufacturers
 	 */
