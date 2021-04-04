@@ -1,6 +1,9 @@
 package hyl_project_TESTS;
 
+import static org.junit.Assert.assertTrue;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +16,10 @@ public class SearchTests {
 	private search subject;
 	private Connection dbConnect;
 	
+	public final String DBURL = "jdbc:mysql://localhost/inventory";
+	public final String  USERNAME = "root";
+	public final String PASSWORD = "Pound_multiple_demonstration_watching";
+	
 	/**
      * Setup method that is invoked before each test method, initializing connection
      * with SQL database
@@ -23,19 +30,22 @@ public class SearchTests {
     public void setUp() throws Exception {
     	//Logs in with my current credentials
     	try {
-    		dbConnect = DriverManager.getConnection("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
+    		dbConnect = DriverManager.getConnection(DBURL,USERNAME,PASSWORD);
+    		
+    		if (dbConnect == null) {
+    			throw new SQLException();
+    		}
     	} catch (SQLException e) {
     		e.printStackTrace();
     		System.out.println("If even this fails, you're done lol");
     	}
-    	
-    	
-    	subject = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 
     	//This part is about to get ugly, avert your eyes
     	
     	initDatabase();	//Initializes database based on the the sample data given
     	
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     }
 
     /**
@@ -45,12 +55,145 @@ public class SearchTests {
     @After
     public void tearDown() {
         subject = null;
+        dbConnect = null;
+    }
+    
+    /*Constructor tests*/
+    
+    @Test
+    public void constructorValidUserTest() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    }
+    
+    @Test (expected = SQLException.class)
+    public void constructorInalidUrl() throws SQLException {
+    	subject = new search("invalid",USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    }
+    
+    @Test (expected = SQLException.class)
+    public void constructorInalidUsername() throws SQLException {
+    	subject = new search(DBURL,"invalid",PASSWORD);
+    	subject.initializeConnection();
+    }
+    
+    @Test (expected = SQLException.class)
+    public void constructorInvalidPassword() throws SQLException {
+    	subject = new search(DBURL,USERNAME,"invalid");
+    	subject.initializeConnection();
+    }
+    
+    /*Power set method tests*/
+    
+    //Can't test these rn, gonna need kyle to make me a getter for something in order to test it
+    @Test
+    public void powerSetSizeOne() {
+    	
     }
     
     @Test
-    public void testTest() {
-    	System.out.println("Lets see if my tests even work");
+    public void powerSetDecentSize() {
+    	
     }
+    
+    /*findManufacturer tests*/
+    
+    @Test
+    public void findManufacturerChair() throws SQLException {
+    	ArrayList<String> manuList = new ArrayList<String>();
+    	ArrayList<String> subjectList = subject.findManufacturer("chair");
+    	
+    	//Creats the expected list
+    	manuList.add("Chairs R Us");
+    	manuList.add("Office Furnishings");
+    	manuList.add("Furniture Goods");
+    	manuList.add("Fine Office Supplies");
+    	
+    	//Checking if every String that's an element of manuList is also an element of subjectList
+    	//assertTrue("", true);
+    	if (manuList.size() != subjectList.size()) {
+    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    	}
+    	
+    	for (String entry : manuList) {
+    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
+    	}
+    }
+    
+    @Test
+    public void findManufacturerDesk() throws SQLException {
+    	ArrayList<String> manuList = new ArrayList<String>();
+    	ArrayList<String> subjectList = subject.findManufacturer("desk");
+    	
+    	//Creats the expected list
+    	manuList.add("Academic Desks");
+    	manuList.add("Office Furnishings");
+    	manuList.add("Furniture Goods");
+    	manuList.add("Fine Office Supplies");
+    	
+    	//Checking if every String that's an element of manuList is also an element of subjectList
+    	//assertTrue("", true);
+    	if (manuList.size() != subjectList.size()) {
+    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    	}
+    	
+    	for (String entry : manuList) {
+    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
+    	}
+    
+    }
+    
+    @Test
+    public void findManufacturerLamp() throws SQLException {
+    	ArrayList<String> manuList = new ArrayList<String>();
+    	ArrayList<String> subjectList = subject.findManufacturer("lamp");
+    	
+    	//Creats the expected list
+    	manuList.add("Office Furnishings");
+    	manuList.add("Furniture Goods");
+    	manuList.add("Fine Office Supplies");
+    	
+    	//Checking if every String that's an element of manuList is also an element of subjectList
+    	//assertTrue("", true);
+    	if (manuList.size() != subjectList.size()) {
+    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    	}
+    	
+    	for (String entry : manuList) {
+    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
+    	}
+    
+    }
+    
+    @Test
+    public void findManufacturerFiling() throws SQLException {
+    	ArrayList<String> manuList = new ArrayList<String>();
+    	ArrayList<String> subjectList = subject.findManufacturer("filing");
+    	
+    	//Creats the expected list
+    	manuList.add("Office Furnishings");
+    	manuList.add("Furniture Goods");
+    	manuList.add("Fine Office Supplies");
+    	
+    	//Checking if every String that's an element of manuList is also an element of subjectList
+    	//assertTrue("", true);
+    	if (manuList.size() != subjectList.size()) {
+    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    	}
+    	
+    	for (String entry : manuList) {
+    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
+    	}
+    }
+
+    @Test (expected = SQLException.class)
+    public void findManufacturerInvalid() throws SQLException {
+    	//Should throw am SQLException
+    	ArrayList<String> subjectList = subject.findManufacturer("Bed");
+    }
+    
+    
     
     /**
      * Initiallizes the database based on inventory.sql that was provided
@@ -210,5 +353,6 @@ public class SearchTests {
     	PreparedStatement stmt;
 		stmt = dbConnect.prepareStatement(update);
 		int test = stmt.executeUpdate();
+		stmt.close();
     }
 }

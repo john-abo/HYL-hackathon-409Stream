@@ -1,5 +1,6 @@
 package edu.ucalgary.ensf409;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,6 +31,7 @@ public class ProjectMain {
 	 * Main method
 	 * 
 	 * @param args
+	 * @throws SQLException Thrown if an SQL error is encountered
 	 */
 	public static void main(String[] args) {
 		

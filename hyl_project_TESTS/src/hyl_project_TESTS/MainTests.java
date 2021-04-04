@@ -8,6 +8,7 @@ import org.junit.Test;
 import edu.ucalgary.ensf409.FormPrinter;
 import edu.ucalgary.ensf409.search;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MainTests {
@@ -113,7 +114,7 @@ public class MainTests {
 	}
 	
 	@Test
-	public void chairSearching1() {
+	public void chairSearching1() throws SQLException {
 		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
 		ArrayList<String> expected = new ArrayList<String>(); //EMPTY LIST FOR NOW

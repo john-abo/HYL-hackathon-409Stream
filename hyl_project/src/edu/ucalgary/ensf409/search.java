@@ -10,6 +10,7 @@ public class search {
 	
 	//comboList contains the power set or all possible combinations of the currently found item list
 	private ArrayList<ArrayList<node>> comboList;
+	
 	/**
 	 * 
 	 * @param dBURL url of database
@@ -17,20 +18,21 @@ public class search {
 	 * @param pASSWORD password of user
 	 */
 	public search( String dBURL, String uSERNAME, String pASSWORD) {
-		
 		DBURL = dBURL;
 		USERNAME = uSERNAME;
 		PASSWORD = pASSWORD;
 	}
 	/**
 	 * connects to sql database
+	 * 
+	 * @throws SQLException Thrown if an error occurs with the sql
 	 */
-	public void initializeConnection() {
+	public void initializeConnection() throws SQLException {
 		 try {
 			dbConnect = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Unable to connect to database");
+			throw e;
 		}
 		
 	}
@@ -582,8 +584,9 @@ public class search {
 	 * @param  furniture type of furniture where manufacturers are being looked into (e.g, chair, filing, desk, lamp).
 	 * This needs to be in all lowercase
 	 * @return returns a list of chair manufacturers
+	 * @throws SQLException 
 	 */
-	public ArrayList<String> findManufacturer(String furniture){
+	public ArrayList<String> findManufacturer(String furniture) throws SQLException{
 		ResultSet results;
 		PreparedStatement find;
 		//contains all the manufacturers
@@ -621,8 +624,8 @@ public class search {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		}
 		
 		
@@ -697,8 +700,4 @@ public class search {
         }
 	}
 	
-	
-	
-	
-
 }

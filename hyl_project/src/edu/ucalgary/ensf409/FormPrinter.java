@@ -2,6 +2,7 @@ package edu.ucalgary.ensf409;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -99,12 +100,18 @@ public class FormPrinter {
 	 * it to global result variable, if there are no possible results it will
 	 * be assigned to null. User input is also verified to an extent, but the
 	 * user is no longer prompted for another input.
+	 * @throws SQLException 
 	 */
 	public boolean query() {
 		
 		//Begins querying the database for most optimal purchase
 		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
-		myJDBC.initializeConnection();
+		try {
+			myJDBC.initializeConnection();
+		} catch (SQLException e) {
+			System.err.println("Invalid login credentials, user is not authorized");
+			e.printStackTrace();
+		}
 				
 		result = null;
 		
@@ -213,8 +220,12 @@ public class FormPrinter {
 		System.out.println("Order cannot be fulfilled based on current inventory");
 		System.out.println("Suggested manufacturers:");
 	
-		for (String man : myJDBC.findManufacturer(furniture)) {
-			System.out.println(man);
+		try {
+			for (String man : myJDBC.findManufacturer(furniture)) {
+				System.out.println(man);
+			}
+		} catch (SQLException e) {
+			System.out.println("Furniture " + furniture + " is not in the inventory");
 		}
 	}
 	
