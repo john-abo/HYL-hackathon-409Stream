@@ -91,7 +91,19 @@ public class search {
 	            }
 			//returns immediately if no results were found
 			if(temp1 == null) {
-				return null;
+				returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	
 			}
 			//iterates once to find each item required in order
 			for(int b = 0; b < needed ; b++) {
@@ -154,8 +166,19 @@ public class search {
 		
 	    	//if no valid combo is found, index1 is -1. Therefore order is invalid
 	      	if(index1 ==-1) {
-	      		
-	    		return null;
+	      		returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	
 	    	}
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
@@ -181,10 +204,10 @@ public class search {
 		
 		
 		/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
-		if (done2 != null) {
-    		for (int i = 0; i < (done2.size() -1); i++){
-    			if (done2.get(i).charAt(0) == 'F') {
-    				deleteFiling(done2.get(i));
+		if (returnList != null) {
+    		for (int i = 0; i < (returnList.size() -1); i++){
+    			if (returnList.get(i).charAt(0) == 'F') {
+    				deleteFiling(returnList.get(i));
     			}
     		}   		
     	}
@@ -238,7 +261,19 @@ public class search {
 	            }
 			//returns immediately if no results were found
 			if(temp1 == null) {
-				return null;
+				returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	
 			}
 		
 			//iterates once for each item required in order
@@ -297,7 +332,19 @@ public class search {
 	    	
 	    	//if valid combo could not be found index = -1. Therefore order is invalid
 	      	if(index1 ==-1) {
-	    		return null;
+	      		returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	
 	    	}
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
@@ -320,10 +367,10 @@ public class search {
     	returnList.add("$" + String.valueOf(orderPrice));
     	
     	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
-		if (done2 != null) {
-    		for (int i = 0; i < (done2.size() -1); i++){
-    			if (done2.get(i).charAt(0) == 'L') {
-    				deleteLamp(done2.get(i));
+		if (returnList != null) {
+    		for (int i = 0; i < (returnList.size() -1); i++){
+    			if (returnList.get(i).charAt(0) == 'L') {
+    				deleteLamp(returnList.get(i));
     			}
     		}   		
     	}
@@ -374,8 +421,19 @@ public class search {
 	            }
 			//returns immediately if no results were found
 			if(temp1 == null) {
-				
-				return null;
+				returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (001,002,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	
 			}
 			//iterates once for each item needed in order
 			for(int b= 0 ; b < needed ; b++) {
@@ -433,8 +491,19 @@ public class search {
 			
 	    	//this means no combination was found and therefore order is not possible
 	      	if(index1 ==-1) {
-	      		
-	    		return null;
+	      		returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (001,002,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	        
 	    	}
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
@@ -456,10 +525,10 @@ public class search {
     	
     	returnList.add("$"+String.valueOf(orderPrice));
     	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
-		if (done2 != null) {
-    		for (int i = 0; i < (done2.size() -1); i++){
-    			if (done2.get(i).charAt(0) == 'D') {
-    				deleteDesk(done2.get(i));
+		if (returnList != null) {
+    		for (int i = 0; i < (returnList.size() -1); i++){
+    			if (returnList.get(i).charAt(0) == 'D') {
+    				deleteDesk(returnList.get(i));
     			}
     		}   		
     	}
@@ -508,7 +577,19 @@ public class search {
 	         }
 			//returns immediately if no results were found
 			if(temp1 == null) {
-				return null;
+				returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,003,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	        
 			}
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ; b++) {
@@ -569,7 +650,19 @@ public class search {
 	    	
 	    	//if index1 = -1, then no valid combo could be found and therefore order is invalid
 	    	if(index1 ==-1) {
-	    		return null;
+	    		returnList.clear();
+	    		  try {                    
+	  	            Statement myStmt = dbConnect.createStatement();
+	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,003,004,005)");
+	  	          while (results.next()){	 	  
+		             returnList.add(results.getString("Name"));
+		            }
+		            
+		            myStmt.close();
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+	  	          return returnList; 	          
 	    	}
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
@@ -594,14 +687,16 @@ public class search {
     	
 /* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
     	
-		if (done2 != null) {
-    		for (int i = 0; i < (done2.size() -1); i++){
-    			if (done2.get(i).charAt(0) == 'C') {
-    				deleteChair(done2.get(i));
+		if (returnList != null) {
+    		for (int i = 0; i < (returnList.size() -1); i++){
+    			if (returnList.get(i).charAt(0) == 'C') {
+    				deleteChair(returnList.get(i));
     			}
     		}   		
     	}
     	*/
+    	
+    	
 		return returnList;
 		
 		
@@ -637,52 +732,7 @@ public class search {
 	 * @return returns a list of chair manufacturers
 	 * @throws SQLException 
 	 */
-	public ArrayList<String> findManufacturer(String furniture) throws SQLException{
-		ResultSet results;
-		PreparedStatement find;
-		//contains all the manufacturers
-		ArrayList<String> returnList = new ArrayList<String>();
-		//contains list of manufacturer IDs
-		ArrayList<String> IDlist = new ArrayList<String>();
-		try {
-			
-			//finds all entries of chair and saves them into results
-			find = dbConnect.prepareStatement("SELECT * FROM " + furniture);
-			results = find.executeQuery();
-			ResultSet resultsManu = null;
-			PreparedStatement findManu = null;
-			while(results.next()) {
-				//contains manufacturer ID of current item being looked at
-				String id = results.getString("ManuID");
-				//if the current item in table has manufacturer ID thats not already in the list, that  manufacturer will be added to the list
-				if(!IDlist.contains(id)){
-					//finds entry of with specified ID and then it adds it to the list 
-		    		 findManu = dbConnect.prepareStatement("SELECT * FROM MANUFACTURER WHERE ManuID=?");
-					findManu.setString(1, id);
-					//contains entry of manufacturer with specified ID
-					 resultsManu = findManu.executeQuery();
-					//adds id of manufacturer to ID and name of manufacturer to return list
-					while(resultsManu.next()) {
-					IDlist.add(id);
-					returnList.add(resultsManu.getString(2));
-					}
-				}
-			}
-			results.close();
-			findManu.close();
-			resultsManu.close();
-			find.close();
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-		
-		return returnList;
-		
-	}
+	
 	/**
 	 * Method to delete the chair currently bought from the database by using the chairID
 	 * preparedStatement connects to database using parameter query which "DELETES from chair" for a certain chairID, which is the input to this method.

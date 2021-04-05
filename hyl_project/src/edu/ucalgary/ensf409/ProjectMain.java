@@ -33,8 +33,14 @@ public class ProjectMain {
 	 * @param args
 	 * @throws SQLException Thrown if an SQL error is encountered
 	 */
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws SQLException {
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","mouser3","ensf409");
+		myJDBC.initializeConnection();
+		System.out.println(myJDBC.searchDesk("Standing", 5));
+		System.out.println(myJDBC.searchChair("Mesh", 5));
+		System.out.println(myJDBC.searchLamp("Medium", 7));
+		System.out.println(myJDBC.searchFiling("Medium", 80));
+		/*
 		// TESTING NOW
 		System.out.println("Starting software...");
 		
@@ -55,7 +61,6 @@ public class ProjectMain {
 		} catch (IllegalArgumentException e) {
 			System.out.println("Bruh");
 		}
-		
-
+		*/
 	}
 }
