@@ -13,7 +13,9 @@ public class FormPrinter {
 	private int quantity;
 	
 	private static String REGEX = "(.*?) (.*?), (.*?) ";
+	private static String REGEX1 = "(.*?) (.*?) (.*?) ";
 	private static Pattern PATTERN = Pattern.compile(REGEX);
+	private static Pattern PATTERN1 = Pattern.compile(REGEX1);
 	
 	private final static String DIRECTORY = "OUT";
 	private static int orderNum = 0;
@@ -29,6 +31,9 @@ public class FormPrinter {
 	 * @param request	The string request that the user enters. will be stripped for spaces
 	 * 					and perhaps could be made case insensitive.
 	 */
+ 	public FormPrinter() {
+	}
+
 	public FormPrinter(String request) {
 		String s = "";
 		Matcher match = PATTERN.matcher(request + " ");
@@ -93,6 +98,58 @@ public class FormPrinter {
 			System.err.println("Clone is null");
 			throw new IllegalArgumentException();
 		}
+	}
+	
+
+	public boolean querySQL(String request) {
+		
+		String Dburl;
+		String Username;
+		String Password;
+
+
+		String s = "";
+		Matcher match = PATTERN1.matcher(request + " ");
+		
+		System.out.println("SQL request: " + request);
+		
+		if (match.find()) {
+			s = match.group(1);
+			
+			if (s != null) {
+				Dburl = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(2);
+			
+			if (s != null) {
+				Username = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(3);
+			
+			if (s != null) {
+				Password = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+
+		} else {
+			System.err.println("No match found");
+			throw new IllegalArgumentException();
+		}		
+		
+		return true;
 	}
 	
 	/**
