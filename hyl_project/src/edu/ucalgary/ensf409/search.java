@@ -683,6 +683,13 @@ public class search {
 		return returnList;
 		
 	}
+	/**
+	 * Method to delete the chair currently bought from the database by using the chairID
+	 * preparedStatement connects to database using parameter query which "DELETES from chair" for a certain chairID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param ChairID ChairID of the chair to be deleted
+	 */
 	
 	public void deleteChair(String ChairID) {
 		try {
@@ -778,10 +785,4 @@ public class search {
             ex.printStackTrace();
         }
 	}
-	
-	/**
-	 * method that closes ResultSet and Connection Objects
-	 */
-	 
-	
 }
