@@ -178,6 +178,17 @@ public class search {
     	
     	//adds currentLowestComboPrice to return list
 		returnList.add("$" + String.valueOf(orderPrice));
+		
+		
+		/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+		if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'F') {
+    				deleteFiling(done2.get(i));
+    			}
+    		}   		
+    	}
+    	*/
 		return returnList;
 		
 		
@@ -308,6 +319,16 @@ public class search {
 		}
     	returnList.add("$" + String.valueOf(orderPrice));
     	
+    	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+		if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'L') {
+    				deleteLamp(done2.get(i));
+    			}
+    		}   		
+    	}
+    	*/
+    	
 		return returnList;
 	}
 	/**
@@ -434,6 +455,15 @@ public class search {
 		}
     	
     	returnList.add("$"+String.valueOf(orderPrice));
+    	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+		if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'D') {
+    				deleteDesk(done2.get(i));
+    			}
+    		}   		
+    	}
+    	*/
 		return returnList;
 		
 	}
@@ -561,6 +591,17 @@ public class search {
 		}
     	//adds order price to return list
     	returnList.add("$"+String.valueOf(orderPrice));
+    	
+/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+    	
+		if (done2 != null) {
+    		for (int i = 0; i < (done2.size() -1); i++){
+    			if (done2.get(i).charAt(0) == 'C') {
+    				deleteChair(done2.get(i));
+    			}
+    		}   		
+    	}
+    	*/
 		return returnList;
 		
 		
@@ -656,6 +697,13 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	/**
+	 * Method to delete the desk currently bought from the database by using the deskID
+	 * preparedStatement connects to database using parameter query which "DELETES from desk" for a certain deskID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param DeskID DeskID of the desk to be deleted
+	 */
 	public void deleteDesk(String DeskID) {
 		try {
             String query = "DELETE FROM desk WHERE ID = ?";
@@ -669,7 +717,13 @@ public class search {
             ex.printStackTrace();
         }
 	}
-	
+	/**
+	 * Method to delete the filing currently bought from the database by using the filingID
+	 * preparedStatement connects to database using parameter query which "DELETES from filing" for a certain filingID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param FilingID FilingID of the filing to be deleted
+	 */
 	public void deleteFiling(String FilingID) {
 		try {
             String query = "DELETE FROM filing WHERE ID = ?";
@@ -683,6 +737,13 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	/**
+	 * Method to delete the lamp currently bought from the database by using the lampID
+	 * preparedStatement connects to database using parameter query which "DELETES from lamp" for a certain lampID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param LampID LampID of the lamp to be deleted
+	 */
 	public void deleteLamp(String LampID) {
 		try {
             String query = "DELETE FROM lamp WHERE ID = ?";
@@ -696,6 +757,14 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	
+	/**
+	 * Method to delete the manufacturer by using ManuID
+	 * preparedStatement connects to database using parameter query which "DELETES from manufacturer" for a certain ManuID, which is the input to this method.
+	 * SetString method for preparedStatement used to make the change, and then executeUpdate executes the Statement so that the database is impacted.
+	 * Everything is closed properly using the close method and try catch block is there to catch any SQLExceptions.
+	 * @param ManuID, ManuID of the manufacturer to be deleted
+	 */
 	public void deleteManufacturer(String ManuID) {
 		try {
             String query = "DELETE FROM manufacturer WHERE ID = ?";
@@ -709,5 +778,10 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	
+	/**
+	 * method that closes ResultSet and Connection Objects
+	 */
+	 
 	
 }
