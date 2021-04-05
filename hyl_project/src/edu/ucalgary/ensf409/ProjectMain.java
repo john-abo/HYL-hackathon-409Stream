@@ -48,7 +48,7 @@ public class ProjectMain {
 		// TESTING NOW
 		System.out.println("Starting software...");
 		
-		FormPrinter printer;
+		FormPrinter printer = new FormPrinter();
 		userInput();
 
 		try {
@@ -61,7 +61,7 @@ public class ProjectMain {
 		try {
 			printer = new FormPrinter(userIn);
 			
-			if (printer.query()) {
+			if (printer.query(sqlIn)) {
 				System.out.println(printer.formatReport());
 				//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 						
