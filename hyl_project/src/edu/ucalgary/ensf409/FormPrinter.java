@@ -176,6 +176,11 @@ public class FormPrinter {
 	    	String fileHeader = "";
 	    	fileHeader += "Report #" + orderNum + "\n";
 			fileHeader += "Furniture Order Form\n";
+			
+			fileHeader += "\nFaculty Name:";
+			fileHeader += "Contact:";
+			fileHeader += "Date\n:";
+			
 	    	outStream.write(fileHeader + formatReport());
 	    	
 	    	outStream.close();
