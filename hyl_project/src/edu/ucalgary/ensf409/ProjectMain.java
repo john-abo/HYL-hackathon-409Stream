@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class ProjectMain {
 	
+	private static String sqlIn = "";
 	private static String userIn = "";
 	
 	/**
@@ -15,6 +16,15 @@ public class ProjectMain {
 	private static void userInput() {
 		Scanner input = new Scanner(System.in);
 		
+		System.out.println("Enter your SQL Information in the format");
+		System.out.println("\n<dbURL> <Username> <Password>\n");
+		System.out.println("<dbURL>:		For our Project it should be jdbc:mysql://localhost/inventory");
+		System.out.println("<Username>:		It can be either 'root' or your own custom Username");
+		System.out.println("<Password>:		Your Password for this particular Username");
+		System.out.println("\nEnter:");
+		
+		sqlIn = input.nextLine();
+
 		System.out.println("Enter request in the format");
 		System.out.println("\n<furniture type> <furniture>, <quantity>\n");
 		System.out.println("<Furniture type>:	Type of furniture, such as mesh, Adjustable, or Swing Arm");
@@ -40,6 +50,13 @@ public class ProjectMain {
 		
 		FormPrinter printer;
 		userInput();
+
+		try {
+			boolean example = printer.querySQL(sqlIn);
+
+		} catch (IllegalArgumentException e) {
+			System.out.println("Bruh");
+		}
 		
 		try {
 			printer = new FormPrinter(userIn);
