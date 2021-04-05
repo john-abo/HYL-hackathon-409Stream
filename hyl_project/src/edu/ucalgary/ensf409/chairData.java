@@ -1,6 +1,7 @@
-package hyl_project;
-
+package edu.ucalgary.ensf409;
+//class to store chair data 
 public class chairData {
+	//all data for chair entry
 	 boolean legs = false;
 	 boolean arms = false;
 	 boolean seat = false;
@@ -10,7 +11,7 @@ public class chairData {
 	 
 	
 	 /**
-	  * 
+	  * Constructor
 	  * @param id id of table entry
 	  * @param legs1 legs value of table entry
 	  * @param arms1 arms value of table entry

@@ -4,7 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import hyl_project.FormPrinter;
+
+import edu.ucalgary.ensf409.FormPrinter;
+import edu.ucalgary.ensf409.search;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MainTests {
@@ -14,7 +18,7 @@ public class MainTests {
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidTypeConst() {
 		subject = new FormPrinter("");	//no idea how to test this case exactly
-													//I think I can query for existing types
+										//I think I can query for existing types
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -110,8 +114,8 @@ public class MainTests {
 	}
 	
 	@Test
-	public void chairSearching1() {
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","code","zhongli9");
+	public void chairSearching1() throws SQLException {
+		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
 		myJDBC.initializeConnection();
 		ArrayList<String> expected = new ArrayList<String>(); //EMPTY LIST FOR NOW
 		ArrayList<String> actual = myJDBC.searchChair("Task",1);

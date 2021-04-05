@@ -1,4 +1,8 @@
 Report #1
 Furniture Order Form
 
-Original request: test testerson, 1652165
+Original request: MESH chair, 1
+ID: C0942
+ID: C9890
+
+Total Cost: $150
