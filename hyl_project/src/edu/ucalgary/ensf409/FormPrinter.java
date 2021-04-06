@@ -239,8 +239,12 @@ public class FormPrinter {
 		} else {
 			System.out.println("That furniture can't be found");
 		}
-		
-		if (result == null) {
+		//this checks if the recommended manufacturer list was returned, because if it was returned there would be no price at the end
+		if (result.get(result.size()-1).charAt(0) != '$') {
+			System.out.println("Order cannot be fulfilled based on current inventory. Suggested manufacturers are ");
+			for(int i = 0; i < result.size(); i++) {
+				System.out.println(result.get(i));
+			}
 			return false;
 		}
 		
@@ -325,15 +329,7 @@ public class FormPrinter {
 		return ret;
 	}
 	
-	/**
-	 * Prints failure message to user, including recommended list of manufacturers
-	 */
-	public void failed() {
-		System.out.println("Order cannot be fulfilled based on current inventory");
-		System.out.println("Suggested manufacturers:");
 	
-		
-	}
 	
 	public String getType() {
 		return type;

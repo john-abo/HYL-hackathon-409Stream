@@ -66,9 +66,7 @@ public class ProjectMain {
 				//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 						
 				printer.writeReport();	//Writes report
-			} else {
-				printer.failed();
-			}
+			} 
 		} catch (IllegalArgumentException e) {
 			System.out.println("Bruh");
 		}
