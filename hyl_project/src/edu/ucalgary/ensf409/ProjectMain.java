@@ -29,7 +29,7 @@ public class ProjectMain {
 		System.out.println("\n<furniture type> <furniture>, <quantity>\n");
 		System.out.println("<Furniture type>:	Type of furniture, such as mesh, Adjustable, or Swing Arm");
 		System.out.println("<Furniture>:		Furniture that's being checked, such as Desk, Lamp, Chair");
-		System.out.println("<Quantity>:			Amount of specific furniture you are looking for");
+		System.out.println("<Quantity>:		Amount of specific furniture you are looking for");
 		System.out.println("\nEnter:");
 		
 		userIn = input.nextLine();
