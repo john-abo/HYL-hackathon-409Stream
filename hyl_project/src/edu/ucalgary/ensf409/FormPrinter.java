@@ -159,10 +159,58 @@ public class FormPrinter {
 	 * user is no longer prompted for another input.
 	 * @throws SQLException 
 	 */
-	public boolean query() {
+	public boolean query(String request) {
 		
 		//Begins querying the database for most optimal purchase
-		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
+		
+		String Dburl;
+		String Username;
+		String Password;
+
+
+		String s = "";
+		Matcher match = PATTERN1.matcher(request + " ");
+				
+		if (match.find()) {
+			s = match.group(1);
+			
+			if (s != null) {
+				Dburl = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(2);
+			
+			if (s != null) {
+				Username = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(3);
+			
+			if (s != null) {
+				Password = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+
+		} else {
+			System.err.println("No match found");
+			throw new IllegalArgumentException();
+		}
+
+
+
+
+		myJDBC = new search(Dburl, Username, Password);
 		try {
 			myJDBC.initializeConnection();
 		} catch (SQLException e) {
@@ -235,8 +283,8 @@ public class FormPrinter {
 			fileHeader += "Furniture Order Form\n";
 			
 			fileHeader += "\nFaculty Name:";
-			fileHeader += "Contact:";
-			fileHeader += "Date\n:";
+			fileHeader += "\nContact:";
+			fileHeader += "\nDate:\n";
 			
 	    	outStream.write(fileHeader + formatReport());
 	    	
@@ -260,6 +308,8 @@ public class FormPrinter {
 		
 		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity + "\n";	//This needs to change once I get
 																								//the SQL data
+		ret += "\nItems Ordered\n";
+		
 		if (result != null) {
 			int i;
 			
