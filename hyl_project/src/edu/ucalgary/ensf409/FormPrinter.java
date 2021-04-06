@@ -233,6 +233,11 @@ public class FormPrinter {
 	    	String fileHeader = "";
 	    	fileHeader += "Report #" + orderNum + "\n";
 			fileHeader += "Furniture Order Form\n";
+			
+			fileHeader += "\nFaculty Name:";
+			fileHeader += "Contact:";
+			fileHeader += "Date\n:";
+			
 	    	outStream.write(fileHeader + formatReport());
 	    	
 	    	outStream.close();
@@ -277,13 +282,7 @@ public class FormPrinter {
 		System.out.println("Order cannot be fulfilled based on current inventory");
 		System.out.println("Suggested manufacturers:");
 	
-		try {
-			for (String man : myJDBC.findManufacturer(furniture)) {
-				System.out.println(man);
-			}
-		} catch (SQLException e) {
-			System.out.println("Furniture " + furniture + " is not in the inventory");
-		}
+		
 	}
 	
 	public String getType() {

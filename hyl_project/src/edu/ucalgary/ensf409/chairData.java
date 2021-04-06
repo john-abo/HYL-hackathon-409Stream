@@ -8,6 +8,8 @@ public class chairData {
 	 boolean cushion = false;
 	 String ID = "";
 	 int price;
+	 
+	
 	 /**
 	  * Constructor
 	  * @param id id of table entry
@@ -40,4 +42,6 @@ public class chairData {
 			
 		}
 	}
+	
+
 }

@@ -43,8 +43,8 @@ public class ProjectMain {
 	 * @param args
 	 * @throws SQLException Thrown if an SQL error is encountered
 	 */
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws SQLException {
+	
 		// TESTING NOW
 		System.out.println("Starting software...");
 		
@@ -73,6 +73,5 @@ public class ProjectMain {
 			System.out.println("Bruh");
 		}
 		
-
 	}
 }

@@ -5,11 +5,12 @@ public class filingData {
 	 boolean Rails = false;
 	 boolean Cabinet = false;
 	 boolean Drawers = false;
-	
+	 int price;
 	
 	 String ID = "";
 	
-	 int price;
+
+	 
 	 /**
 	  * Constructor
 	  * @param id id of filing entry
@@ -19,7 +20,7 @@ public class filingData {
 	  * 
 	  * @param price price of filing entry
 	  */
-
+	
 	public filingData( String id, String Rails1, String cabinet1,
 			String Drawers1,  int price) {
 		this.ID = id;
@@ -39,5 +40,7 @@ public class filingData {
 			
 		}
 	}
+	
+	
 
 }
