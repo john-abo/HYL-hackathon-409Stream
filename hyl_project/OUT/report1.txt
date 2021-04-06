@@ -1,8 +1,0 @@
-Report #1
-Furniture Order Form
-
-Original request: MESH chair, 1
-ID: C0942
-ID: C9890
-
-Total Cost: $150
