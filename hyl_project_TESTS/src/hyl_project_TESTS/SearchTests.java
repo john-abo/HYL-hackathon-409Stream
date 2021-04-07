@@ -1,5 +1,6 @@
 package hyl_project_TESTS;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.*;
@@ -220,38 +221,83 @@ public class SearchTests {
     	}
     }
     
-    /*Meat and potatoes of the tests, the searching*/
+    /* Meat and potatoes of the tests, the searching
+     * Hopefully these can just be copy pasted, but for sure
+     * there's going to need to be a helper method where it
+     * compared arrayLists? I think there's already a method
+     * for that
+     */
     
-    public void searchChairPossible() {
+    @Test
+    public void searchChairPossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
+    }
+    
+    @Test
+    public void searchDeskPossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
 
-    public void searchDeskPossible() {
+    @Test
+    public void searchLampPossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
 
-    public void searchLampPossible() {
+    @Test
+    public void searchFilingPossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
 
-    public void searchFilingPossible() {
+    @Test
+    public void searchChairImpossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
 
-    public void searchChairImpossible() {
+    @Test
+    public void searchDeskImpossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
 
-    public void searchDeskImpossible() {
+    @Test
+    public void searchLampImpossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
 
-    public void searchLampImpossible() {
+    @Test
+    public void searchFilingImpossible() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
-    }
-
-    public void searchFilingImpossible() {
-    	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("Task",1);
     }
     /**
      * Initiallizes the database based on inventory.sql that was provided

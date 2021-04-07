@@ -112,13 +112,4 @@ public class MainTests {
 		reportInt = subject.writeReport();	//report3.txt
 		assertTrue("reportInt is incorrect. Expected: 3, Actual: " + reportInt, reportInt == 3);
 	}
-	
-	@Test
-	public void chairSearching1() throws SQLException {
-		search myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
-		myJDBC.initializeConnection();
-		ArrayList<String> expected = new ArrayList<String>(); //EMPTY LIST FOR NOW
-		ArrayList<String> actual = myJDBC.searchChair("Task",1);
-		assertEquals(expected, actual);
-	}
 }
