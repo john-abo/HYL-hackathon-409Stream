@@ -55,7 +55,7 @@ public class ProjectMain {
 			boolean example = printer.querySQL(sqlIn);
 
 		} catch (IllegalArgumentException e) {
-			System.out.println("Bruh");
+			
 		}
 		
 		try {
@@ -68,7 +68,7 @@ public class ProjectMain {
 				printer.writeReport();	//Writes report
 			} 
 		} catch (IllegalArgumentException e) {
-			System.out.println("Bruh");
+			
 		}
 		
 	}

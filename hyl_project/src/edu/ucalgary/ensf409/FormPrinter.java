@@ -71,11 +71,11 @@ public class FormPrinter {
 				}
 				
 			} catch (Exception e) {
-				System.err.println("Invalid Integer passed. Passed: \"" + s + "\"");
+				System.err.println("This is not represent a valid number of items to order. Passed: \"" + s + "\"");
 				throw new IllegalArgumentException();
 			}
 		} else {
-			System.err.println("No match found");
+			System.err.println("The input does not represent a valid order.");
 			throw new IllegalArgumentException();
 		}
 		
@@ -145,7 +145,7 @@ public class FormPrinter {
 			}
 
 		} else {
-			System.err.println("No match found");
+			System.err.println("This input does not represent a valid order");
 			throw new IllegalArgumentException();
 		}		
 		
