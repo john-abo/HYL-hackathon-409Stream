@@ -345,7 +345,7 @@ public class SearchTests {
     				+ "('C3405',	'Task',	'Y',	'Y',	'N',	'N',	100,	'003'),\r\n"
     				+ "('C9890',	'Mesh',	'N',	'Y',	'N',	'Y',	50,	'003'),\r\n"
     				+ "('C7268',	'Executive',	'N',	'N',	'Y',	'N',	75,	'004'),\r\n"
-    				+ "('C0942',	'Mesh',	'Y',	'N',	'Y',	'Y',	100,	'005'),\r\n"
+    				+ "('C0942',	'Mesh',	'Y',	'N',	'Y',	'Y',	175,	'005'),\r\n"
     				+ "('C4839',	'Ergonomic',	'N',	'N',	'N',	'Y',	50,	'002'),\r\n"
     				+ "('C2483',	'Executive',	'Y',	'Y',	'N',	'N',	175,	'002'),\r\n"
     				+ "('C5789',	'Ergonomic',	'Y',	'N',	'N',	'Y',	125,	'003'),\r\n"
@@ -383,7 +383,7 @@ public class SearchTests {
     				+ "('D1927',	'Standing',	'Y',	'N',	'Y',	200,	'005'),\r\n"
     				+ "('D1030',	'Adjustable',	'N',	'Y',	'N',	150,	'002'),\r\n"
     				+ "('D4438',	'Standing',	'N',	'Y',	'Y',	150,	'004'),\r\n"
-    				+ "('D5437',	'Adjustable',	'Y',	'N',	'N',	50,	'001'),\r\n"
+    				+ "('D5437',	'Adjustable',	'Y',	'N',	'N',	200,	'001'),\r\n"
     				+ "('D3682',	'Adjustable',	'N',	'N',	'Y',	50,	'005')");
     		executeUpdate("DROP TABLE IF EXISTS LAMP");
     		executeUpdate("CREATE TABLE LAMP (\r\n"
@@ -435,7 +435,7 @@ public class SearchTests {
     				+ "('F006',	'Small',	'Y',	'Y',	'N',	50,	'005'),\r\n"
     				+ "('F007',	'Medium',	'N',	'Y',	'Y',	150,	'002'),\r\n"
     				+ "('F008',	'Medium',	'Y',	'N',	'N',	50,	'005'),\r\n"
-    				+ "('F009',	'Medium',	'Y',	'Y',	'N',	150,	'004'),\r\n"
+    				+ "('F009',	'Medium',	'Y',	'Y',	'N',	100,	'004'),\r\n"
     				+ "('F010',	'Large',	'Y',	'N',	'Y',	225,	'002'),\r\n"
     				+ "('F011',	'Large',	'N',	'Y',	'Y',	225,	'005'),\r\n"
     				+ "('F012',	'Large',	'N',	'Y',	'N',	75,	'005'),\r\n"
