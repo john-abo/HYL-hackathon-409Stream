@@ -91,12 +91,18 @@ public class SearchTests {
     
     //Can't test these rn, gonna need kyle to make me a getter for something in order to test it
     @Test
-    public void powerSetSizeOne() {
+    public void powerSetSizeOne() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
     	
     }
     
     @Test
-    public void powerSetDecentSize() {
+    public void powerSetDecentSize() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
     	
     }
     

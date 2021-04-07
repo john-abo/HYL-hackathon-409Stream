@@ -853,11 +853,25 @@ public class search {
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setString(1, ManuID);
-            myStmt.executeUpdate();
+            int resultCount = myStmt.executeUpdate();
             myStmt.close();
 
+            if (resultCount == 0) {
+            	throw new IllegalArgumentException();
+            }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 	}
+	
+	/**
+     * returns comboList instance variable
+     * @return comboList, which lists all the possible list combinations
+     */
+	public ArrayList<ArrayList<node>> getComboList() {
+
+        return comboList;
+
+    }
 }
