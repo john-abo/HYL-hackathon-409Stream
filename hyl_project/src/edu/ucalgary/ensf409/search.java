@@ -12,6 +12,8 @@ public class search {
 	private ArrayList<ArrayList<node>> comboList;
 	
 	/**
+	 * Constructor for the class, sets the DBURL, USERNAME, and PASSWORD strings that
+	 * will be used later
 	 * 
 	 * @param dBURL url of database
 	 * @param uSERNAME username of user
@@ -251,7 +253,7 @@ public class search {
 				 
 				   
 				
-				
+			
 	            }
 			//returns manufacturer list immediately if no results were found
 			if(temp1 == null) {
@@ -748,15 +750,19 @@ public class search {
 	 * @param ChairID ChairID of the chair to be deleted
 	 */
 	
-	public void deleteChair(String ChairID) {
+	public void deleteChair(String ChairID) throws IllegalArgumentException{
 		try {
             String query = "DELETE FROM chair WHERE ID = ?";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setString(1, ChairID);
-            myStmt.executeUpdate();
+            int resultCount = myStmt.executeUpdate();
             myStmt.close();
 
+            if (resultCount == 0) {
+            	throw new IllegalArgumentException();
+            }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -774,9 +780,13 @@ public class search {
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setString(1, DeskID);
-            myStmt.executeUpdate();
+            int resultCount = myStmt.executeUpdate();
             myStmt.close();
 
+            if (resultCount == 0) {
+            	throw new IllegalArgumentException();
+            }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -794,9 +804,13 @@ public class search {
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setString(1, FilingID);
-            myStmt.executeUpdate();
+            int resultCount = myStmt.executeUpdate();
             myStmt.close();
 
+            if (resultCount == 0) {
+            	throw new IllegalArgumentException();
+            }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -814,9 +828,13 @@ public class search {
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setString(1, LampID);
-            myStmt.executeUpdate();
+            int resultCount = myStmt.executeUpdate();
             myStmt.close();
 
+            if (resultCount == 0) {
+            	throw new IllegalArgumentException();
+            }
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

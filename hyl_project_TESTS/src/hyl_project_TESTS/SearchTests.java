@@ -100,108 +100,122 @@ public class SearchTests {
     	
     }
     
-    /*findManufacturer tests*/
+    /*Tests delete metheds*/
     
     @Test
-    public void findManufacturerChair() throws SQLException {
-    	ArrayList<String> manuList = new ArrayList<String>();
-    	ArrayList<String> subjectList = subject.findManufacturer("chair");
+    public void deleteExistingChair() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
-    	//Creats the expected list
-    	manuList.add("Chairs R Us");
-    	manuList.add("Office Furnishings");
-    	manuList.add("Furniture Goods");
-    	manuList.add("Fine Office Supplies");
+    	if (getChairByID("C1320")) {
     	
-    	//Checking if every String that's an element of manuList is also an element of subjectList
-    	//assertTrue("", true);
-    	if (manuList.size() != subjectList.size()) {
-    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    		subject.deleteChair("C1320");
+    	
+    		assertTrue("Chair still exists after attempt to delete it", !getChairByID("C1320"));
+    	} else {
+    		throw new SQLException();
     	}
+    }
+    
+    @Test (expected = IllegalArgumentException.class) 
+    public void deleteNonexistingChair() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
-    	for (String entry : manuList) {
-    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
+    	//Just using invalid ID, such as empty string
+    	//results should be the same whether id is in
+    	//the right format or not
+    	if (!getChairByID("")) {
+    		
+    		subject.deleteChair("");
+    		
     	}
     }
     
     @Test
-    public void findManufacturerDesk() throws SQLException {
-    	ArrayList<String> manuList = new ArrayList<String>();
-    	ArrayList<String> subjectList = subject.findManufacturer("desk");
+    public void deleteExistingDesk() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
-    	//Creats the expected list
-    	manuList.add("Academic Desks");
-    	manuList.add("Office Furnishings");
-    	manuList.add("Furniture Goods");
-    	manuList.add("Fine Office Supplies");
+    	if (getDeskByID("D3820")) {
     	
-    	//Checking if every String that's an element of manuList is also an element of subjectList
-    	//assertTrue("", true);
-    	if (manuList.size() != subjectList.size()) {
-    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    		subject.deleteDesk("D3820");
+    		
+    		assertTrue("Desk still exists after attempt to delete it", !getDeskByID("D3820"));
+    	} else {
+    		throw new SQLException();
     	}
-    	
-    	for (String entry : manuList) {
-    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
-    	}
+    }
     
+    @Test (expected = IllegalArgumentException.class)
+    public void deleteNonexistingDesk() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	if (!getDeskByID("")) {
+    		
+    		subject.deleteDesk("");
+    		
+    	}
     }
     
     @Test
-    public void findManufacturerLamp() throws SQLException {
-    	ArrayList<String> manuList = new ArrayList<String>();
-    	ArrayList<String> subjectList = subject.findManufacturer("lamp");
+    public void deleteExistingLamp() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
     	
-    	//Creats the expected list
-    	manuList.add("Office Furnishings");
-    	manuList.add("Furniture Goods");
-    	manuList.add("Fine Office Supplies");
+    	if (getLampByID("L132")) {
     	
-    	//Checking if every String that's an element of manuList is also an element of subjectList
-    	//assertTrue("", true);
-    	if (manuList.size() != subjectList.size()) {
-    		assertTrue("The lists aren't the same size, and cannot be equal", false);
+    		subject.deleteLamp("L132");
+    		
+    		assertTrue("Lamp still exists after attempt to delete it", !getLampByID("L132"));
+    	} else {
+    		throw new SQLException();
     	}
-    	
-    	for (String entry : manuList) {
-    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
-    	}
-    	
     }
     
-    @Test
-    public void findManufacturerFiling() throws SQLException {
-    	ArrayList<String> manuList = new ArrayList<String>();
-    	ArrayList<String> subjectList = subject.findManufacturer("filing");
-    	
-    	//Creats the expected list
-    	manuList.add("Office Furnishings");
-    	manuList.add("Furniture Goods");
-    	manuList.add("Fine Office Supplies");
-    	
-    	//Checking if every String that's an element of manuList is also an element of subjectList
-    	//assertTrue("", true);
-    	if (manuList.size() != subjectList.size()) {
-    		assertTrue("The lists aren't the same size, and cannot be equal", false);
-    	}
-    	
-    	for (String entry : manuList) {
-    		assertTrue("List provided did not contain: " + entry, subjectList.contains(entry));
-    	}
-    }
+    @Test (expected = IllegalArgumentException.class)
+    public void deleteNonexistingLamp() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
 
-    @Test (expected = SQLException.class)
-    public void findManufacturerInvalid() throws SQLException {
-    	//Should throw am SQLException
-    	ArrayList<String> subjectList = subject.findManufacturer("Bed");
+    	if (!getLampByID("")) {
+    		
+    		subject.deleteLamp("");
+    		
+    	}
     }
     
+    @Test
+    public void deleteExistingFiling() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	if (getFilingByID("F001")) {
+    	
+    		subject.deleteFiling("F001");
+    		
+    		assertTrue("Filing still exists after attempt to delete it", !getFilingByID("F001"));
+    	} else {
+    		throw new SQLException();
+    	}
+    }
+    
+    @Test (expected = IllegalArgumentException.class)
+    public void deleteNonexistingFiling() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+
+    	if (!getFilingByID("")) {
+    		
+    		subject.deleteFiling("");
+    		
+    	}
+    }
     /**
      * Initiallizes the database based on inventory.sql that was provided
      * by the class
-     * 
      */
-
     private void initDatabase() {
     	//LOL look at this garbage
     	try {
@@ -351,10 +365,96 @@ public class SearchTests {
     	//System.out.println("The deed is done, but what sort of man have you become");
     }
     
-    private void executeUpdate(String update) throws SQLException{
+    @SuppressWarnings("unused")
+	private void executeUpdate(String update) throws SQLException{
     	PreparedStatement stmt;
 		stmt = dbConnect.prepareStatement(update);
 		int test = stmt.executeUpdate();
 		stmt.close();
+    }
+    
+    /*
+     * Lets me search the data base for a specific piece of furniture
+     * based on it's ID
+     */
+    
+    private boolean getChairByID(String ID) {
+    	try {
+    		String query = "SELECT * FROM CHAIR WHERE ID=?";
+    		PreparedStatement stmt = dbConnect.prepareStatement(query);
+    		
+    		stmt.setString(1, ID);
+    		ResultSet queryResult = stmt.executeQuery();
+    		
+    		if (!queryResult.next()) {
+    			System.out.println("Chair " + ID + " does not exist");
+    			return false;
+    		}
+    		
+    	} catch (SQLException e) {
+    		System.out.println("Failed query");
+    		return false;
+    	}
+    	return true;
+    }
+    
+    private boolean getDeskByID(String ID) {
+    	try {
+    		String query = "SELECT * FROM DESK WHERE ID=?";
+    		PreparedStatement stmt = dbConnect.prepareStatement(query);
+    		
+    		stmt.setString(1, ID);
+    		ResultSet queryResult = stmt.executeQuery();
+    		
+    		if (!queryResult.next()) {
+    			System.out.println("Desk " + ID + " does not exist");
+    			return false;
+    		}
+    		
+    	} catch (SQLException e) {
+    		System.out.println("Failed query");
+    		return false;
+    	}
+    	return true;
+    }
+    
+    private boolean getLampByID(String ID) {
+    	try {
+    		String query = "SELECT * FROM Lamp WHERE ID=?";
+    		PreparedStatement stmt = dbConnect.prepareStatement(query);
+    		
+    		stmt.setString(1, ID);
+    		ResultSet queryResult = stmt.executeQuery();
+    		
+    		if (!queryResult.next()) {
+    			System.out.println("Lamp " + ID + " does not exist");
+    			return false;
+    		}
+    		
+    	} catch (SQLException e) {
+    		System.out.println("Failed query");
+    		return false;
+    	}
+    	return true;
+    }
+    
+    private boolean getFilingByID(String ID) {
+    	try {
+    		String query = "SELECT * FROM Filing WHERE ID=?";
+    		PreparedStatement stmt = dbConnect.prepareStatement(query);
+    		
+    		stmt.setString(1, ID);
+    		ResultSet queryResult = stmt.executeQuery();
+    		
+    		if (!queryResult.next()) {
+    			System.out.println("Filing " + ID + " does not exist");
+    			return false;
+    		}
+    		
+    	} catch (SQLException e) {
+    		System.out.println("Failed query");
+    		return false;
+    	}
+    	return true;
     }
 }
