@@ -90,6 +90,7 @@ public class SearchTests {
     /*Power set method tests*/
     
     //Can't test these rn, gonna need kyle to make me a getter for something in order to test it
+    //maybe I'll get kyle to make this considering how embedded it is with his class
     @Test
     public void powerSetSizeOne() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -217,6 +218,40 @@ public class SearchTests {
     		subject.deleteFiling("");
     		
     	}
+    }
+    
+    /*Meat and potatoes of the tests, the searching*/
+    
+    public void searchChairPossible() {
+    	
+    }
+
+    public void searchDeskPossible() {
+    	
+    }
+
+    public void searchLampPossible() {
+    	
+    }
+
+    public void searchFilingPossible() {
+    	
+    }
+
+    public void searchChairImpossible() {
+    	
+    }
+
+    public void searchDeskImpossible() {
+    	
+    }
+
+    public void searchLampImpossible() {
+    	
+    }
+
+    public void searchFilingImpossible() {
+    	
     }
     /**
      * Initiallizes the database based on inventory.sql that was provided

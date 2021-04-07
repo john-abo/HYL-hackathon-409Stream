@@ -100,7 +100,14 @@ public class FormPrinter {
 		}
 	}
 	
-
+	/**
+	 * I don't recall making this method, what the hell is going on here
+	 * Can someone please comment this if they made this function so we
+	 * know what it does. That'd be much appreciated
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public boolean querySQL(String request) {
 		
 		String Dburl;
