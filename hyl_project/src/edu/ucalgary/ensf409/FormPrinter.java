@@ -101,10 +101,9 @@ public class FormPrinter {
 	}
 	
 	/**
-	 * I don't recall making this method, what the hell is going on here
-	 * Can someone please comment this if they made this function so we
-	 * know what it does. That'd be much appreciated
-	 * 
+	 * Performs the initial query in order to get SQL directory and Login
+	 * information. If the information is invalid, access will be denied.
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -192,6 +191,7 @@ public class FormPrinter {
 			s = match.group(2);
 			
 			if (s != null) {
+
 				Username = s;
 			} else {
 				//I don't think it's possible to reach these exceptions
