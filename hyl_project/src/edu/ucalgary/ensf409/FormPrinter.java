@@ -43,7 +43,7 @@ public class FormPrinter {
 		if (match.find()) {
 			s = match.group(1);
 			
-			if (s != null ) {
+			if (s != null) {
 				type = s;
 			} else {
 				//I don't think it's possible to reach these exceptions
@@ -104,7 +104,7 @@ public class FormPrinter {
 	 * Performs the initial query in order to get SQL directory and Login
 	 * information. If the information is invalid, access will be denied.
 	 *
-	 * @param request
+	 * @param request String consisting of DBUrl, Username and Password separated by whitespaces.
 	 * @return
 	 */
 	public boolean querySQL(String request) {
