@@ -24,7 +24,8 @@ public class SearchTests {
 	
 	/**
      * Setup method that is invoked before each test method, initializing connection
-     * with SQL database
+     * with SQL database. The database used for testing is the one provided in the 
+     * inventory.sql file
      * 
      * @throws Exception
      */
