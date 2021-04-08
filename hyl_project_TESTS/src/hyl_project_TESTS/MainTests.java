@@ -15,17 +15,11 @@ public class MainTests {
 	
 	public FormPrinter subject;
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void invalidTypeConst() {
-		subject = new FormPrinter("");	//no idea how to test this case exactly
-										//I think I can query for existing types
-	}
-	
-	@Test (expected = IllegalArgumentException.class)
-	public void invalidFurnitureConst() {
-		subject = new FormPrinter("");	//no idea how to test this case exactly
-													//And here I can query tables
-	}
+	/*
+	 * Constructor tests. All of which are passed invalid arguments except the last one
+	 * That means all tests must throw an exception except for the last one in order
+	 * to pass
+	 */
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidIntegerConst() {

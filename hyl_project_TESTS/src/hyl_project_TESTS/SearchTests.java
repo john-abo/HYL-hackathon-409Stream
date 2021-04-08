@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import edu.ucalgary.ensf409.search;
 
+//these tests can take a while, please be patient. 
 public class SearchTests {
 	
 	private search subject;
@@ -19,11 +20,12 @@ public class SearchTests {
 	
 	public final String DBURL = "jdbc:mysql://localhost/inventory";
 	public final String  USERNAME = "root";
-	public final String PASSWORD = "Pound_multiple_demonstration_watching";
+	public final String PASSWORD = "ensf409";
 	
 	/**
      * Setup method that is invoked before each test method, initializing connection
-     * with SQL database
+     * with SQL database. The database used for testing is the one provided in the 
+     * inventory.sql file
      * 
      * @throws Exception
      */
@@ -63,7 +65,13 @@ public class SearchTests {
         dbConnect = null;
     }
     
-    /*Constructor tests*/
+    /*
+     * Constructor tests
+     * These are pretty straight forward, if the constructor is supposed to throw an exception
+     * and it doesn't, the tests fails. If it's supposed to succeed, nothing is thrown and the
+     * test is passed. No other functionality is tested with that case, as an object will be
+     * made no matter what
+     */
     
     @Test
     public void constructorValidUserTest() throws SQLException {
@@ -89,27 +97,14 @@ public class SearchTests {
     	subject.initializeConnection();
     }
     
-    /*Power set method tests*/
     
-    //Can't test these rn, gonna need kyle to make me a getter for something in order to test it
-    //maybe I'll get kyle to make this considering how embedded it is with his class
-    @Test
-    public void powerSetSizeOne() throws SQLException {
-    	subject = new search(DBURL,USERNAME,PASSWORD);
-    	subject.initializeConnection();
-    	
-    	
-    }
     
-    @Test
-    public void powerSetDecentSize() throws SQLException {
-    	subject = new search(DBURL,USERNAME,PASSWORD);
-    	subject.initializeConnection();
-    	
-    	
-    }
     
-    /*Tests delete metheds*/
+    /*
+     * Tests delete methods
+     * Thankfully I have the initDatabase method, so these won't actually change the
+     * database permanently. Running the main program will cause it to change, however.
+     */
     
     @Test
     public void deleteExistingChair() throws SQLException {
@@ -222,14 +217,16 @@ public class SearchTests {
     	}
     }
     
-    /* Meat and potatoes of the tests, the searching
+    /* 
+     * Meat and potatoes of the tests, the searching
+     * 
      * Hopefully these can just be copy pasted, but for sure
      * there's going to need to be a helper method where it
      * compared arrayLists? I think there's already a method
-     * for that
+     * for that. (There wasn't lol)
      * 
      * The search methods also return a combo with the lowest price
-     * and the lowest ID numbers are prioritized
+     * The combinations with lowest ID numbers first are prioritized.
      */
     
     @Test
@@ -240,9 +237,10 @@ public class SearchTests {
     	ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> actual = subject.searchChair("mesh", 1);
 		
+		expected.add("C6748");
+		expected.add("C8138");
 		expected.add("C9890");
-		expected.add("C0942");
-		expected.add("$150");
+		expected.add("$200");
 		
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
@@ -255,12 +253,12 @@ public class SearchTests {
     	ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> actual = subject.searchDesk("Adjustable", 2);
 		
-		expected.add("D4475");
-		expected.add("D5437");
+		
+		expected.add("D7373");
 		expected.add("D3682");
 		expected.add("D2746");
 		expected.add("D1030");
-		expected.add("$700");
+		expected.add("$800");
 		
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
@@ -292,12 +290,18 @@ public class SearchTests {
 		
 		expected.add("F007");
 		expected.add("F008");
-		expected.add("F014");
+		expected.add("F009");
+		expected.add("F002");
 		expected.add("$400");
 		
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
+    /* 
+     * These tests search for an order that cannot be fulfilled and are supposed to fail
+     * The method should not return a list with a price
+     */
+    
     @Test
     public void searchChairImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -355,7 +359,7 @@ public class SearchTests {
     }
     /**
      * Initiallizes the database based on inventory.sql that was provided
-     * by the class
+     * by the class. This is before the last second updated .sql was given
      */
     private void initDatabase() {
     	//LOL look at this garbage
