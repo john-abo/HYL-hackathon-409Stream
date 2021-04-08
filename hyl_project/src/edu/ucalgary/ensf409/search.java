@@ -46,9 +46,12 @@ public class search {
 	 * @return arraylist string containing ids of all ordered items, returns recommended manufacturer list for invalid order. total order price always at end of list
 	 */
 	public ArrayList<String> searchFiling(String lookup,int needed){
-		//contains the combination with the lowest price. Price is always at the END of the arraylist. If combination cannot be created, this contains recommended manufacturer list
+		
+		//contains the combination with the lowest price. Price is always at the END of the arraylist.
+		//If combination cannot be created, this contains recommended manufacturer list
 	    ArrayList<String> returnList = new ArrayList<String>();
-	    //total order price
+	    
+		//total order price
 	    long orderPrice = 0;
 	    ResultSet results;
 
@@ -59,137 +62,155 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 		
-			
 			//used to check if combination is valid
 			boolean Rails = false;
 			boolean Cabinet = false;
 			boolean Drawers = false;
 			
 			boolean total = false;
+			
 			//this matches list will contain all the filing entries that match the type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
 			while (results.next()){
+				
 				if(results.getString("Type").equals(lookup)) {
+					
 					//saves data of each filing entry of specified type into node and then saves that node into matches list
-				   filingData temp = new filingData(results.getString("ID"),results.getString("Rails"),results.getString("Cabinet"),results.getString("Drawers"),results.getInt("Price"));
+					filingData temp = new filingData(results.getString("ID"),
+													results.getString("Rails"),
+													results.getString("Cabinet"),
+													results.getString("Drawers"),
+													results.getInt("Price"));
 				    temp1 = new node(temp);
-				   matches.add(temp1);
-				 
-				   
+					matches.add(temp1);
 				}
 				
-	            }
+	        }
+			
 			//returns recommended manufacturer list if no results were found
 			if(temp1 == null) {
 				returnList.clear();
-	    		  try {                    
-	  	            Statement myStmt = dbConnect.createStatement();
-	  	            //looks for all manufacturers with ids that make filings and saves them into results
-	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
-	  	          while (results.next()){
-	  	        	  //adds the name of each filing manufacturer to list
-		             returnList.add(results.getString("Name"));
-		            }
+	    			try {                    
+	  	            	Statement myStmt = dbConnect.createStatement();
+	  	            
+						//looks for all manufacturers with ids that make filings and saves them into results
+	  	           		results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+	  	          		while (results.next()){
+	  	        	  		//adds the name of each filing manufacturer to list
+		             		returnList.add(results.getString("Name"));
+		            	}
 		            
-		            myStmt.close();
-		        } catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-	  	          return returnList; 	
+		            	myStmt.close();
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+	  	          	return returnList; 	
 			}
+
 			//iterates once to find each item required in order
 			for(int b = 0; b < needed ; b++) {
+
 				//price of current combination
-				 long combinedPrice = 0;
-				 //current lowest combination price
+				long combinedPrice = 0;
+				
+				//current lowest combination price
 				long currentLowestComboPrice = Long.MAX_VALUE;
+				
 				//intializes all possible combination list comboList
 				comboList = new ArrayList<ArrayList<node>>();
-			//saves index of found combination
-		    int index1 = -1;
-			//empty arraylist
-			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set/all possible combinations for the matches list
+				
+				//saves index of found combination
+				int index1 = -1;
+				
+				//empty arraylist
+				ArrayList<node> g = new ArrayList<node>();
+				
+				//finds the power set/all possible combinations for the matches list
+				powerSet(matches,g,0);
 
-			powerSet(matches,g,0);
-			//removes the empty set
-			comboList.remove(0);
-			//iterates over each possible combination/subset
-	    	for(int i = 0; i < comboList.size(); i++) {
-	    		//resets for next combination price
-	    		combinedPrice = 0;
-	    		//iterates over each element in combination
-	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			filingData comboItem = (filingData) comboList.get(i).get(j).element;
-	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			Rails |= comboItem.Rails ;
+				//removes the empty set
+				comboList.remove(0);
+				
+				//iterates over each possible combination/subset
+				for(int i = 0; i < comboList.size(); i++) {	
 	    		
-	    		   Cabinet |= comboItem.Cabinet;
-	    		   
-	    		    Drawers |= comboItem.Drawers;
+					//resets for next combination price
+					combinedPrice = 0;
+
+					//iterates over each element in combination
+					for(int j = 0; j< comboList.get(i).size(); j++) {
+						
+						filingData comboItem = (filingData) comboList.get(i).get(j).element;
+						
+						//checks if combination is valid by checking if at least 1 element is true for each part
+						Rails |= comboItem.Rails;
+						Cabinet |= comboItem.Cabinet;	    		   
+	    		    	Drawers |= comboItem.Drawers;
 	    		    
+	    		    	//total determines whether the combination is valid by seeing if each combination has required parts
+	    		     	total = Rails && Drawers && Cabinet;
 	    		    
-	    		    //total determines whether the combination is valid by seeing if each combination has required parts
-	    		     total = Rails && Drawers && Cabinet;
-	    		    
-	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
-	    		     //finds combined currentLowestComboPrice of combo
-	    			combinedPrice += comboItem.price;
-	    			
-	    		}
+	    		   		//System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
+	    		     	//finds combined currentLowestComboPrice of combo
+	    				combinedPrice += comboItem.price;	
+	    			}
 	    	
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-
-
-	    		if(combinedPrice <= currentLowestComboPrice && total) {
-	    			//saves index of currently found combination
-	    			index1 = i;
-	    			//updates current lowest price with combined price of combination
-	    			currentLowestComboPrice = combinedPrice;
+	    			//if combination is valid and whether the combined price of the combination is smallest possible one
+		    		if(combinedPrice <= currentLowestComboPrice && total) {
+		    			//saves index of currently found combination
+	    				index1 = i;
+	    				//updates current lowest price with combined price of combination
+	    				currentLowestComboPrice = combinedPrice;
+	    			}
+	    		
+	    			//resets variables for each iteration
+	    		
+					Rails = false;
+					Cabinet = false;
+					Drawers = false;
 	    		}
-	    		
-	    		//resets variables for each iteration
-	    		
-	    		Rails = false;
-	    		Cabinet = false;
-	    		
-	    		Drawers = false;
-	    	}
 		
-	    	//if no valid combo is found, index1 is -1. Therefore order is invalid and list of recommended manufacturers are returned
-	      	if(index1 ==-1) {
-	      		returnList.clear();
-	    		  try {                    
-	  	            Statement myStmt = dbConnect.createStatement();
-	  	          //looks for all manufacturers with ids that make filings and saves them into results
-	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
-	  	          while (results.next()){	 
-	  	        	  //saves the name of each filing manufacturer into list
-		             returnList.add(results.getString("Name"));
-		            }
-		            
-		            myStmt.close();
-		        } catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-	  	          return returnList; 	
-	    	}
-	    	ArrayList<node> finalCombo = comboList.get(index1);
-	    	for(int h = 0; h < finalCombo.size(); h++) {
-	    		//adds currently found combination items to return list
-	    		returnList.add(finalCombo.get(h).id);
-	    		//removes currently found combination from list of available items
-	    		matches.remove(finalCombo.get(h));
-	    		
-	    	}
-	    	//adds current lowest price to total order price
-	    	orderPrice += currentLowestComboPrice;
+				//if no valid combo is found, index1 is -1. Therefore order is invalid and list of recommended manufacturers are returned
+				if(index1 == -1) {
+
+					returnList.clear();
+					try {                    
+						Statement myStmt = dbConnect.createStatement();
+						//looks for all manufacturers with ids that make filings and saves them into results
+						results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+						while (results.next()){	 
+							//saves the name of each filing manufacturer into list
+							returnList.add(results.getString("Name"));
+						}
+						
+						myStmt.close();
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					
+					return returnList; 	
+				}
+
+				ArrayList<node> finalCombo = comboList.get(index1);
+				for(int h = 0; h < finalCombo.size(); h++) {
+					
+					//adds currently found combination items to return list
+					returnList.add(finalCombo.get(h).id);
+					
+					//removes currently found combination from list of available items
+					matches.remove(finalCombo.get(h));
+					
+				}
+	    		//adds current lowest price to total order price
+	    		orderPrice += currentLowestComboPrice;
 	    	
 			}
+			
 			find.close();
 			results.close();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -197,8 +218,6 @@ public class search {
     	
     	//adds order price to return list
 		returnList.add("$" + String.valueOf(orderPrice));
-		
-		
 		
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
@@ -209,7 +228,6 @@ public class search {
     	}
     	
 		return returnList;
-		
 		
 	}
 	/**
@@ -232,14 +250,12 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 		
-			
-			
 			//used to check if combination is valid
 			boolean Base = false;
 			boolean Bulb = false;
 		
-			
 			boolean total = false;
+			
 			//matches will have all the lamp entries of specified type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
@@ -247,116 +263,130 @@ public class search {
 			while (results.next()){
 				
 				//saves data of each lamp entry of specified type into node and then saves that node into matches list
-				  lampData temp = new lampData(results.getString("ID"),results.getString("Bulb"),results.getString("Base"),results.getInt("Price"));
-				    temp1 = new node(temp);
-				   matches.add(temp1);
-				 
-				   
+				lampData temp = new lampData(results.getString("ID"),
+											results.getString("Bulb"),
+											results.getString("Base"),
+											results.getInt("Price"));
+				temp1 = new node(temp);
+				matches.add(temp1);
 				
+	        }
 			
-	            }
 			//returns manufacturer list immediately if no results were found
 			if(temp1 == null) {
+				
 				returnList.clear();
-	    		  try {                    
+	    		try {                    
 	  	            Statement myStmt = dbConnect.createStatement();
-	  	        //looks for all manufacturer with id that make lamps and saves them into results
+	  	        	//looks for all manufacturer with id that make lamps and saves them into results
 	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
-	  	          while (results.next()){	
-	  	        	//adds the name of each lamp manufacturer to list
-		             returnList.add(results.getString("Name"));
+	  	          	while (results.next()){	
+	  	        		//adds the name of each lamp manufacturer to list
+		             	returnList.add(results.getString("Name"));
 		            }
 		            
 		            myStmt.close();
 		        } catch (SQLException ex) {
 		            ex.printStackTrace();
 		        }
-	  	          return returnList; 	
+	  	        return returnList; 	
 			}
 		
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ;b++) {
-			//current lowest combination price
-			long currentLowestComboPrice = Long.MAX_VALUE;
-			//intializes all possible combination list comboList
-			comboList = new ArrayList<ArrayList<node>>();
-			int index1 = -1;
-			//price of current combination
-			long combinedPrice = 0;
+				
+				//current lowest combination price
+				long currentLowestComboPrice = Long.MAX_VALUE;
+				
+				//intializes all possible combination list comboList
+				comboList = new ArrayList<ArrayList<node>>();
+				int index1 = -1;
+				
+				//price of current combination
+				long combinedPrice = 0;
 
-			//empty arraylist
-			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set/all possible combinations for the matches list
-
-			powerSet(matches,g,0);
-			//removes the empty set
-			comboList.remove(0);
-			//iterates over each possible combination/subset
-	    	for(int i = 0; i < comboList.size(); i++) {
-	    		//iterates over each element in combination
-	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			lampData comboItem = (lampData) comboList.get(i).get(j).element;
-	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			Base |= comboItem.Base ;
+				//empty arraylist
+				ArrayList<node> g = new ArrayList<node>();
+				
+				//finds the power set/all possible combinations for the matches list
+				powerSet(matches,g,0);
+				
+				//removes the empty set
+				comboList.remove(0);
+				
+				//iterates over each possible combination/subset
+				for(int i = 0; i < comboList.size(); i++) {
+					
+					//iterates over each element in combination
+					for(int j = 0; j< comboList.get(i).size(); j++) {
+						
+						lampData comboItem = (lampData) comboList.get(i).get(j).element;
+						
+						//checks if combination is valid by checking if at least 1 element is true for each part
+						Base |= comboItem.Base;
+						Bulb |= comboItem.Bulb;
+					
+						//total determines whether the combination is valid by seeing if each combination has required parts
+						total = Base && Bulb;
+						
+						//System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
+						//finds combined price of combo
+						combinedPrice += comboItem.price;
+						
+					}
 	    		
-	    		    Bulb |= comboItem.Bulb;
-	    		    
-	    		  //total determines whether the combination is valid by seeing if each combination has required parts
-	    		     total = Base && Bulb;
-	    		    
-	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
-	    		     //finds combined price of combo
-	    			combinedPrice += comboItem.price;
-	    			
+	    			//if combination is valid and whether the combined price of the combination is the smallest possible one
+
+					if(combinedPrice <= currentLowestComboPrice && total) {
+						
+						//saves current combination index
+						index1 = i;
+						
+						//updates current lowest price with combined price of combination
+						currentLowestComboPrice = combinedPrice;
+					}
+					
+					//resets variables for each iteration
+					combinedPrice = 0;
+					Base = false;
+					Bulb = false;
 	    		}
-	    		
-	    		//if combination is valid and whether the combined price of the combination is the smallest possible one
-
-	    		if(combinedPrice <= currentLowestComboPrice && total) {
-	    			//saves current combination index
-	    			index1 = i;
-	    			//updates current lowest price with combined price of combination
-	    			currentLowestComboPrice = combinedPrice;
-	    		}
-	    		
-	    		//resets variables for each iteration
-	    		combinedPrice = 0;
-	    		Base = false;
-	    		Bulb = false;
-	    		
-	    	
-	    	}
 			
 	    	
-	    	//if valid combo could not be found index = -1. Therefore order is invalid and list of recommended manufacturers is returned
-	      	if(index1 ==-1) {
-	      		returnList.clear();
-	    		  try {                    
-	  	            Statement myStmt = dbConnect.createStatement();
-	  	          //looks for all manufacturers with ids that make lamps and saves them into results
-	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
-	  	          while (results.next()){	
-	  	        	//adds the name of each lamp manufacturer to list
-		             returnList.add(results.getString("Name"));
-		            }
-		            
-		            myStmt.close();
-		        } catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-	  	          return returnList; 	
-	    	}
-	    	ArrayList<node> finalCombo = comboList.get(index1);
-	    	for(int h = 0; h < finalCombo.size(); h++) {
-	    		//adds currently found combination items to return list
-	    		returnList.add(finalCombo.get(h).id);
-	    		//removes currently found combo items from available items
-	    		matches.remove(finalCombo.get(h));
-	    		//System.out.println(returnList.get(h));
-	    	}
-	    	//increases price of order by currently found combo price
-	    	orderPrice += currentLowestComboPrice;
+				//if valid combo could not be found index = -1. Therefore order is invalid and list of recommended manufacturers is returned
+				if(index1 == -1) {
+					returnList.clear();
+					try {                    
+						Statement myStmt = dbConnect.createStatement();
+						//looks for all manufacturers with ids that make lamps and saves them into results
+						results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,004,005)");
+						while (results.next()){	
+							//adds the name of each lamp manufacturer to list
+							returnList.add(results.getString("Name"));
+						}
+						
+						myStmt.close();
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return returnList; 	
+				}
+				
+				ArrayList<node> finalCombo = comboList.get(index1);
+				for(int h = 0; h < finalCombo.size(); h++) {
+					
+					//adds currently found combination items to return list
+					returnList.add(finalCombo.get(h).id);
+					
+					//removes currently found combo items from available items
+					matches.remove(finalCombo.get(h));
+					
+					//System.out.println(returnList.get(h));
+				}
+				//increases price of order by currently found combo price
+				orderPrice += currentLowestComboPrice;
 			}
+			
 			//go.printList();
 			results.close();
 			find.close();
@@ -364,9 +394,9 @@ public class search {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     	//adds order price to return list
     	returnList.add("$" + String.valueOf(orderPrice));
-    	
     	
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
@@ -375,7 +405,6 @@ public class search {
     			}
     		}   		
     	}
-    	
     	
 		return returnList;
 	}
@@ -389,7 +418,8 @@ public class search {
 		//total price of order
 		long orderPrice = 0;
 
-		//contains the combination with the lowest total price. Total price is always at the END of the arraylist. If combination cannot be created, this contains manufacturer list
+		//contains the combination with the lowest total price. Total price is always at the END of the arraylist.
+		//If combination cannot be created, this contains manufacturer list
     	ArrayList<String> returnList = new ArrayList<String>();
     	ResultSet results;
     	try {
@@ -398,7 +428,6 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 			
-			
 			//used to check if combination is valid
 			boolean Top = false;
 			boolean legs = false;
@@ -406,10 +435,9 @@ public class search {
 			
 			boolean total = false;
 
-
 			//matches will contain all the desk entries with specified type
 		    ArrayList<node> matches = new ArrayList<node>();
-			node temp1= null;
+			node temp1 = null;
 			
 			while (results.next()){
 				
@@ -447,6 +475,7 @@ public class search {
 
 			//iterates once for each item needed in order
 			for (int b=0; b < needed; b++) {
+
 				//current lowest combination price
 				long currentLowestComboPrice = Long.MAX_VALUE;
 				
@@ -564,10 +593,12 @@ public class search {
 	 * @return string arraylist of chair ids ordered. String containing total price is always at the end. Returns recommended manufacturer list for invalid order.
 	 */
 	public ArrayList<String> searchChair(String lookup,int needed) {
+		
 		//total order price
 		long orderPrice = 0;
 
-    	//contains the combination with the lowest currentLowestComboPrice. Order Price is always at the END of the arraylist. If combination cannot be created, this contains recommended manufacturer list
+    	//contains the combination with the lowest currentLowestComboPrice. Order Price is always at the END of the arraylist. 
+		//If combination cannot be created, this contains recommended manufacturer list
     	ArrayList<String> returnList = new ArrayList<String>();
     	ResultSet results;
     	
@@ -577,128 +608,145 @@ public class search {
 			find.setString(1,lookup);
 			results = find.executeQuery();
 	
-			
-		
 			//used to check if combination is valid
 			boolean arm = false;
 			boolean legs = false;
 			boolean seat = false;
 			boolean cushion = false;
+			
 			boolean total = false;
+
 			//contains the chair entries for required type
 		    ArrayList<node> matches = new ArrayList<node>();
 			node temp1= null;
 			
 			while (results.next()){				
 				//saves data of each chair entry with specified type into temp node and adds it to matches list
-				chairData temp = new chairData(results.getString("ID"),results.getString("Legs"),results.getString("Arms"),results.getString("Seat"),results.getString("Cushion"),results.getInt("Price"));
+				chairData temp = new chairData(results.getString("ID"),
+												results.getString("Legs"),
+												results.getString("Arms"),
+												results.getString("Seat"),
+												results.getString("Cushion"),
+												results.getInt("Price"));
 				temp1 = new node(temp);
 				matches.add(temp1);
 
-	         }
+	        }
+			
 			//returns recommended manufacturer list immediately if no results were found
 			if(temp1 == null) {
 				returnList.clear();
-	    		  try {                    
+	    		try {                    
 	  	            Statement myStmt = dbConnect.createStatement();
-	  	          //looks for all manufacturers with ids that make chairs and saves them into results
+	  	          	
+					//looks for all manufacturers with ids that make chairs and saves them into results
 	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,003,004,005)");
-	  	          while (results.next()){
-	  	        	//saves the name of each chair manufacturer into list
-		             returnList.add(results.getString("Name"));
+	  	          	while (results.next()){
+	  	        		//saves the name of each chair manufacturer into list
+		             	returnList.add(results.getString("Name"));
 		            }
 		            
 		            myStmt.close();
 		        } catch (SQLException ex) {
 		            ex.printStackTrace();
 		        }
-	  	          return returnList; 	        
+	  	        return returnList; 	        
 			}
+			
 			//iterates once for each item required in order
 			for(int b = 0; b < needed ; b++) {
-			//current lowest combination price	
-			long currentLowestComboPrice = Long.MAX_VALUE;
-			//saves index of found combination
-			int index1 = -1;
-			//intializes all possible combination list comboList
-			comboList = new ArrayList<ArrayList<node>>();
-			//this is the current combination price
-			long combinedPrice = 0;
+				
+				//current lowest combination price	
+				long currentLowestComboPrice = Long.MAX_VALUE;
+				
+				//saves index of found combination
+				int index1 = -1;
+				
+				//intializes all possible combination list comboList
+				comboList = new ArrayList<ArrayList<node>>();
+				
+				//this is the current combination price
+				long combinedPrice = 0;
 
-			//empty arraylist
-			ArrayList<node> g = new ArrayList<node>();
-			//finds the power set/all possible combinations for the matches list
-
-			powerSet(matches,g,0);
-			//removes the empty set
-			comboList.remove(0);
-			//iterates over each possible combination/subset
-	    	for(int i = 0; i < comboList.size(); i++) {
-	    		//iterates over each element in combination
-	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			chairData comboItem = (chairData) comboList.get(i).get(j).element;
-	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			arm |= comboItem.arms ;
+				//empty arraylist
+				ArrayList<node> g = new ArrayList<node>();
+				
+				//finds the power set/all possible combinations for the matches list
+				powerSet(matches,g,0);
+				
+				//removes the empty set
+				comboList.remove(0);
+				
+				//iterates over each possible combination/subset
+				for(int i = 0; i < comboList.size(); i++) {
+					
+					//iterates over each element in combination
+					for(int j = 0; j < comboList.get(i).size(); j++) {
+						chairData comboItem = (chairData) comboList.get(i).get(j).element;
+						
+						//checks if combination is valid by checking if at least 1 element is true for each part
+						arm |= comboItem.arms;
+						seat |= comboItem.seat;
+						cushion |= comboItem.cushion;
+						legs |= comboItem.legs;
+						
+						//total determines whether the combination is valid by seeing if each combination has required parts
+						total = seat && arm && cushion && legs;
+					
+						//finds combined price of combo
+						combinedPrice += comboItem.price;
+					}
 	    		
-	    		    seat |= comboItem.seat;
-	    		   
-	    		    cushion |= comboItem.cushion;
-	    		    
-	    		    legs |= comboItem.legs;
-	    		    //total determines whether the combination is valid by seeing if each combination has required parts
-	    		     total = seat && arm && cushion && legs;
-	    		    
-	    		   
-	    		     //finds combined price of combo
-	    			combinedPrice += comboItem.price;
-	    			
-	    		}
-	    		
-	    		//if combination is valid and whether the combined price of the combination is smallest possible one
-	    		if(combinedPrice <= currentLowestComboPrice && total) {
-	    			//saves index of found combination
-	    			index1 = i;
-	    			//updates current lowest price with combined price of combination
-	    			currentLowestComboPrice = combinedPrice;
-	    		}
-	    		
-	    		//resets variables for each iteration
-	    		combinedPrice = 0;
-	    		arm = false;
-	    		seat = false;
-	    		cushion = false;
-	    		legs = false;
-	    	}
+					//if combination is valid and whether the combined price of the combination is smallest possible one
+					if(combinedPrice <= currentLowestComboPrice && total) {
+						
+						//saves index of found combination
+						index1 = i;
+						
+						//updates current lowest price with combined price of combination
+						currentLowestComboPrice = combinedPrice;
+					}
+					
+					//resets variables for each iteration
+					combinedPrice = 0;
+					arm = false;
+					seat = false;
+					cushion = false;
+					legs = false;
+				}
 			
 	    	
-	    	//if index1 = -1, then no valid combo could be found and therefore order is invalid. Recommended manufacturer list is returned.
-	    	if(index1 ==-1) {
-	    		returnList.clear();
-	    		  try {                    
-	  	            Statement myStmt = dbConnect.createStatement();
-	  	          //looks for all manufacturers with ids that make chairs and saves them into results
-	  	            results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,003,004,005)");
-	  	          while (results.next()){	 
-	  	        	//saves the name of each chair manufacturer into list
-		             returnList.add(results.getString("Name"));
-		            }
-		            
-		            myStmt.close();
-		        } catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-	  	          return returnList; 	          
-	    	}
-	    	ArrayList<node> finalCombo = comboList.get(index1);
-	    	for(int h = 0; h < finalCombo.size(); h++) {
-	    		//adds currently found combo items to return list
-	    		returnList.add(finalCombo.get(h).id);
-	    		//removes currently found combo items from list of available items
-	    		matches.remove(finalCombo.get(h));
-	    		
-	    	}
-	    	//increases total price of order by currently found lowest combo price
-	    	orderPrice += currentLowestComboPrice;
+				//if index1 = -1, then no valid combo could be found and therefore order is invalid. Recommended manufacturer list is returned.
+				if(index1 ==-1) {
+					returnList.clear();
+					try {                    
+						Statement myStmt = dbConnect.createStatement();
+						
+						//looks for all manufacturers with ids that make chairs and saves them into results
+						results = myStmt.executeQuery("SELECT * FROM Manufacturer WHERE ManuID IN (002,003,004,005)");
+						while (results.next()){	 
+							//saves the name of each chair manufacturer into list
+							returnList.add(results.getString("Name"));
+						}
+						
+						myStmt.close();
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return returnList; 	          
+				}
+				
+				ArrayList<node> finalCombo = comboList.get(index1);
+				for(int h = 0; h < finalCombo.size(); h++) {
+					
+					//adds currently found combo items to return list
+					returnList.add(finalCombo.get(h).id);
+					
+					//removes currently found combo items from list of available items
+					matches.remove(finalCombo.get(h));	
+				}
+				//increases total price of order by currently found lowest combo price
+				orderPrice += currentLowestComboPrice;
 			}
 			find.close();
 			results.close();
@@ -707,11 +755,10 @@ public class search {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     	//adds order price to return list
     	returnList.add("$"+String.valueOf(orderPrice));
-    	
 
-    	
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
     			if (returnList.get(i).charAt(0) == 'C') {
@@ -720,35 +767,42 @@ public class search {
     		}   		
     	}
     	
-    	
-    	
 		return returnList;
-		
-		
-		
+
 	}
+	
 	/**
 	 * finds the power set / all possible combinations of a given arg list
 	 * @param arg list to find power set/ all possible combinations of arg
 	 * @param currentSet currently created subset/combination
 	 * @param index index of element being looked at in the arg list
 	 */
-	private void powerSet(ArrayList<node> arg,ArrayList<node> currentSet,int index) {
+	private void powerSet(ArrayList<node> arg, ArrayList<node> currentSet, int index) {
+		
+		//powerSet(matches,g,0);
+
 		//base case
 		if(index == arg.size()) {
+			
 			//adds the current set to the power set / list of all possible combinations
 			comboList.add(currentSet);
 			return;
 		}
-		//copy of current set/combination before adding to it. This contains the current set/combination without the current element being looked at in the arg set
+		
+		//copy of current set/combination before adding to it. 
+		//This contains the current set/combination without
+		//the current element being looked at in the arg set
 		ArrayList<node> copyOfCurrentSet = (ArrayList<node>) currentSet.clone();
+		
 		//adds current element being looked at to current set(one case of any subset/combination)
 		currentSet.add(arg.get(index));
 		
 		powerSet(arg,copyOfCurrentSet,index+1);
-		//This contains the current set/combination with the current element being looked at in the arg set/list(other case of any subset/combination)
-		powerSet(arg,currentSet,index+1);
 		
+		//This contains the current set/combination with 
+		//the current element being looked at in the
+		//arg set/list(other case of any subset/combination)
+		powerSet(arg,currentSet,index+1);
 	}
 	/**
 	 * finds all possible  manufacturers
