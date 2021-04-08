@@ -63,7 +63,13 @@ public class SearchTests {
         dbConnect = null;
     }
     
-    /*Constructor tests*/
+    /*
+     * Constructor tests
+     * These are pretty straight forward, if the constructor is supposed to throw an exception
+     * and it doesn't, the tests fails. If it's supposed to succeed, nothing is thrown and the
+     * test is passed. No other functionality is tested with that case, as an object will be
+     * made no matter what
+     */
     
     @Test
     public void constructorValidUserTest() throws SQLException {
@@ -109,7 +115,11 @@ public class SearchTests {
     	
     }
     
-    /*Tests delete metheds*/
+    /*
+     * Tests delete methods
+     * Thankfully I have the initDatabase method, so these won't actually change the
+     * database permanently. Running the main program will cause it to change, however.
+     */
     
     @Test
     public void deleteExistingChair() throws SQLException {
@@ -222,11 +232,13 @@ public class SearchTests {
     	}
     }
     
-    /* Meat and potatoes of the tests, the searching
+    /* 
+     * Meat and potatoes of the tests, the searching
+     * 
      * Hopefully these can just be copy pasted, but for sure
      * there's going to need to be a helper method where it
      * compared arrayLists? I think there's already a method
-     * for that
+     * for that. (There wasn't lol)
      * 
      * The search methods also return a combo with the lowest price
      * and the lowest ID numbers are prioritized
@@ -298,6 +310,11 @@ public class SearchTests {
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
+    /* 
+     * These tests search for an order that cannot be fulfilled and are supposed to fail
+     * The method should not return a list with a price
+     */
+    
     @Test
     public void searchChairImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -355,7 +372,7 @@ public class SearchTests {
     }
     /**
      * Initiallizes the database based on inventory.sql that was provided
-     * by the class
+     * by the class. This is before the last second updated .sql was given
      */
     private void initDatabase() {
     	//LOL look at this garbage
