@@ -232,20 +232,20 @@ public class FormPrinter {
 		
 		if (furniture.equalsIgnoreCase("chair")) {
 			System.out.println("Looking for chairs...");
-			
 			result = myJDBC.searchChair(type,  quantity);
+
 		} else if (furniture.equalsIgnoreCase("desk")) {
-			System.out.println("Looking for desks...");
-					
+			System.out.println("Looking for desks...");		
 			result = myJDBC.searchDesk(type,  quantity);
+
 		} else if (furniture.equalsIgnoreCase("lamp")) {
-			System.out.println("Looking for lamps...");
-					
+			System.out.println("Looking for lamps...");		
 			result = myJDBC.searchLamp(type,  quantity);
+
 		} else if (furniture.equalsIgnoreCase("filing")) {
-			System.out.println("Looking for filings...");
-					
+			System.out.println("Looking for filings...");		
 			result = myJDBC.searchFiling(type,  quantity);
+			
 		} else {
 			System.out.println("That furniture can't be found");
 		}

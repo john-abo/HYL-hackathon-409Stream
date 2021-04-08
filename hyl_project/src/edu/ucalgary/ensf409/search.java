@@ -30,13 +30,12 @@ public class search {
 	 * @throws SQLException Thrown if an error occurs with the sql
 	 */
 	public void initializeConnection() throws SQLException {
-		 try {
+		try {
 			dbConnect = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
 		} catch (SQLException e) {
 			System.out.println("Unable to connect to database");
 			throw e;
 		}
-		
 	}
 	
 	/**
@@ -576,7 +575,7 @@ public class search {
     	returnList.add("$"+String.valueOf(orderPrice));
     	
 		if (returnList != null) {
-    		for (int i = 0; i < (returnList.size() -1); i++){
+    		for (int i = 0; i < (returnList.size() - 1); i++){
     			if (returnList.get(i).charAt(0) == 'D') {
     				deleteDesk(returnList.get(i));
     			}
