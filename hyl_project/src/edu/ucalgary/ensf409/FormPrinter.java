@@ -119,6 +119,9 @@ public class FormPrinter {
 		
 		System.out.println("SQL request: " + request);
 		
+		//Assigns the 3 groups into variables, if they're
+		//not valid, an Exception is thrown
+		
 		if (match.find()) {
 			s = match.group(1);
 			

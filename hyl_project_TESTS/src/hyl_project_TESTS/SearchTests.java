@@ -58,6 +58,7 @@ public class SearchTests {
     	
     	initDatabase();	//Reinitializes the database, in case something breaks
     	
+    	//Don't think I need these, but it'd be nice to get rid of stuff I guess
         subject = null;
         dbConnect = null;
     }
@@ -226,6 +227,9 @@ public class SearchTests {
      * there's going to need to be a helper method where it
      * compared arrayLists? I think there's already a method
      * for that
+     * 
+     * The search methods also return a combo with the lowest price
+     * and the lowest ID numbers are prioritized
      */
     
     @Test
@@ -234,7 +238,13 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchChair("mesh", 1);
+		
+		expected.add("C9890");
+		expected.add("C0942");
+		expected.add("$150");
+		
+		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
     
     @Test
@@ -243,7 +253,16 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchDesk("Adjustable", 2);
+		
+		expected.add("D4475");
+		expected.add("D5437");
+		expected.add("D3682");
+		expected.add("D2746");
+		expected.add("D1030");
+		expected.add("$700");
+		
+		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
     @Test
@@ -252,7 +271,15 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchLamp("Desk", 2);
+		
+		expected.add("L013");
+		expected.add("L208");
+		expected.add("L112");
+		expected.add("L342");
+		expected.add("$40");
+		
+		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
     @Test
@@ -261,7 +288,14 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchFiling("Medium", 2);
+		
+		expected.add("F007");
+		expected.add("F008");
+		expected.add("F014");
+		expected.add("$400");
+		
+		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
     @Test
@@ -270,7 +304,12 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchChair("Task",100);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+		
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
 
     @Test
@@ -279,7 +318,12 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchDesk("Task",100);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+		
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
 
     @Test
@@ -288,16 +332,26 @@ public class SearchTests {
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchLamp("Desk",100);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+		
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
-
+    
     @Test
     public void searchFilingImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchChair("Task",1);
+		ArrayList<String> actual = subject.searchFiling("Large",100);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
     /**
      * Initiallizes the database based on inventory.sql that was provided
@@ -542,6 +596,26 @@ public class SearchTests {
     		System.out.println("Failed query");
     		return false;
     	}
+    	return true;
+    }
+    
+    private boolean areEqualArraylists(ArrayList<String> expected, ArrayList<String> actual) {
+    	
+    	//Both sets must be the same size to be equal
+    	if (expected.size() != actual.size()) {
+    		return false;
+    	}
+    	
+    	for (String exp : expected) {
+    		
+    		//If there exists an element in expected that is not an element of actual
+    		//then they cannot be equal
+    		if (!actual.contains(exp)) {
+    			return false;
+    		}
+    	}
+    	
+    	//Returns true if they are equal
     	return true;
     }
 }
