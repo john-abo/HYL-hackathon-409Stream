@@ -2,6 +2,7 @@ package edu.ucalgary.ensf409;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +13,9 @@ public class FormPrinter {
 	private int quantity;
 	
 	private static String REGEX = "(.*?) (.*?), (.*?) ";
+	private static String REGEX1 = "(.*?) (.*?) (.*?) ";
 	private static Pattern PATTERN = Pattern.compile(REGEX);
+	private static Pattern PATTERN1 = Pattern.compile(REGEX1);
 	
 	private final static String DIRECTORY = "OUT";
 	private static int orderNum = 0;
@@ -28,6 +31,9 @@ public class FormPrinter {
 	 * @param request	The string request that the user enters. will be stripped for spaces
 	 * 					and perhaps could be made case insensitive.
 	 */
+ 	public FormPrinter() {
+	}
+
 	public FormPrinter(String request) {
 		String s = "";
 		Matcher match = PATTERN.matcher(request + " ");
@@ -65,11 +71,11 @@ public class FormPrinter {
 				}
 				
 			} catch (Exception e) {
-				System.err.println("Invalid Integer passed. Passed: \"" + s + "\"");
+				System.err.println("This is not represent a valid number of items to order. Passed: \"" + s + "\"");
 				throw new IllegalArgumentException();
 			}
 		} else {
-			System.err.println("No match found");
+			System.err.println("The input does not represent a valid order.");
 			throw new IllegalArgumentException();
 		}
 		
@@ -95,19 +101,138 @@ public class FormPrinter {
 	}
 	
 	/**
+<<<<<<< HEAD
 
+=======
+	 * I don't recall making this method, what the hell is going on here
+	 * Can someone please comment this if they made this function so we
+	 * know what it does. That'd be much appreciated
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public boolean querySQL(String request) {
+		
+		String Dburl;
+		String Username;
+		String Password;
+
+
+		String s = "";
+		Matcher match = PATTERN1.matcher(request + " ");
+		
+		System.out.println("SQL request: " + request);
+		
+		if (match.find()) {
+			s = match.group(1);
+			
+			if (s != null) {
+				Dburl = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(2);
+			
+			if (s != null) {
+				Username = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(3);
+			
+			if (s != null) {
+				Password = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+
+		} else {
+			System.err.println("This input does not represent a valid order");
+			throw new IllegalArgumentException();
+		}		
+		
+		return true;
+	}
+	
+	/**
+>>>>>>> HYL-project
 	 * Performs the query in order to get a result from the database. Assigns
 	 * it to global result variable, if there are no possible results it will
 	 * be assigned to null. User input is also verified to an extent, but the
 	 * user is no longer prompted for another input.
+	 * @throws SQLException 
 	 */
-	public boolean query() {
+	public boolean query(String request) {
 		
 		//Begins querying the database for most optimal purchase
+<<<<<<< HEAD
 
-		myJDBC = new search("jdbc:mysql://localhost/inventory","root","Pound_multiple_demonstration_watching");
+		
+=======
+		
+		String Dburl;
+		String Username;
+		String Password;
 
-		myJDBC.initializeConnection();
+
+		String s = "";
+		Matcher match = PATTERN1.matcher(request + " ");
+				
+		if (match.find()) {
+			s = match.group(1);
+			
+			if (s != null) {
+				Dburl = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(2);
+			
+			if (s != null) {
+				Username = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(3);
+			
+			if (s != null) {
+				Password = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+
+		} else {
+			System.err.println("No match found");
+			throw new IllegalArgumentException();
+		}
+
+
+
+
+		myJDBC = new search(Dburl, Username, Password);
+		try {
+			myJDBC.initializeConnection();
+		} catch (SQLException e) {
+			System.err.println("Invalid login credentials, user is not authorized");
+			e.printStackTrace();
+		}
+>>>>>>> HYL-project
 				
 		result = null;
 		
@@ -130,8 +255,12 @@ public class FormPrinter {
 		} else {
 			System.out.println("That furniture can't be found");
 		}
-		
-		if (result == null) {
+		//this checks if the recommended manufacturer list was returned, because if it was returned there would be no price at the end
+		if (result.get(result.size()-1).charAt(0) != '$') {
+			System.out.println("Order cannot be fulfilled based on current inventory. Suggested manufacturers are ");
+			for(int i = 0; i < result.size(); i++) {
+				System.out.println(result.get(i));
+			}
 			return false;
 		}
 		
@@ -173,6 +302,11 @@ public class FormPrinter {
 	    	String fileHeader = "";
 	    	fileHeader += "Report #" + orderNum + "\n";
 			fileHeader += "Furniture Order Form\n";
+			
+			fileHeader += "\nFaculty Name:";
+			fileHeader += "\nContact:";
+			fileHeader += "\nDate:\n";
+			
 	    	outStream.write(fileHeader + formatReport());
 	    	
 	    	outStream.close();
@@ -195,6 +329,8 @@ public class FormPrinter {
 		
 		ret += "\nOriginal request: " + type + " " + furniture + ", " + quantity + "\n";	//This needs to change once I get
 																								//the SQL data
+		ret += "\nItems Ordered\n";
+		
 		if (result != null) {
 			int i;
 			
@@ -209,6 +345,8 @@ public class FormPrinter {
 		
 		return ret;
 	}
+	
+	
 	
 	public String getType() {
 		return type;

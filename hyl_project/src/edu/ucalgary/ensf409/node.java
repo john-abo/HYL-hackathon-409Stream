@@ -4,7 +4,7 @@ class node<e>{
 	
 	//this class is used to store data from furniture objects
 	
-	node next = null;
+	
 	//this element contains all the data the furniture object needs. For a chair for example, e contains a chairData object
     e element;
     //id of item in element

@@ -9,12 +9,13 @@ import java.util.Scanner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 
-import hyl_project.FormPrinter;
+import edu.ucalgary.ensf409.*;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
+@SuppressWarnings("unused")
 public class GuiMain {
 
 	protected Shell shell;
