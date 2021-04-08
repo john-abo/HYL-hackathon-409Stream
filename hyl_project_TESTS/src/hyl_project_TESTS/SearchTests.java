@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import edu.ucalgary.ensf409.search;
 
+//these tests can take a while, please be patient. 
 public class SearchTests {
 	
 	private search subject;
@@ -19,7 +20,7 @@ public class SearchTests {
 	
 	public final String DBURL = "jdbc:mysql://localhost/inventory";
 	public final String  USERNAME = "root";
-	public final String PASSWORD = "Pound_multiple_demonstration_watching";
+	public final String PASSWORD = "ensf409";
 	
 	/**
      * Setup method that is invoked before each test method, initializing connection
@@ -95,25 +96,8 @@ public class SearchTests {
     	subject.initializeConnection();
     }
     
-    /*Power set method tests*/
     
-    //Can't test these rn, gonna need kyle to make me a getter for something in order to test it
-    //maybe I'll get kyle to make this considering how embedded it is with his class
-    @Test
-    public void powerSetSizeOne() throws SQLException {
-    	subject = new search(DBURL,USERNAME,PASSWORD);
-    	subject.initializeConnection();
-    	
-    	
-    }
     
-    @Test
-    public void powerSetDecentSize() throws SQLException {
-    	subject = new search(DBURL,USERNAME,PASSWORD);
-    	subject.initializeConnection();
-    	
-    	
-    }
     
     /*
      * Tests delete methods
@@ -241,7 +225,7 @@ public class SearchTests {
      * for that. (There wasn't lol)
      * 
      * The search methods also return a combo with the lowest price
-     * and the lowest ID numbers are prioritized
+     * The combinations with lowest ID numbers first are prioritized.
      */
     
     @Test
@@ -252,9 +236,10 @@ public class SearchTests {
     	ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> actual = subject.searchChair("mesh", 1);
 		
+		expected.add("C6748");
+		expected.add("C8138");
 		expected.add("C9890");
-		expected.add("C0942");
-		expected.add("$150");
+		expected.add("$200");
 		
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
@@ -267,12 +252,12 @@ public class SearchTests {
     	ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> actual = subject.searchDesk("Adjustable", 2);
 		
-		expected.add("D4475");
-		expected.add("D5437");
+		
+		expected.add("D7373");
 		expected.add("D3682");
 		expected.add("D2746");
 		expected.add("D1030");
-		expected.add("$700");
+		expected.add("$800");
 		
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
@@ -304,7 +289,8 @@ public class SearchTests {
 		
 		expected.add("F007");
 		expected.add("F008");
-		expected.add("F014");
+		expected.add("F009");
+		expected.add("F002");
 		expected.add("$400");
 		
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
@@ -416,7 +402,7 @@ public class SearchTests {
     				+ "('C3405',	'Task',	'Y',	'Y',	'N',	'N',	100,	'003'),\r\n"
     				+ "('C9890',	'Mesh',	'N',	'Y',	'N',	'Y',	50,	'003'),\r\n"
     				+ "('C7268',	'Executive',	'N',	'N',	'Y',	'N',	75,	'004'),\r\n"
-    				+ "('C0942',	'Mesh',	'Y',	'N',	'Y',	'Y',	100,	'005'),\r\n"
+    				+ "('C0942',	'Mesh',	'Y',	'N',	'Y',	'Y',	175,	'005'),\r\n"
     				+ "('C4839',	'Ergonomic',	'N',	'N',	'N',	'Y',	50,	'002'),\r\n"
     				+ "('C2483',	'Executive',	'Y',	'Y',	'N',	'N',	175,	'002'),\r\n"
     				+ "('C5789',	'Ergonomic',	'Y',	'N',	'N',	'Y',	125,	'003'),\r\n"
@@ -454,7 +440,7 @@ public class SearchTests {
     				+ "('D1927',	'Standing',	'Y',	'N',	'Y',	200,	'005'),\r\n"
     				+ "('D1030',	'Adjustable',	'N',	'Y',	'N',	150,	'002'),\r\n"
     				+ "('D4438',	'Standing',	'N',	'Y',	'Y',	150,	'004'),\r\n"
-    				+ "('D5437',	'Adjustable',	'Y',	'N',	'N',	50,	'001'),\r\n"
+    				+ "('D5437',	'Adjustable',	'Y',	'N',	'N',	200,	'001'),\r\n"
     				+ "('D3682',	'Adjustable',	'N',	'N',	'Y',	50,	'005')");
     		executeUpdate("DROP TABLE IF EXISTS LAMP");
     		executeUpdate("CREATE TABLE LAMP (\r\n"
@@ -506,7 +492,7 @@ public class SearchTests {
     				+ "('F006',	'Small',	'Y',	'Y',	'N',	50,	'005'),\r\n"
     				+ "('F007',	'Medium',	'N',	'Y',	'Y',	150,	'002'),\r\n"
     				+ "('F008',	'Medium',	'Y',	'N',	'N',	50,	'005'),\r\n"
-    				+ "('F009',	'Medium',	'Y',	'Y',	'N',	150,	'004'),\r\n"
+    				+ "('F009',	'Medium',	'Y',	'Y',	'N',	100,	'004'),\r\n"
     				+ "('F010',	'Large',	'Y',	'N',	'Y',	225,	'002'),\r\n"
     				+ "('F011',	'Large',	'N',	'Y',	'Y',	225,	'005'),\r\n"
     				+ "('F012',	'Large',	'N',	'Y',	'N',	75,	'005'),\r\n"
