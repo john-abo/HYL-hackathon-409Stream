@@ -2,10 +2,10 @@ package edu.ucalgary.ensf409;
 //class to store lamp data
 public class lampData {
 	//contains data for lamp entry
-	 boolean Bulb = false;
-	 boolean Base = false;
-	 String ID = "";
-	int price;
+	 protected boolean Bulb = false;
+	 protected boolean Base = false;
+	 protected String ID = "";
+	 protected int price;
 	 /**
 	  * Constructor
 	  * @param id id of lamp entry
@@ -29,5 +29,61 @@ public class lampData {
 			Bulb = true;
 			
 		}
+	}
+	/**
+	 * getter method for Bulb
+	 * @return returns Bulb
+	 */
+	public boolean isBulb() {
+		return Bulb;
+	}
+	/**
+	 * setter method for Bulb
+	 * @param bulb input for setter
+	 */
+	public void setBulb(boolean bulb) {
+		Bulb = bulb;
+	}
+	/**
+	 * getter method for Base
+	 * @return returns Base
+	 */
+	public boolean isBase() {
+		return Base;
+	}
+	/**
+	 * setter method for base
+	 * @param base input for setter
+	 */
+	public void setBase(boolean base) {
+		Base = base;
+	}
+	/**
+	 * getter method for ID
+	 * @return returns ID
+	 */
+	public String getID() {
+		return ID;
+	}
+	/**
+	 * setter method for ID
+	 * @param iD input for setter
+	 */
+	public void setID(String iD) {
+		ID = iD;
+	}
+	/**
+	 * getter method for price
+	 * @return returns price
+	 */
+	public int getPrice() {
+		return price;
+	}
+	/**
+	 * setter method for price
+	 * @param price input for setter
+	 */
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }

@@ -6,11 +6,11 @@ package edu.ucalgary.ensf409;
 	
 	
 	//this element contains all the data the furniture object needs. For a chair for example, e contains a chairData object
-    e element;
+    protected e element;
     //id of item in element
-    String id;
+    protected String id;
     //price of item in element
-    int price;
+    protected int price;
     /**
      * Constructor
      * @param element object that contains the actual furniture data. Object type changes depending on what furniture is stored
@@ -32,6 +32,48 @@ package edu.ucalgary.ensf409;
 	 */
 	public node() {
 		
+	}
+	/**
+	 * getter method for element
+	 * @return returns element
+	 */
+	public e getElement() {
+		return element;
+	}
+	/**
+	 * setter method for element
+	 * @param element element chosen as input for setter
+	 */
+	public void setElement(e element) {
+		this.element = element;
+	}
+	/**
+	 * getter method for id
+	 * @return returns id
+	 */
+	public String getId() {
+		return id;
+	}
+	/**
+	 * setter method for id
+	 * @param id id chosen as input for setter
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+	/**
+	 * getter method for price
+	 * @return returns price
+	 */
+	public int getPrice() {
+		return price;
+	}
+	/**
+	 * setter method for price
+	 * @param price price chosen as input for setter
+	 */
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 
