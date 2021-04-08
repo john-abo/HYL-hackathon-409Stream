@@ -717,7 +717,7 @@ public class search {
 	 * @param currentSet currently created subset/combination
 	 * @param index index of element being looked at in the arg list
 	 */
-	public void powerSet(ArrayList<node> arg,ArrayList<node> currentSet,int index) {
+	private void powerSet(ArrayList<node> arg,ArrayList<node> currentSet,int index) {
 		//base case
 		if(index == arg.size()) {
 			//adds the current set to the power set / list of all possible combinations
@@ -865,13 +865,5 @@ public class search {
         }
 	}
 	
-	/**
-     * returns comboList instance variable
-     * @return comboList, which lists all the possible list combinations
-     */
-	public ArrayList<ArrayList<node>> getComboList() {
-
-        return comboList;
-
-    }
+	
 }
