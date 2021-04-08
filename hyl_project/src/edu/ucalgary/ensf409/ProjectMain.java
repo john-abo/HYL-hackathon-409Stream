@@ -55,10 +55,11 @@ public class ProjectMain {
 			boolean example = printer.querySQL(sqlIn);
 
 		} catch (IllegalArgumentException e) {
-			
+			 //System.err.println("Error connecting to sql database");
+			System.exit(0);
 		}
 		
-		try {
+		
 			printer = new FormPrinter(userIn);
 			
 			if (printer.query(sqlIn)) {
@@ -66,10 +67,14 @@ public class ProjectMain {
 				//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 						
 				printer.writeReport();	//Writes report
+
 			} 
-		} catch (IllegalArgumentException e) {
-			
 		}
+
+			
+			
 		
+
+
 	}
-}
+

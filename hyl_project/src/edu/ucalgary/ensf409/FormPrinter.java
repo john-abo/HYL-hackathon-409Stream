@@ -75,8 +75,8 @@ public class FormPrinter {
 				throw new IllegalArgumentException();
 			}
 		} else {
-			System.err.println("The input does not represent a valid order.");
-			throw new IllegalArgumentException();
+			System.err.println("The input was either invalid or not in the correct format");
+			System.exit(0);
 		}
 		
 		
@@ -155,7 +155,7 @@ public class FormPrinter {
 			}
 
 		} else {
-			System.err.println("This input does not represent a valid order");
+			System.err.println("This input does not represent a valid database login");
 			throw new IllegalArgumentException();
 		}		
 		
@@ -247,7 +247,9 @@ public class FormPrinter {
 					
 			result = myJDBC.searchFiling(type,  quantity);
 		} else {
-			System.out.println("That furniture can't be found");
+			
+			System.err.println("That furniture does not exist");
+			System.exit(0);
 		}
 		//this checks if the recommended manufacturer list was returned, because if it was returned there would be no price at the end
 		if (result.get(result.size()-1).charAt(0) != '$') {
