@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 
-class node<e>{
+ class node<e>{
 	
 	//this class is used to store data from furniture objects
 	
