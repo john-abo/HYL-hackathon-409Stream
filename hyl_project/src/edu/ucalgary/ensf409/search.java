@@ -199,7 +199,7 @@ public class search {
 		returnList.add("$" + String.valueOf(orderPrice));
 		
 		
-		/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+		
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
     			if (returnList.get(i).charAt(0) == 'F') {
@@ -207,7 +207,7 @@ public class search {
     			}
     		}   		
     	}
-    	*/
+    	
 		return returnList;
 		
 		
@@ -367,7 +367,7 @@ public class search {
     	//adds order price to return list
     	returnList.add("$" + String.valueOf(orderPrice));
     	
-    	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+    	
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
     			if (returnList.get(i).charAt(0) == 'L') {
@@ -375,7 +375,7 @@ public class search {
     			}
     		}   		
     	}
-    	*/
+    	
     	
 		return returnList;
 	}
@@ -529,7 +529,7 @@ public class search {
 		}
     	
     	returnList.add("$"+String.valueOf(orderPrice));
-    	/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+    	
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
     			if (returnList.get(i).charAt(0) == 'D') {
@@ -537,7 +537,7 @@ public class search {
     			}
     		}   		
     	}
-    	*/
+    	
 		return returnList;
 		
 	}
@@ -694,7 +694,7 @@ public class search {
     	//adds order price to return list
     	returnList.add("$"+String.valueOf(orderPrice));
     	
-/* Uncomment this to check if delete works, it's commented right now so your databases don't get ruined.
+
     	
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
@@ -703,7 +703,7 @@ public class search {
     			}
     		}   		
     	}
-    	*/
+    	
     	
     	
 		return returnList;
