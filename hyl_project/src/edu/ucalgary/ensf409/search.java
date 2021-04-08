@@ -122,13 +122,13 @@ public class search {
 	    		combinedPrice = 0;
 	    		//iterates over each element in combination
 	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			filingData comboItem = (filingData) comboList.get(i).get(j).getElement();
+	    			filingData comboItem = (filingData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			Rails |= comboItem.isRails();
+	    			Rails |= comboItem.Rails ;
 	    		
-	    		   Cabinet |= comboItem.isCabinet();
+	    		   Cabinet |= comboItem.Cabinet;
 	    		   
-	    		    Drawers |= comboItem.isDrawers();
+	    		    Drawers |= comboItem.Drawers;
 	    		    
 	    		    
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
@@ -136,7 +136,7 @@ public class search {
 	    		    
 	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
 	    		     //finds combined currentLowestComboPrice of combo
-	    			combinedPrice += comboItem.getPrice();
+	    			combinedPrice += comboItem.price;
 	    			
 	    		}
 	    	
@@ -179,7 +179,7 @@ public class search {
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combination items to return list
-	    		returnList.add(finalCombo.get(h).getId());
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combination from list of available items
 	    		matches.remove(finalCombo.get(h));
 	    		
@@ -295,18 +295,18 @@ public class search {
 	    	for(int i = 0; i < comboList.size(); i++) {
 	    		//iterates over each element in combination
 	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			lampData comboItem = (lampData) comboList.get(i).get(j).getElement();
+	    			lampData comboItem = (lampData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			Base |= comboItem.isBase();
+	    			Base |= comboItem.Base ;
 	    		
-	    		    Bulb |= comboItem.isBulb();
+	    		    Bulb |= comboItem.Bulb;
 	    		    
 	    		  //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = Base && Bulb;
 	    		    
 	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
 	    		     //finds combined price of combo
-	    			combinedPrice += comboItem.getPrice();
+	    			combinedPrice += comboItem.price;
 	    			
 	    		}
 	    		
@@ -349,7 +349,7 @@ public class search {
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combination items to return list
-	    		returnList.add(finalCombo.get(h).getId());
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from available items
 	    		matches.remove(finalCombo.get(h));
 	    		//System.out.println(returnList.get(h));
@@ -458,13 +458,13 @@ public class search {
 	    	for(int i = 0; i < comboList.size(); i++) {
 	    		
 	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			deskData comboItem = (deskData) comboList.get(i).get(j).getElement();
+	    			deskData comboItem = (deskData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			Top |= comboItem.isTop();
+	    			Top |= comboItem.top ;
 	    		
-	    		    legs |= comboItem.isLegs();
+	    		    legs |= comboItem.legs;
 	    		   
-	    		    Drawer |= comboItem.isDrawer();
+	    		    Drawer |= comboItem.Drawer;
 	    		    
 	    		    
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
@@ -472,7 +472,7 @@ public class search {
 	    		    
 	    		   //System.out.println(comboList.get(i).get(j).arms + " " +  arm + " " + comboList.get(i).get(j).ID);
 	    		     //finds combined price of combo
-	    			combinedPrice += comboItem.getPrice();
+	    			combinedPrice += comboItem.price;
 	    			
 	    		}
 	    	
@@ -513,7 +513,7 @@ public class search {
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combo items to return list
-	    		returnList.add(finalCombo.get(h).getId());
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from list of possible items
 	    		matches.remove(finalCombo.get(h));
 	    	}
@@ -529,7 +529,7 @@ public class search {
 		}
     	
     	returnList.add("$"+String.valueOf(orderPrice));
-    	System.out.println(returnList.size());
+    	
 		if (returnList != null) {
     		for (int i = 0; i < (returnList.size() -1); i++){
     			if (returnList.get(i).charAt(0) == 'D') {
@@ -620,21 +620,21 @@ public class search {
 	    	for(int i = 0; i < comboList.size(); i++) {
 	    		//iterates over each element in combination
 	    		for(int j = 0; j< comboList.get(i).size(); j++) {
-	    			chairData comboItem = (chairData) comboList.get(i).get(j).getElement();
+	    			chairData comboItem = (chairData) comboList.get(i).get(j).element;
 	    			//checks if combination is valid by checking if at least 1 element is true for each part
-	    			arm |= comboItem.isArms();
+	    			arm |= comboItem.arms ;
 	    		
-	    		    seat |= comboItem.isSeat();
+	    		    seat |= comboItem.seat;
 	    		   
-	    		    cushion |= comboItem.isCushion();
+	    		    cushion |= comboItem.cushion;
 	    		    
-	    		    legs |= comboItem.isLegs();
+	    		    legs |= comboItem.legs;
 	    		    //total determines whether the combination is valid by seeing if each combination has required parts
 	    		     total = seat && arm && cushion && legs;
 	    		    
 	    		   
 	    		     //finds combined price of combo
-	    			combinedPrice += comboItem.getPrice();
+	    			combinedPrice += comboItem.price;
 	    			
 	    		}
 	    		
@@ -676,7 +676,7 @@ public class search {
 	    	ArrayList<node> finalCombo = comboList.get(index1);
 	    	for(int h = 0; h < finalCombo.size(); h++) {
 	    		//adds currently found combo items to return list
-	    		returnList.add(finalCombo.get(h).getId());
+	    		returnList.add(finalCombo.get(h).id);
 	    		//removes currently found combo items from list of available items
 	    		matches.remove(finalCombo.get(h));
 	    		
@@ -864,5 +864,6 @@ public class search {
             ex.printStackTrace();
         }
 	}
+	
 	
 }
