@@ -36,7 +36,7 @@ public class MainTests {
 	}
 	@Test (expected = IllegalArgumentException.class)
 	public void nonExistantFurnitureType() {
-		subject = new FormPrinter("\"mesh\" \"notFurniture\", 1", loginDetails);
+		subject = new FormPrinter("\"mesh\" \"notChair\", 1", loginDetails);
 		subject.query();
 	}
 	

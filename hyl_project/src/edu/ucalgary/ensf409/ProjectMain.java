@@ -26,7 +26,7 @@ public class ProjectMain {
 		sqlIn = input.nextLine();
 
 		System.out.println("Enter request in the format");
-		System.out.println("*** note the quotations around the first 2 groups, and the coma before the number");
+		System.out.println("*** note the quotations around the first 2 groups, and the comma before the number");
 		System.out.println("\n\"<furniture type>\" \"<furniture>\", <quantity>\n");
 		System.out.println("<Furniture type>:	Type of furniture, such as mesh, Adjustable, or Swing Arm");
 		System.out.println("<Furniture>:		Furniture that's being checked, such as Desk, Lamp, Chair");
