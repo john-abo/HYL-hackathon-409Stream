@@ -20,7 +20,7 @@ public class SearchTests {
 	
 	public final String DBURL = "jdbc:mysql://localhost/inventory";
 	public final String  USERNAME = "root";
-	public final String PASSWORD = "ensf409";
+	public final String PASSWORD = "Pound_multiple_demonstration_watching";
 	
 	/**
      * Setup method that is invoked before each test method, initializing connection

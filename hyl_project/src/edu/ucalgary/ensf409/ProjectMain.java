@@ -26,7 +26,8 @@ public class ProjectMain {
 		sqlIn = input.nextLine();
 
 		System.out.println("Enter request in the format");
-		System.out.println("\n<furniture type> <furniture>, <quantity>\n");
+		System.out.println("*** note the quotations around the first 2 groups, and the coma before the number");
+		System.out.println("\n\"<furniture type>\" \"<furniture>\", <quantity>\n");
 		System.out.println("<Furniture type>:	Type of furniture, such as mesh, Adjustable, or Swing Arm");
 		System.out.println("<Furniture>:		Furniture that's being checked, such as Desk, Lamp, Chair");
 		System.out.println("<Quantity>:		Amount of specific furniture you are looking for");
@@ -50,31 +51,16 @@ public class ProjectMain {
 		
 		FormPrinter printer = new FormPrinter();
 		userInput();
-
-		try {
-			boolean example = printer.querySQL(sqlIn);
-
-		} catch (IllegalArgumentException e) {
-			 //System.err.println("Error connecting to sql database");
-			System.exit(0);
-		}
 		
-		
-			printer = new FormPrinter(userIn);
+		printer = new FormPrinter(userIn, sqlIn);
 			
-			if (printer.query(sqlIn)) {
-				System.out.println(printer.formatReport());
-				//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
+		if (printer.query()) {
+			System.out.println(printer.formatReport());
+			//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
 						
-				printer.writeReport();	//Writes report
+			printer.writeReport();	//Writes report
 
-			} 
-		}
-
-			
-			
-		
-
-
+		} 
 	}
+}
 

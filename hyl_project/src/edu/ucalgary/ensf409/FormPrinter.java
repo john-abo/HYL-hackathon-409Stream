@@ -12,10 +12,10 @@ public class FormPrinter {
 	private String furniture;
 	private int quantity;
 	
-	private static String REGEX = "(.*?) (.*?), (.*?) ";
-	private static String REGEX1 = "(.*?) (.*?) (.*?) ";
-	private static Pattern PATTERN = Pattern.compile(REGEX);
-	private static Pattern PATTERN1 = Pattern.compile(REGEX1);
+	private static String REGEX_REQUEST = "\"(.*?)\" \"(.*?)\", (.*?) ";
+	private static String REGEX_LOGIN = "(.*?) (.*?) (.*?) ";
+	private static Pattern PATTERN_REQUEST = Pattern.compile(REGEX_REQUEST);
+	private static Pattern PATTERN_LOGIN = Pattern.compile(REGEX_LOGIN);
 	
 	private final static String DIRECTORY = "OUT";
 	private static int orderNum = 0;
@@ -34,9 +34,67 @@ public class FormPrinter {
  	public FormPrinter() {
 	}
 
-	public FormPrinter(String request) {
+	public FormPrinter(String request, String login) {
 		String s = "";
-		Matcher match = PATTERN.matcher(request + " ");
+		Matcher match = PATTERN_LOGIN.matcher(login + " ");
+		
+		String Dburl = "";
+		String Username = "";
+		String Password = "";
+		
+		System.out.println("SQL request: " + login);
+		
+		//Assigns the 3 groups into variables, if they're
+		//not valid, an Exception is thrown
+		
+		if (match.find()) {
+			s = match.group(1);
+			
+			if (s != null) {
+				Dburl = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("No Dburl passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(2);
+			
+			if (s != null) {
+				Username = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("No Username passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(3);
+			
+			if (s != null) {
+				Password = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("No Password passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+
+		} else {
+			System.err.println("Format not followed, please try again");
+			throw new IllegalArgumentException();
+		}
+		
+		myJDBC = new search(Dburl, Username, Password);
+		try {
+			myJDBC.initializeConnection();
+		} catch (SQLException e) {
+			System.err.println("Invalid login credentials, user is not authorized");
+			e.printStackTrace();
+			
+			throw new IllegalArgumentException();
+		}
+		
+		s = "";
+		match = PATTERN_REQUEST.matcher(request + " ");
 		
 		System.out.println("User request: " + request);
 		
@@ -100,67 +158,6 @@ public class FormPrinter {
 		}
 	}
 	
-	/**
-	 * I don't recall making this method, what the hell is going on here
-	 * Can someone please comment this if they made this function so we
-	 * know what it does. That'd be much appreciated
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public boolean querySQL(String request) {
-		
-		String Dburl;
-		String Username;
-		String Password;
-
-
-		String s = "";
-		Matcher match = PATTERN1.matcher(request + " ");
-		
-		System.out.println("SQL request: " + request);
-		
-		//Assigns the 3 groups into variables, if they're
-		//not valid, an Exception is thrown
-		
-		if (match.find()) {
-			s = match.group(1);
-			
-			if (s != null) {
-				Dburl = s;
-			} else {
-				//I don't think it's possible to reach these exceptions
-				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
-				throw new IllegalArgumentException();
-			}
-			
-			s = match.group(2);
-			
-			if (s != null) {
-				Username = s;
-			} else {
-				//I don't think it's possible to reach these exceptions
-				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
-				throw new IllegalArgumentException();
-			}
-			
-			s = match.group(3);
-			
-			if (s != null) {
-				Password = s;
-			} else {
-				//I don't think it's possible to reach these exceptions
-				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
-				throw new IllegalArgumentException();
-			}
-
-		} else {
-			System.err.println("This input does not represent a valid database login");
-			throw new IllegalArgumentException();
-		}		
-		
-		return true;
-	}
 	
 	/**
 	 * Performs the query in order to get a result from the database. Assigns
@@ -169,65 +166,9 @@ public class FormPrinter {
 	 * user is no longer prompted for another input.
 	 * @throws SQLException 
 	 */
-	public boolean query(String request) {
+	public boolean query() {
 		
 		//Begins querying the database for most optimal purchase
-		
-		String Dburl;
-		String Username;
-		String Password;
-
-
-		String s = "";
-		Matcher match = PATTERN1.matcher(request + " ");
-				
-		if (match.find()) {
-			s = match.group(1);
-			
-			if (s != null) {
-				Dburl = s;
-			} else {
-				//I don't think it's possible to reach these exceptions
-				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
-				throw new IllegalArgumentException();
-			}
-			
-			s = match.group(2);
-			
-			if (s != null) {
-				Username = s;
-			} else {
-				//I don't think it's possible to reach these exceptions
-				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
-				throw new IllegalArgumentException();
-			}
-			
-			s = match.group(3);
-			
-			if (s != null) {
-				Password = s;
-			} else {
-				//I don't think it's possible to reach these exceptions
-				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
-				throw new IllegalArgumentException();
-			}
-
-		} else {
-			System.err.println("No match found");
-			throw new IllegalArgumentException();
-		}
-
-
-
-
-		myJDBC = new search(Dburl, Username, Password);
-		try {
-			myJDBC.initializeConnection();
-		} catch (SQLException e) {
-			System.err.println("Invalid login credentials, user is not authorized");
-			e.printStackTrace();
-		}
-				
 		result = null;
 		
 		if (furniture.equalsIgnoreCase("chair")) {
