@@ -23,7 +23,7 @@ public class MainTests {
 	
 	//The login details that will be used for the tests
 	//Entered in the same way the program would have normally
-	private String loginDetails = "jdbc:mysql://localhost/inventory root Pound_multiple_demonstration_watching";
+	private String loginDetails = "jdbc:mysql://localhost/inventory root ensf409";
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidIntegerConst() throws SQLException {
@@ -34,6 +34,12 @@ public class MainTests {
 	public void zeroIntegerConst() {
 		subject = new FormPrinter("\"mesh\" \"chair\", 0", loginDetails);
 	}
+	@Test (expected = IllegalArgumentException.class)
+	public void nonExistantFurnitureType() {
+		subject = new FormPrinter("\"mesh\" \"notFurniture\", 1", loginDetails);
+		subject.query();
+	}
+	
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidCloneConst() {
