@@ -88,7 +88,7 @@ public class FormPrinter {
 			myJDBC.initializeConnection();
 		} catch (SQLException e) {
 			System.err.println("Invalid login credentials, user is not authorized");
-			e.printStackTrace();
+		
 			
 			throw new IllegalArgumentException();
 		}
@@ -134,7 +134,7 @@ public class FormPrinter {
 			}
 		} else {
 			System.err.println("The input was either invalid or not in the correct format");
-			System.exit(0);
+			throw new IllegalArgumentException();
 		}
 		
 		
@@ -157,7 +157,70 @@ public class FormPrinter {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
+
+
+
+/**
+	 * I don't recall making this method, what the hell is going on here
+	 * Can someone please comment this if they made this function so we
+	 * know what it does. That'd be much appreciated
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public boolean querySQL(String request) {
+		
+		String Dburl;
+		String Username;
+		String Password;
+
+
+		String s = "";
+		Matcher match = PATTERN_LOGIN.matcher(request + " ");
+		
+		System.out.println("SQL request: " + request);
+		
+		if (match.find()) {
+			s = match.group(1);
+			
+			if (s != null) {
+				Dburl = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Dburl passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(2);
+			
+			if (s != null) {
+				Username = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Username passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+			
+			s = match.group(3);
+			
+			if (s != null) {
+				Password = s;
+			} else {
+				//I don't think it's possible to reach these exceptions
+				System.err.println("Invalid Password passed. Passed: \"" + s + "\"");
+				throw new IllegalArgumentException();
+			}
+
+		} else {
+			System.err.println("This input does not represent a valid order");
+			throw new IllegalArgumentException();
+		}		
+		
+		return true;
+	}
+
+
 	
 	/**
 	 * Performs the query in order to get a result from the database. Assigns
@@ -169,6 +232,18 @@ public class FormPrinter {
 	public boolean query() {
 		
 		//Begins querying the database for most optimal purchase
+
+
+		
+		
+		try {
+			myJDBC.initializeConnection();
+		} catch (SQLException e) {
+			System.err.println("Invalid login credentials, user is not authorized");
+			throw new IllegalArgumentException();
+		}
+
+
 		result = null;
 		
 		if (furniture.equalsIgnoreCase("chair")) {
@@ -190,7 +265,7 @@ public class FormPrinter {
 		} else {
 			
 			System.err.println("That furniture does not exist");
-			System.exit(0);
+			throw new IllegalArgumentException();
 		}
 		//this checks if the recommended manufacturer list was returned, because if it was returned there would be no price at the end
 		if (result.get(result.size()-1).charAt(0) != '$') {

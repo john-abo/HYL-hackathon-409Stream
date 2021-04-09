@@ -53,7 +53,7 @@ public class ProjectMain {
 		userInput();
 		
 		printer = new FormPrinter(userIn, sqlIn);
-			
+		try {
 		if (printer.query()) {
 			System.out.println(printer.formatReport());
 			//System.out.println(printer.getType() + ", " + printer.getFurniture() + ", " + printer.getQuantity());
@@ -61,6 +61,11 @@ public class ProjectMain {
 			printer.writeReport();	//Writes report
 
 		} 
+		}
+		catch(IllegalArgumentException e){
+			
+			
+		}
 	}
 }
 
