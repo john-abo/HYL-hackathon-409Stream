@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 //class to store desk data
-public class deskData {
+class deskData {
 	//all data for desk entry
 	 boolean legs = false;
 	 boolean top = false;

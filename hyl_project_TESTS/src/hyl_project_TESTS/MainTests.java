@@ -34,11 +34,7 @@ public class MainTests {
 	public void zeroIntegerConst() {
 		subject = new FormPrinter("\"mesh\" \"chair\", 0", loginDetails);
 	}
-	@Test (expected = IllegalArgumentException.class)
-	public void nonExistantFurnitureType() {
-		subject = new FormPrinter("\"mesh\" \"notChair\", 1", loginDetails);
-		subject.query();
-	}
+	
 	
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -64,8 +60,35 @@ public class MainTests {
 		assertTrue("reportFurniture is incorrect. Expected: " + subject.getFurniture() + ", Actual: \"" + reportFurniture + "\"", reportFurniture.equalsIgnoreCase(subject.getFurniture()));
 		assertTrue("reportInt is incorrect. Expected: " + subject.getQuantity() + ", Actual: \"" + reportInt + "\"", reportInt == subject.getQuantity());
 	}
-	
+	/** These tests are for invalid user inputs
+	 * 
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void nonExistantFurniture() {
+		subject = new FormPrinter("\"mesh\" \"cwhair\", 2", loginDetails);
+		subject.query();
+	}
+	@Test (expected = IllegalArgumentException.class)
+	public void invalidInputFormat() {
+		subject = new FormPrinter("mesh chair 2", loginDetails);
+		subject.query();
+	}
+	@Test (expected = IllegalArgumentException.class)
+	public void badLogin() {
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", "this is not a proper login");
+		
+		
+	}
+	@Test (expected = IllegalArgumentException.class)
+	public void badLogin2() {
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", "\"jdbc:mysql://localhost/inventory userdoesntexist notThepassword\";");
+		
+		
+	}
 	@Test
+	/**
+	 * these tests are for the getter methods
+	 */
 	public void typeGetterTests() {
 		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 		String reportType = subject.getType();

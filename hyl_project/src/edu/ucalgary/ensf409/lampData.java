@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 //class to store lamp data
-public class lampData {
+class lampData {
 	//contains data for lamp entry
 	 boolean Bulb = false;
 	 boolean Base = false;

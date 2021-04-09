@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 //class to store filing data
-public class filingData {
+class filingData {
 	//all data for filing entry
 	 boolean Rails = false;
 	 boolean Cabinet = false;

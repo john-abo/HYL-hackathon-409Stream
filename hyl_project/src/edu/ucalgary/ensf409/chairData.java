@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 //class to store chair data 
-public class chairData {
+class chairData {
 	//all data for chair entry
 	 boolean legs = false;
 	 boolean arms = false;
