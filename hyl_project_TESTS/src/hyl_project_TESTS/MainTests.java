@@ -15,26 +15,24 @@ public class MainTests {
 	
 	public FormPrinter subject;
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void invalidTypeConst() {
-		subject = new FormPrinter("");	//no idea how to test this case exactly
-										//I think I can query for existing types
-	}
+	/*
+	 * Constructor tests. All of which are passed invalid arguments except the last one
+	 * That means all tests must throw an exception except for the last one in order
+	 * to pass
+	 */
+	
+	//The login details that will be used for the tests
+	//Entered in the same way the program would have normally
+	private String loginDetails = "jdbc:mysql://localhost/inventory root Pound_multiple_demonstration_watching";
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void invalidFurnitureConst() {
-		subject = new FormPrinter("");	//no idea how to test this case exactly
-													//And here I can query tables
-	}
-	
-	@Test (expected = IllegalArgumentException.class)
-	public void invalidIntegerConst() {
-		subject = new FormPrinter("mesh chair, fail");
+	public void invalidIntegerConst() throws SQLException {
+		subject = new FormPrinter("\"mesh\" \"chair\", fail", loginDetails);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void zeroIntegerConst() {
-		subject = new FormPrinter("mesh chair, 0");
+		subject = new FormPrinter("\"mesh\" \"chair\", 0", loginDetails);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -44,12 +42,12 @@ public class MainTests {
 	
 	@Test
 	public void validConst() {
-		subject = new FormPrinter("mesh chair, 1");
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 	}
 	
 	@Test
 	public void validCopyConst() {
-		subject = new FormPrinter("mesh chair, 1");
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 		FormPrinter subject2 = new FormPrinter(subject);
 		
 		String reportType = subject2.getType();
@@ -63,7 +61,7 @@ public class MainTests {
 	
 	@Test
 	public void typeGetterTests() {
-		subject = new FormPrinter("mesh chair, 1");
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 		String reportType = subject.getType();
 		
 		//Expected: mesh
@@ -72,7 +70,7 @@ public class MainTests {
 	
 	@Test
 	public void furnitureGetterTests() {
-		subject = new FormPrinter("mesh chair, 1");
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 		String reportFurniture = subject.getFurniture();
 		
 		//Expected: chair
@@ -81,17 +79,17 @@ public class MainTests {
 	
 	@Test
 	public void quantityGetterTests() {
-		subject = new FormPrinter("mesh chair, 1");
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 		int reportInt = subject.getQuantity();
 		
 		//Expected: 1
 		assertTrue("reportInt is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
 		
-		subject = new FormPrinter("mesh chair, 100");
+		subject = new FormPrinter("\"mesh\" \"chair\", 100", loginDetails);
 		reportInt = subject.getQuantity();
 		assertTrue("reportInt is incorrect. Expected: 100, Actual: " + reportInt, reportInt == 100);
 		
-		subject = new FormPrinter("mesh chair, 56216");
+		subject = new FormPrinter("\"mesh\" \"chair\", 56216", loginDetails);
 		reportInt = subject.getQuantity();
 		assertTrue("reportInt is incorrect. Expected: 56216, Actual: " + reportInt, reportInt == 56216);
 	}
@@ -101,7 +99,7 @@ public class MainTests {
 		int reportInt = 0;
 		
 		//not sure how to test for this
-		subject = new FormPrinter("mesh chair, 1");
+		subject = new FormPrinter("\"mesh\" \"chair\", 1", loginDetails);
 		
 		reportInt = subject.writeReport();	//report1.txt
 		assertTrue("reportInt is incorrect. Expected: 1, Actual: " + reportInt, reportInt == 1);
