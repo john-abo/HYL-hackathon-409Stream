@@ -20,7 +20,7 @@ public class SearchTests {
 	
 	public final String DBURL = "jdbc:mysql://localhost/inventory";
 	public final String  USERNAME = "root";
-	public final String PASSWORD = "Pound_multiple_demonstration_watching";
+	public final String PASSWORD = "ensf409";
 	
 	/**
      * Setup method that is invoked before each test method, initializing connection
@@ -315,19 +315,45 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
-
+    @Test
+    public void searchChairImpossible2() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchChair("L",1);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+		
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was either null or a valid list, and should not have been", endOfActual.charAt(0) != '$');
+    }
+    
     @Test
     public void searchDeskImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
     	subject.initializeConnection();
     	
     	ArrayList<String> expected = new ArrayList<String>();
-		ArrayList<String> actual = subject.searchDesk("Task",100);
+		ArrayList<String> actual = subject.searchDesk("Standing",100);
 		
 		String endOfActual = actual.get(actual.size() - 1);
 		
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
+    }
+    @Test
+    public void searchDeskImpossible2() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchDesk("L",1);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+		
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was either a valid list or null, and should not have been", endOfActual.charAt(0) != '$');
     }
 
     @Test
@@ -343,6 +369,19 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
+    @Test
+    public void searchLampImpossible2() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchLamp("L",1);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+		
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was either a valid list or null, and should not have been", endOfActual.charAt(0) != '$');
+    }
     
     @Test
     public void searchFilingImpossible() throws SQLException {
@@ -356,6 +395,19 @@ public class SearchTests {
 
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
+    }
+    @Test
+    public void searchFilingImpossible2() throws SQLException {
+    	subject = new search(DBURL,USERNAME,PASSWORD);
+    	subject.initializeConnection();
+    	
+    	ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> actual = subject.searchFiling("L",1);
+		
+		String endOfActual = actual.get(actual.size() - 1);
+
+		//If the first character were a $, then a valid list was given
+		assertTrue("Actual was either a valid list or null, and should not have been", endOfActual.charAt(0) != '$');
     }
     /**
      * Initiallizes the database based on inventory.sql that was provided
@@ -602,7 +654,7 @@ public class SearchTests {
     	}
     	return true;
     }
-    
+  
     private boolean areEqualArraylists(ArrayList<String> expected, ArrayList<String> actual) {
     	
     	//Both sets must be the same size to be equal
