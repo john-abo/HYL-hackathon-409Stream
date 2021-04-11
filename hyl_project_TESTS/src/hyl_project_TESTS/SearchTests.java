@@ -20,7 +20,7 @@ public class SearchTests {
 	
 	public final String DBURL = "jdbc:mysql://localhost/inventory";
 	public final String  USERNAME = "root";
-	public final String PASSWORD = "ensf409";
+	public final String PASSWORD = "Pound_multiple_demonstration_watching"; //Hand in with: ensf409
 	
 	/**
      * Setup method that is invoked before each test method, initializing connection
@@ -73,32 +73,41 @@ public class SearchTests {
      * made no matter what
      */
     
+    /**
+     * Tests if the object fails to be created despite valid login credentials
+     */
     @Test
     public void constructorValidUserTest() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
     	subject.initializeConnection();
     }
     
+    /**
+     * Test if the object is created despite the invalid URL
+     */
     @Test (expected = SQLException.class)
     public void constructorInalidUrl() throws SQLException {
     	subject = new search("invalid",USERNAME,PASSWORD);
     	subject.initializeConnection();
     }
     
+    /**
+     * Test if the object is created despite the invalid Username
+     */
     @Test (expected = SQLException.class)
     public void constructorInalidUsername() throws SQLException {
     	subject = new search(DBURL,"invalid",PASSWORD);
     	subject.initializeConnection();
     }
     
+    /**
+     * Test if the object is created despite the invalid Password
+     */
     @Test (expected = SQLException.class)
     public void constructorInvalidPassword() throws SQLException {
     	subject = new search(DBURL,USERNAME,"invalid");
     	subject.initializeConnection();
     }
-    
-    
-    
     
     /*
      * Tests delete methods
@@ -106,6 +115,9 @@ public class SearchTests {
      * database permanently. Running the main program will cause it to change, however.
      */
     
+    /**
+     * Tests if the method fails to remove the chair despite the chair existing
+     */
     @Test
     public void deleteExistingChair() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -121,6 +133,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Tests to see if the chair is removed despite not existing
+     */
     @Test (expected = IllegalArgumentException.class) 
     public void deleteNonexistingChair() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -136,6 +151,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Tests if the method fails to remove the desk despite the chair existing
+     */
     @Test
     public void deleteExistingDesk() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -151,6 +169,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Test to see if the desk is removed despite not existing
+     */
     @Test (expected = IllegalArgumentException.class)
     public void deleteNonexistingDesk() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -163,6 +184,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Tests if the method fails to remove the lamp despite the chair existing
+     */
     @Test
     public void deleteExistingLamp() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -178,6 +202,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Test to see if the lamp is removed despite not existing
+     */
     @Test (expected = IllegalArgumentException.class)
     public void deleteNonexistingLamp() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -190,6 +217,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Tests if the method fails to remove the filing despite the chair existing
+     */
     @Test
     public void deleteExistingFiling() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -205,6 +235,9 @@ public class SearchTests {
     	}
     }
     
+    /**
+     * Test to see if the filing is removed despite not existing
+     */
     @Test (expected = IllegalArgumentException.class)
     public void deleteNonexistingFiling() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -229,6 +262,10 @@ public class SearchTests {
      * The combinations with lowest ID numbers first are prioritized.
      */
     
+    /**
+     * Tests to see if the searchChair method returns the correct list of
+     * chairs as well as a price
+     */
     @Test
     public void searchChairPossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -245,6 +282,10 @@ public class SearchTests {
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
     
+    /**
+     * Tests to see if the searchDesk method returns the correct list of
+     * desks as well as a price
+     */
     @Test
     public void searchDeskPossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -263,6 +304,10 @@ public class SearchTests {
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
+    /**
+     * Tests to see if the searchLamp method returns the correct list of
+     * lamps as well as a price
+     */
     @Test
     public void searchLampPossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -280,6 +325,10 @@ public class SearchTests {
 		assertTrue("actual did not return as expected\n" + actual, areEqualArraylists(expected, actual));
     }
 
+    /**
+     * Tests to see if the searchFiling method returns the correct list of
+     * filing as well as a price
+     */
     @Test
     public void searchFilingPossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -302,6 +351,10 @@ public class SearchTests {
      * The method should not return a list with a price
      */
     
+    /**
+     * Tests to see if a valid list of chairs is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchChairImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -315,6 +368,11 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
+    
+    /**
+     * Tests to see if a valid list of chairs is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchChairImpossible2() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -329,6 +387,10 @@ public class SearchTests {
 		assertTrue("Actual was either null or a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
     
+    /**
+     * Tests to see if a valid list of desks is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchDeskImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -342,6 +404,11 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
+    
+    /**
+     * Tests to see if a valid list of desks is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchDeskImpossible2() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -356,6 +423,10 @@ public class SearchTests {
 		assertTrue("Actual was either a valid list or null, and should not have been", endOfActual.charAt(0) != '$');
     }
 
+    /**
+     * Tests to see if a valid list of lamps is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchLampImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -369,6 +440,11 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
+    
+    /**
+     * Tests to see if a valid list of lamps is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchLampImpossible2() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -383,6 +459,10 @@ public class SearchTests {
 		assertTrue("Actual was either a valid list or null, and should not have been", endOfActual.charAt(0) != '$');
     }
     
+    /**
+     * Tests to see if a valid list of filings is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchFilingImpossible() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -396,6 +476,11 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was a valid list, and should not have been", endOfActual.charAt(0) != '$');
     }
+    
+    /**
+     * Tests to see if a valid list of filings is returned despite the order
+     * being impossible to fulfill
+     */
     @Test
     public void searchFilingImpossible2() throws SQLException {
     	subject = new search(DBURL,USERNAME,PASSWORD);
@@ -409,6 +494,7 @@ public class SearchTests {
 		//If the first character were a $, then a valid list was given
 		assertTrue("Actual was either a valid list or null, and should not have been", endOfActual.charAt(0) != '$');
     }
+    
     /**
      * Initiallizes the database based on inventory.sql that was provided
      * by the class. This is before the last second updated .sql was given
@@ -562,6 +648,13 @@ public class SearchTests {
     	//System.out.println("The deed is done, but what sort of man have you become");
     }
     
+    /**
+     * Manually executes an update, this allows the test to repair the database after any
+     * change has been done
+     * 
+     * @param update 		the update line that will be executed
+     * @throws SQLException Incase anything goes wrong with execution
+     */
     @SuppressWarnings("unused")
 	private void executeUpdate(String update) throws SQLException{
     	PreparedStatement stmt;
@@ -575,6 +668,13 @@ public class SearchTests {
      * based on it's ID
      */
     
+    /**
+     * Gets a chair from the database based on the ID provided. Then returns a boolean
+     * based on whether it exists or not
+     * 
+     * @param ID	ID of the chair that will be searched for
+     * @return		Boolean, true if it exists and false otherwise
+     */
     private boolean getChairByID(String ID) {
     	try {
     		String query = "SELECT * FROM CHAIR WHERE ID=?";
@@ -595,6 +695,13 @@ public class SearchTests {
     	return true;
     }
     
+    /**
+     * Gets a desk from the database based on the ID provided. Then returns a boolean
+     * based on whether it exists or not
+     * 
+     * @param ID	ID of the desk that will be searched for
+     * @return		Boolean, true if it exists and false otherwise
+     */
     private boolean getDeskByID(String ID) {
     	try {
     		String query = "SELECT * FROM DESK WHERE ID=?";
@@ -615,6 +722,13 @@ public class SearchTests {
     	return true;
     }
     
+    /**
+     * Gets a lamp from the database based on the ID provided. Then returns a boolean
+     * based on whether it exists or not
+     * 
+     * @param ID	ID of the lamp that will be searched for
+     * @return		Boolean, true if it exists and false otherwise
+     */
     private boolean getLampByID(String ID) {
     	try {
     		String query = "SELECT * FROM Lamp WHERE ID=?";
@@ -635,6 +749,13 @@ public class SearchTests {
     	return true;
     }
     
+    /**
+     * Gets a filing from the database based on the ID provided. Then returns a boolean
+     * based on whether it exists or not
+     * 
+     * @param ID	ID of the filing that will be searched for
+     * @return		Boolean, true if it exists and false otherwise
+     */
     private boolean getFilingByID(String ID) {
     	try {
     		String query = "SELECT * FROM Filing WHERE ID=?";
@@ -655,6 +776,16 @@ public class SearchTests {
     	return true;
     }
   
+    /**
+     * Compares 2 sets to see if they are equal, using arraylists.
+     * For all String that are elements of expected, String is also an element of actual
+     * 
+     * This allows the comparison to ignore the order elements in the list
+     * 
+     * @param expected	The arraylist of known contents
+     * @param actual
+     * @return
+     */
     private boolean areEqualArraylists(ArrayList<String> expected, ArrayList<String> actual) {
     	
     	//Both sets must be the same size to be equal
