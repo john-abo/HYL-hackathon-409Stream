@@ -129,7 +129,7 @@ public class FormPrinter {
 				}
 				
 			} catch (Exception e) {
-				System.err.println("This is not represent a valid number of items to order. Passed: \"" + s + "\"");
+				System.err.println("This does not represent a valid number of items to order. Passed: \"" + s + "\"");
 				throw new IllegalArgumentException();
 			}
 		} else {
