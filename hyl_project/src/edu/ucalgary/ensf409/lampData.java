@@ -1,6 +1,13 @@
+/**
+@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+@version 1.3
+@since 1.0
+*/
+
+
 package edu.ucalgary.ensf409;
 //class to store lamp data
-public class lampData {
+class lampData {
 	//contains data for lamp entry
 	 boolean Bulb = false;
 	 boolean Base = false;

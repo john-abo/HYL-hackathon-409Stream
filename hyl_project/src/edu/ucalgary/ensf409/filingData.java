@@ -1,6 +1,13 @@
+/**
+@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+@version 1.3
+@since 1.0
+*/
+
+
 package edu.ucalgary.ensf409;
 //class to store filing data
-public class filingData {
+class filingData {
 	//all data for filing entry
 	 boolean Rails = false;
 	 boolean Cabinet = false;

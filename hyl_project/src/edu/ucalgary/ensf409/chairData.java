@@ -1,6 +1,13 @@
+
+/**
+@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+@version 1.3
+@since 1.0
+*/
+
 package edu.ucalgary.ensf409;
 //class to store chair data 
-public class chairData {
+class chairData {
 	//all data for chair entry
 	 boolean legs = false;
 	 boolean arms = false;
