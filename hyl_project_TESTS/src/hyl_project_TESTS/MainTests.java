@@ -1,3 +1,10 @@
+/**
+@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+@version 1.3
+@since 1.0
+*/
+
+
 package hyl_project_TESTS;
 
 import static org.junit.Assert.assertEquals;
