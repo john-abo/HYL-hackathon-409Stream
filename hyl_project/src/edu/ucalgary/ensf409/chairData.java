@@ -1,5 +1,5 @@
 /**
- * Holds data pertaining the 
+ * Holds data pertaining to a specific chair in the database
  * 
  *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
  *	@version 1.3
