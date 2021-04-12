@@ -1,8 +1,11 @@
 /**
-@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
-@version 1.3
-@since 1.0
-*/
+ * Test suite for the search class and it's methods, as well as the other
+ * classes that are used in search
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
 
 package hyl_project_TESTS;
 

@@ -1,8 +1,11 @@
 /**
-@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
-@version 1.3
-@since 1.0
-*/
+ * Node in the data structure that contains the furniture types that are being looked for. It's generic and will allow
+ * for it to hold the different data classes
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
 
 package edu.ucalgary.ensf409;
 

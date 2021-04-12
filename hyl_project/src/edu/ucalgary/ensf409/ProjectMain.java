@@ -1,9 +1,11 @@
 /**
-	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
-	@version 1.3
-	@since 1.0
-	*/
-
+ * Main driver of the project that gets user input, and using the other classes, outputs a message to the
+ * user that will either be a list of items and price or recommended manufacturers
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
 
 package edu.ucalgary.ensf409;
 
