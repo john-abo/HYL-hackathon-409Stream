@@ -1,9 +1,10 @@
 /**
-@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
-@version 1.3
-@since 1.0
-*/
-
+ * Test suite for FormPrinter class and it's methods
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
 
 package hyl_project_TESTS;
 

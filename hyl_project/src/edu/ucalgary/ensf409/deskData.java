@@ -1,9 +1,10 @@
 /**
-@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
-@version 1.3
-@since 1.0
-*/
-
+ * Holds data pertaining to a specific desk in the database
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
 
 package edu.ucalgary.ensf409;
 //class to store desk data

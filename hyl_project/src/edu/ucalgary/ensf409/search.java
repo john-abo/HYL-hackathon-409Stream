@@ -1,3 +1,12 @@
+/**
+ * Meat and potatoes of this project. Contains the methods that search the database for furniture as well as the
+ * cheapest combiination of furniture. Can also delete furniture from the database, as well as manufacturers
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
+
 package edu.ucalgary.ensf409;
 
 import java.sql.*;

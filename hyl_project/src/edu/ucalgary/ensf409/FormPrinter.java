@@ -1,8 +1,12 @@
 /**
-@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
-@version 1.3
-@since 1.0
-*/
+ * Class containing an instance of the search class and uses that to sets data into a user friendly format.
+ * This class also contains the FileIO and thus creates the text files in the same format as written to the
+ * user.
+ * 
+ *	@author Kyle Hasan, John Abo , Farhad Alishov, Mohamed Yassin
+ *	@version 1.3
+ *	@since 1.0
+ */
 
 package edu.ucalgary.ensf409;
 
