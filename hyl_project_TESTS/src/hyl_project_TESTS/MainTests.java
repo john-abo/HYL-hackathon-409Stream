@@ -23,7 +23,11 @@ public class MainTests {
 	
 	//The login details that will be used for the tests
 	//Entered in the same way the program would have normally
+<<<<<<< Updated upstream
 	private String loginDetails = "jdbc:mysql://localhost/inventory root Pound_multiple_demonstration_watching";
+=======
+	private String loginDetails = "jdbc:mysql://localhost/inventory root ensf409"; //Hand in with this: "jdbc:mysql://localhost/inventory root ensf409"
+>>>>>>> Stashed changes
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidIntegerConst() throws SQLException {
