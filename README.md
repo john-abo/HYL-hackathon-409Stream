@@ -23,4 +23,7 @@ The system was built using Java and MySQL. Throughout the process, consistent ef
 
 
 ## How To Run The Program (requires MySQL and Java):
-Follow the instructions in the "SetupInstructions.txt" file attached. 
+Follow the instructions in the "SetupInstructions.txt" file attached in the repository.
+
+## UML
+We created a UML diagram that shows how our code is connected, click on the "uml.pdf" file attached in the repository.
