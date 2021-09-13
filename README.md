@@ -1,2 +1,2 @@
-# HYL-hackathon-409Stream
+# Inventory Management System
 2021 Hack Your Learning team repository 
