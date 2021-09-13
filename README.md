@@ -30,5 +30,5 @@ We created a UML diagram that shows how our code is connected, click on the "uml
 
 ## Built Using:
 * Java
-    *Tested with JUnit
+    * Tested with JUnit
 * MySQL
