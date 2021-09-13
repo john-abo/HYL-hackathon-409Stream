@@ -1,4 +1,24 @@
-# Inventory Management System
+# Supply Chain Management, Final Project for ENSF409 - Principles of Software Development
+
+## Authors
+   * John Abo
+   * Farhad Alishov
+   * Kyle Hasan
+   * Mohamed Yassin
+   
+## How The System Works:
+Our supply chain management system is designed to assist office furniture supply chains manage their inventory by re-using surplus items and thus losing as little money as possible. There is also an environmental benefit to this because fewer materials will be thrown away for recycling and such. In quick summary, here is how the system works:
+1. User inputs a request for furniture by inputting the furniture category, the type of the furniture, and the number of pieces of that specific furniture.
+2. Algorithm iterates through the database and finds the cheapest combination of parts that will fulfill customer order.
+3. If the request is possible to be fulfilled based on inventory, an order form is produced in a text file format.
+4. If the request is not possible because of missing parts, the system suggests nearby manufacturers that may have the items.
+
+## How It Was Built:
+The system was built using Java and MySQL. Throughout the process, consistent effort was made to include easy-to-understand documentation, naming conventions, comments as well as object-oriented programming strategies to ensure the program can be expanded in the future if necessary. It can run locally on a user's system without the need for an internet connection provided all the required files are included. 
+## Example Screenshots:
+
+
+## How To Run The Program (requires MySQL and Java):
 Hello, Welcome To the Read Me text document for our Inventory Management System. 
 
 We will show you step by step how to get our program running!
@@ -15,13 +35,13 @@ Required Files:
 
 
 
-Step 1: First, Extract the zip file group18.zip to a destination of your choosing, we personally think extracting to Desktop is most convenient.
+Step 1: First, Extract the zip file FinishedBuild.zip to a destination of your choosing, we personally think extracting to Desktop is most convenient.
 
-Step 2: Now, click on the group18 folder you have extracted, right as you click on the file, you can paste the required files we have listed above. Please do not put the required files anywhere else in the folder,
-they have to be in the "group18" directory so our commands work immediately.
+Step 2: Now, click on the FinishedBuild folder you have extracted, right as you click on the file, you can paste the required files we have listed above. Please do not put the required files anywhere else in the folder, (In the .zip file, we have included those files for your convenience, so feel free to skip this step).
+they have to be in the "FinishedBuild" directory so our commands work immediately.
 
 Step 3: To test the combination finder and report generator, open the command line, and navigate to the directory by copying the address off the group18 directory and pasting it into cmd. For my case, since I saved it to my desktop, 
-the command would be: cd C:\Users\moeya\Desktop\group18
+the command would be: cd C:\Users\moeya\Desktop\FinishedBuild
 
 Step 3.5: compile classes chairData, deskData, filingData, FormPrinter, node and search using the following commands:
 	javac edu/ucalgary/ensf409/chairData.java
